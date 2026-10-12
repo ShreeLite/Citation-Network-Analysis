@@ -24,6 +24,8 @@ former_faculty_from_wayback,IIIT-H,Nagamanikandan Govindan,2022-2024 as 'Assista
 former_faculty_from_wayback,IIIT-H,Govindarajulu R.,2015-2021 as 'Professor Emeritus',https://web.archive.org/web/20210115213625/https://www.iiit.ac.in/people/faculty/,confirm departure; set unit
 former_faculty_from_wayback,IIIT-H,Srivatsava Jandhyala,2015-2015 as 'Assistant Professor',https://web.archive.org/web/20150202080215/http://www.iiit.ac.in:80/people/faculty,confirm departure; set unit
 former_faculty_from_wayback,IIIT-H,Jolly Thomas,2017-2017 as 'Visiting Assistant Professor',https://web.archive.org/web/20170214201405/https://www.iiit.ac.in/people/faculty/,confirm departure; set unit
+former_faculty_from_wayback,IIIT-H,Rao P. R. K,2015-2015 as 'Professor',https://web.archive.org/web/20150202080215/http://www.iiit.ac.in:80/people/faculty,confirm departure; set unit
+former_faculty_from_wayback,IIIT-H,Sarma K. R.,2015-2024 as 'Professor Emeritus',https://web.archive.org/web/20240118040544/https://www.iiit.ac.in/people/faculty/,confirm departure; set unit
 former_faculty_from_wayback,IIIT-H,Rambabu Kalla,2015-2017 as 'Assistant Professor',https://web.archive.org/web/20170214201405/https://www.iiit.ac.in/people/faculty/,confirm departure; set unit
 former_faculty_from_wayback,IIIT-H,Venkata Suresh Kumar N,2019-2019 as 'Research Scientist',https://web.archive.org/web/20190531083330/https://www.iiit.ac.in/people/faculty/,confirm departure; set unit
 former_faculty_from_wayback,IIIT-H,Lavanya Ramapantulu,2019-2020 as 'Assistant Professor',https://web.archive.org/web/20200609204529/https://www.iiit.ac.in/people/faculty/,confirm departure; set unit
@@ -81,6 +83,24 @@ former_faculty_from_wayback,IIIT-D,Samrith Ram,2018-2022 as 'Associate Professor
 former_faculty_from_wayback,IIIT-D,Subhadip Raychaudhuri,2015-2019 as 'Associate Professor',https://web.archive.org/web/20190107093734/https://iiitd.ac.in/people/faculty,confirm departure; set unit
 former_faculty_from_wayback,IIIT-D,Richa Singh,2015-2019 as 'Associate Professor',https://web.archive.org/web/20190107093734/https://iiitd.ac.in/people/faculty,confirm departure; set unit
 former_faculty_from_wayback,IIIT-D,Shweta Singh,2020-2021 as 'Lecturer',https://web.archive.org/web/20210128161655/https://www.iiitd.ac.in/people/faculty,confirm departure; set unit
+former_core_now_other_role,IIIT-H,Avinash Sharma,"core 2016-2023, now adjunct",Wayback,confirm
+former_core_now_other_role,IIIT-H,Kishore S Prahallad,"core 2015-2017, now adjunct",Wayback,confirm
+former_core_now_other_role,IIIT-H,Vishal Garg,"core 2015-2024, now adjunct",Wayback,confirm
+former_core_now_other_role,IIIT-D,Aman Parnami,"core 2018-2022, now adjunct",Wayback,confirm
+former_core_now_other_role,IIIT-D,Anand Srivastava,"core 2015-2025, now adjunct",Wayback,confirm
+former_core_now_other_role,IIIT-D,Debidas Kundu,"core 2024-2025, now adjunct",Wayback,confirm
+former_core_now_other_role,IIIT-D,Dhruv Kumar,"core 2023-2025, now adjunct",Wayback,confirm
+former_core_now_other_role,IIIT-D,Gourab Ghatak,"core 2020-2021, now adjunct",Wayback,confirm
+former_core_now_other_role,IIIT-D,Koteswar Rao Jerripothula,"core 2020-2025, now adjunct",Wayback,confirm
+former_core_now_other_role,IIIT-D,P B Sujit,"core 2015-2019, now adjunct",Wayback,confirm
+former_core_now_other_role,IIIT-D,Ponnurangam Kumaraguru,"core 2015-2021, now adjunct",Wayback,confirm
+former_core_now_other_role,IIIT-D,Rahul Purandare,"core 2015-2022, now adjunct",Wayback,confirm
+former_core_now_other_role,IIIT-D,Rakesh Chaturvedi,"core 2018-2023, now adjunct",Wayback,confirm
+former_core_now_other_role,IIIT-D,Shireen Mirza,"core 2020-2022, now adjunct",Wayback,confirm
+former_core_now_other_role,IIIT-D,Shriram Venkatraman,"core 2017-2019, now adjunct",Wayback,confirm
+former_core_now_other_role,IIIT-D,Subhabrata Samajder,"core 2020-2023, now adjunct",Wayback,confirm
+former_core_now_other_role,IIIT-D,Tammam Tillo,"core 2021-2024, now adjunct",Wayback,confirm
+former_core_now_other_role,IIIT-D,Pankaj Jalote,"core 2015-2018, now emeritus",Wayback,confirm
 joining_year_low_confidence,IIIT-D,Aasim Khan,2017.0: first listed in Wayback snapshot 20170129; absent from 20160311,http://faculty.iiitd.ac.in/~aasim/,confirm joining year
 joining_year_low_confidence,IIIT-D,Abhijit Mitra,2019.0: first listed in Wayback snapshot 20190107; absent from 20180108,http://faculty.iiitd.ac.in/~abhijit/,confirm joining year
 joining_year_low_confidence,IIIT-D,Aman Parnami,2018.0: first listed in Wayback snapshot 20180108; absent from 20170129,,confirm joining year
@@ -251,10 +271,8 @@ dblp_ambiguous,IIIT-H,Suril Vijaykumar Shah,"238/0129 (Suril Vijaykumar Shah, si
 dblp_ambiguous,IIIT-D,Ashwin Srinivasan,"304/3525 (Ashwin Srinivasan, sim 1.0, Microsoft); 351/7082 (Ashwin Srinivasan, sim 1.0, ); 75/6930-1 (Ashwin Srinivasan, sim 1.0, Birla Institute of Technology and Science, Goa, India); 75/6930-2 (Ashwin Srinivasan, sim 1.0, Carnegie Mellon University, PA, USA)",,pick the right DBLP pid or 'none'
 dblp_ambiguous,IIIT-D,Shweta Singh,"47/2949-1 (Shweta Singh, sim 1.0, Manipal Institute of Technology, Department of Electronics a); 47/2949-2 (Shweta Singh, sim 1.0, Indian Institute of Technology Roorkee, UK, India); 47/2949-3 (Shweta Singh, sim 1.0, IES College of Technology, Bhopal, Madhya Pradesh, India); 47/2949-4 (Shweta Singh, sim 1.0, Warwick Business School, University of Warwick, Coventry, UK); 47/2949-5 (Shweta Singh, sim 1.0, IIIT, Hyderabad, India); 47/2949-6 (Shweta Singh, sim 1.0, KIET Group of Institutions, Ghaziabad, Uttar Pradesh, India)",,pick the right DBLP pid or 'none'
 name_collision_across_institutes,IIIT-D/IIIT-H,Abhijit Mitra / Abhijit Mitra,,,same person (moved)? different?
-name_collision_across_institutes,IIIT-D/IIIT-H,K. Thangaraj / Saroja T K,,,same person (moved)? different?
 name_collision_across_institutes,IIIT-D/IIIT-H,Nishad Patnaik / Nishad Patnaik,,,same person (moved)? different?
 name_collision_across_institutes,IIIT-D/IIIT-H,Ponnurangam Kumaraguru / Ponnurangam Kumaraguru,,,same person (moved)? different?
-name_collision_across_institutes,IIIT-D/IIIT-H,Sriram K / K S Rajan,,,same person (moved)? different?
 unit_not_in_official_list,IIIT-D,Shreemoy Mishra,ECO,,map to an official unit
 unit_not_in_official_list,IIIT-D,Somitra Kr. Sanadhya,Applied Maths,,map to an official unit
 unit_not_in_official_list,IIIT-H,Anbumani Subramanian,iHub-Data,https://www.iiit.ac.in/faculty/anbumani-subramanian/,map to an official unit
@@ -270,6 +288,7 @@ listed_on_site_but_nirf_says_left,IIIT-D,A V Subramanyam,NIRF leaving year nan,N
 listed_on_site_but_nirf_says_left,IIIT-D,Aasim Khan,NIRF leaving year nan,NIRF DCS,still current?
 joining_year_conflict_nirf_vs_homepage,IIIT-D,Abhijit Mitra,NIRF 2017 (04-10-2017; 30-09-2022) vs homepage 2019: first listed in Wayback snapshot 20190107; absent from 20180108,NIRF DCS,NIRF used; confirm
 listed_on_site_but_nirf_says_left,IIIT-D,Abhijit Mitra,NIRF leaving year nan,NIRF DCS,still current?
+current_per_nirf_not_on_faculty_page,IIIT-D,Anand Srivastava,"NIRF 2026: Professor, working",NIRF DCS,set unit
 listed_on_site_but_nirf_says_left,IIIT-D,Angshul Majumdar,NIRF leaving year nan,NIRF DCS,still current?
 listed_on_site_but_nirf_says_left,IIIT-D,Anmol Srivastava,NIRF leaving year nan,NIRF DCS,still current?
 joining_year_conflict_nirf_vs_homepage,IIIT-D,Anoop Ratn,NIRF 2018 (13-09-2018) vs homepage 2020: first listed in Wayback snapshot 20200512; absent from 20190107,NIRF DCS,NIRF used; confirm
@@ -285,10 +304,10 @@ listed_on_site_but_nirf_says_left,IIIT-D,Bapi Chatterjee,NIRF leaving year nan,N
 listed_on_site_but_nirf_says_left,IIIT-D,Chanekar Prasad Vilas,NIRF leaving year nan,NIRF DCS,still current?
 listed_on_site_but_nirf_says_left,IIIT-D,Debajyoti Bera,NIRF leaving year nan,NIRF DCS,still current?
 listed_on_site_but_nirf_says_left,IIIT-D,Debarka Sengupta,NIRF leaving year nan,NIRF DCS,still current?
+current_per_nirf_not_on_faculty_page,IIIT-D,Debidas Kundu,"NIRF 2026: Assistant Professor, working",NIRF DCS,set unit
 listed_on_site_but_nirf_says_left,IIIT-D,Debika Banerjee,NIRF leaving year nan,NIRF DCS,still current?
 listed_on_site_but_nirf_says_left,IIIT-D,Deepak Prince,NIRF leaving year nan,NIRF DCS,still current?
 listed_on_site_but_nirf_says_left,IIIT-D,Diptapriyo Majumdar,NIRF leaving year nan,NIRF DCS,still current?
-listed_on_site_but_nirf_says_left,IIIT-D,G.P.S. Raghava,NIRF leaving year nan,NIRF DCS,still current?
 listed_on_site_but_nirf_says_left,IIIT-D,Ganesh Bagler,NIRF leaving year nan,NIRF DCS,still current?
 listed_on_site_but_nirf_says_left,IIIT-D,Gaurav Ahuja,NIRF leaving year nan,NIRF DCS,still current?
 listed_on_site_but_nirf_says_left,IIIT-D,Gaurav Arora,NIRF leaving year nan,NIRF DCS,still current?
@@ -314,6 +333,7 @@ listed_on_site_but_nirf_says_left,IIIT-D,Nabanita Ray,NIRF leaving year nan,NIRF
 listed_on_site_but_nirf_says_left,IIIT-D,Nikhil Gupta,NIRF leaving year nan,NIRF DCS,still current?
 listed_on_site_but_nirf_says_left,IIIT-D,Nishad Patnaik,NIRF leaving year nan,NIRF DCS,still current?
 listed_on_site_but_nirf_says_left,IIIT-D,Ojaswa Sharma,NIRF leaving year nan,NIRF DCS,still current?
+current_per_nirf_not_on_faculty_page,IIIT-D,Pankaj Jalote,"NIRF 2026: Professor, working",NIRF DCS,set unit
 joining_year_conflict_nirf_vs_homepage,IIIT-D,Pankaj Vajpayee,NIRF 2015 (01-08-2022; 16-12-2015) vs homepage 2023: first listed in Wayback snapshot 20230206; absent from 20220116,NIRF DCS,NIRF used; confirm
 listed_on_site_but_nirf_says_left,IIIT-D,Paro Mishra,NIRF leaving year nan,NIRF DCS,still current?
 listed_on_site_but_nirf_says_left,IIIT-D,Piyus Kedia,NIRF leaving year nan,NIRF DCS,still current?

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { findings, indian, INSTS, PARTIAL_YEAR, YEAR_MAX, YEAR_MIN, type Paper } from "../data";
+import { findings, indian, INSTS, meta, PARTIAL_YEAR, YEAR_MAX, YEAR_MIN, type Paper } from "../data";
 import { useFilters } from "../filters";
 import { ChartCard, fmt, instColor, InstDot, Kpi, PartialNote, pct, Section } from "../components/ui";
 import { headlines } from "./findingText";
@@ -63,7 +63,7 @@ export default function Overview() {
         <Kpi label="Papers" value={fmt(pap.length)} sub={`${f.y0}–${f.y1}`} />
         <Kpi label="Citations" value={fmt(k.cites)} sub="OpenAlex, at collection" />
         <Kpi label="Median h-index" value={fmt(k.medH)} sub="within 2016–2026 dataset" />
-        <Kpi label="Q1 share" value={pct(k.q.q1)} sub={`of ${fmt(k.q.nJr)} ranked journal papers`} />
+        <Kpi label={meta.quartile_source === "openalex_proxy" ? "Q1 share (proxy)" : "Q1 share"} value={pct(k.q.q1)} sub={`of ${fmt(k.q.nJr)} ranked journal papers${meta.quartile_source === "openalex_proxy" ? " · OpenAlex impact proxy, not SJR" : " · Scimago SJR"}`} />
         <Kpi label="CORE A*/A" value={pct(k.q.coreA)} sub={`of ${fmt(k.q.nCr)} ranked conf. papers`} />
         <Kpi label="Indian partners" value={fmt(k.partners)} sub="co-authoring institutions" />
       </div>

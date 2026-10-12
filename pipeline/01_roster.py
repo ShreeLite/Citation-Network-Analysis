@@ -499,6 +499,9 @@ def prefetch_dblp_names(rows: list[dict]) -> None:
     """One batched SPARQL pass over every name variant of every roster person."""
     global _NAME_HITS
     variants = sorted({v for r in rows for v in name_variants_for_dblp(r["name"])})
+    # DBLP gives homonyms numbered names ('Anuj Kumar 0001'); asking for '<name> 0001' tells us
+    # whether a bare exact-name record is one person or an undisambiguated pool
+    variants += sorted({f"{v} 0001" for r in rows for v in name_variants_for_dblp(r["name"])})
     try:
         _NAME_HITS = persons_by_names(variants)
     except Exception as e:
@@ -542,7 +545,7 @@ def resolve_dblp(r: dict) -> None:
     wanted = set(name_variants_for_dblp(r["name"]))
     if _NAME_HITS is None:
         prefetch_dblp_names([r])
-    cands = [c for c in _NAME_HITS if c["query_name"] in wanted]
+    cands = [c for c in _NAME_HITS if c["query_name"] in wanted]  # numbered homonyms are not in `wanted`
     by_pid = {}
     for c in cands:
         by_pid.setdefault(c["pid"], c)
@@ -551,8 +554,12 @@ def resolve_dblp(r: dict) -> None:
         r["dblp_pid"], r["dblp_source"], r["dblp_confidence"] = good[0]["pid"], "dblp_name+affiliation", 0.9
     elif len(by_pid) == 1 and not aff:
         c = next(iter(by_pid.values()))
-        # unique exact name in all of DBLP but no affiliation recorded: plausible, needs confirming in step 2
-        r["dblp_pid"], r["dblp_source"], r["dblp_confidence"] = c["pid"], "dblp_unique_exact_name", 0.7
+        homonyms = any(h["query_name"] == f"{v} 0001" for h in _NAME_HITS for v in wanted)
+        if homonyms:
+            # DBLP has numbered homonyms: the bare record pools several people -> verify in step 2
+            r["dblp_pid"], r["dblp_source"], r["dblp_confidence"] = c["pid"], "dblp_unique_exact_name", 0.5
+        else:
+            r["dblp_pid"], r["dblp_source"], r["dblp_confidence"] = c["pid"], "dblp_exact_name_no_homonyms", 0.8
     elif by_pid or aff:
         r["dblp_candidates"] = [{"pid": c["pid"], "name": c["name"], "sim": round(name_similarity(r["name"], c["name"]), 2), "affil": c.get("affiliation", "")}
                                 for c in list(by_pid.values())[:6]] + [{"pid": a["pid"], "name": a["name"], "sim": 1.0, "affil": "; ".join(a["affiliations"])} for a in aff]
@@ -825,6 +832,18 @@ def main() -> None:
                 elif y is None and not pres.empty:
                     r["joined_after_year"] = int(pres[pres.snapshot_url.str.contains("/people/faculty")].year.max()
                                                  if pres.snapshot_url.str.contains("/people/faculty").any() else pres.year.max())
+            # now adjunct/emeritus/visiting/etc. but listed with a regular professor title earlier
+            if not pres.empty:
+                core_rows = pres[pres.designation_seen.str.contains("Professor", na=False)
+                                 & ~pres.designation_seen.str.contains("Adjunct|Visiting|Emeritus|Practice|Distinguished", na=False)]
+                for r in rows:
+                    if r["institution"] != inst or r.get("page_category") in ("regular", "", None):
+                        continue
+                    hit = core_rows[core_rows.name.map(lambda n: name_similarity(n, r["name"]) >= 0.9)]
+                    if len(hit):
+                        r["was_core_until"] = int(hit.year.max())
+                        r["was_core_from"] = int(hit.year.min())
+                        r["was_core_designation"] = hit.sort_values("year").designation_seen.iloc[-1]
             for f in wayback_names(inst, cur, pres):
                 d = f["designation_seen"]
                 former_rows.append({
@@ -843,6 +862,16 @@ def main() -> None:
     if presence_all:
         pd.concat(presence_all).to_csv(PROCESSED / "wayback_presence.csv", index=False)
     df = finalise(rows + former_rows)
+    # former core who stayed on in another role: analyse their core years as core faculty
+    for r in rows:
+        if r.get("was_core_until"):
+            fid = f"{r['institution']}:{normalise(r['name']).replace(' ', '_')}"
+            m = df.faculty_id.eq(fid)
+            now = df.loc[m, "designation_class"].iloc[0] if m.any() else ""
+            df.loc[m, ["designation_class", "is_core", "status", "leaving_year", "designation"]] = ["core", True, "former", r["was_core_until"], r["was_core_designation"]]
+            df.loc[m, "notes"] = (df.loc[m, "notes"] + f" | core ({r['was_core_designation']}) {r['was_core_from']}-{r['was_core_until']} per Wayback; now {now}").str.strip(" |")
+            review.append({"issue": "former_core_now_other_role", "institution": r["institution"], "name": r["name"],
+                           "detail": f"core {r['was_core_from']}-{r['was_core_until']}, now {now}", "evidence_url": "Wayback", "action": "confirm"})
     # former: designation unknown from generic snapshot parsing -> provisional class
     df.loc[df.status.eq("former") & df.designation_class.eq("other"), "designation_class"] = "former_unverified"
 

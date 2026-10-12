@@ -69,6 +69,7 @@ def name_similarity(a: str, b: str) -> float:
     short, long_ = (ta, tb) if len(ta) <= len(tb) else (tb, ta)
     used = [False] * len(long_)
     kinds = []
+    half_initial = 0
     # full tokens first (longest first) so initials don't steal their partners
     for t in sorted(short, key=len, reverse=True):
         best, best_kind = None, None
@@ -82,15 +83,21 @@ def name_similarity(a: str, b: str) -> float:
             return 0.0 if not kinds else round(0.5 * len(kinds) / len(short), 3)
         used[best] = True
         kinds.append(best_kind)
+        if best_kind == "initial" and (len(t) > 1) != (len(long_[best]) > 1):
+            half_initial += 1  # full given name on one side, only its initial on the other
     full_short = sum(1 for t in short if len(t) > 1)
     full_long = sum(1 for t in long_ if len(t) > 1)
-    full_matches = sum(1 for k in kinds if k in ("exact", "fuzzy"))
+    full_matches = sum(1 for k, t in zip(kinds, sorted(short, key=len, reverse=True)) if k in ("exact", "fuzzy") and len(t) > 1)
     if full_matches == 0:
         return 0.0
     if full_short >= 2 and full_long >= 2 and full_matches < 2:
         return 0.6
     extra_full = sum(1 for i, u in enumerate(long_) if not used[i] and len(u) > 1)
     score = 1.0 - 0.1 * extra_full - 0.05 * kinds.count("fuzzy")
+    # one side spells the given name in full, the other only has its initial, and only the
+    # surname matches in full: 'A. Kumar' fits every A-named Kumar, so it is weak evidence
+    if full_matches == 1 and half_initial >= 1:
+        score = min(score, 0.8)
     return round(max(0.0, min(1.0, score)), 3)
 
 

@@ -17,7 +17,7 @@ CS_LIKE = {"Computer Science", "Engineering", "Mathematics", "Decision Sciences"
 
 
 def oa_count(ids: list[str]) -> int:
-    res = oa_get("works", filter=f"author.id:{'|'.join(ids)},publication_year:{Y0}-{Y1},type:article|proceedings-article|book-chapter", **{"per-page": 1})
+    res = oa_get("works", filter=f"author.id:{'|'.join(ids)},publication_year:{Y0}-{Y1},type:article|conference-paper|book-chapter|review", **{"per-page": 1})
     return res.get("meta", {}).get("count", 0)
 
 
@@ -92,8 +92,12 @@ def main() -> None:
     L += [f"- {inc} faculty with topics far from their unit (computational biology/chemistry units excluded).", ""]
 
     # 5. shared ids
-    sh = acc.groupby("author_id").faculty_id.nunique()
-    L += ["## 5. Shared OpenAlex IDs", "", f"- IDs assigned to more than one faculty member: {int((sh > 1).sum())} {'OK' if (sh > 1).sum() == 0 else 'FIX'}", ""]
+    # the same person in both institutes' rosters (moved, or adjunct at the other) legitimately shares IDs
+    person = acc.faculty_id.map(lambda f: f.split(":", 1)[1])
+    sh = acc.assign(person=person).groupby("author_id").person.nunique()
+    moved = acc.assign(person=person).groupby("author_id").faculty_id.nunique()
+    L += ["## 5. Shared OpenAlex IDs", "", f"- IDs assigned to more than one different person: {int((sh > 1).sum())} {'OK' if (sh > 1).sum() == 0 else 'FIX'}",
+          f"- IDs shared by one person's records at both institutes (moved / adjunct): {int(((moved > 1) & (sh == 1)).sum())}", ""]
 
     # 6. affiliation timeline
     L += ["## 6. Affiliation before joining", ""]
@@ -109,6 +113,27 @@ def main() -> None:
             flags.append({"check": "affiliated_years_before_joining", "faculty": r.set_index('faculty_id').at[f, 'name'], "institution": f.split(":")[0],
                           "detail": f"joined {int(jy)} ({r.set_index('faculty_id').at[f, 'joining_year_source']}); institute-affiliated papers in {early}"})
     L += [f"- {n_early} faculty with institute-affiliated papers ≥ 3 distinct years before joining (often IIIT alumni who did their PhD there; listed in qa/checkpoint2_flags.csv).", ""]
+
+    # 7. former faculty really departed? (deferred from checkpoint 1: needs OpenAlex matches)
+    L += ["## 7. Former faculty — confirmed departures", "", "| Former faculty | Inst. | Left (approx.) | Source | OpenAlex last known institution | Verdict |", "|---|---|---|---|---|---|"]
+    fm = core[core.status.eq("former")]
+    moved = stayed = unknown = 0
+    for _, x in fm.iterrows():
+        g = c2[c2.faculty_id == x.faculty_id]
+        lk = "; ".join(sorted({s for s in g.last_known if s}))
+        own = "Hyderabad" if x.institution == "IIIT-H" else "Indraprastha"
+        if not lk:
+            v = "no OpenAlex match"
+            unknown += 1
+        elif own.lower() in lk.lower() and "information technology" in lk.lower():
+            v = "STILL AT INSTITUTE? check"
+            stayed += 1
+            flags.append({"check": "former_still_at_institute", "faculty": x["name"], "institution": x.institution, "detail": lk})
+        else:
+            v = "moved ✓"
+            moved += 1
+        L.append(f"| {x['name']} | {x.institution} | {x.leaving_year} | {x.roster_source} | {lk[:70]} | {v} |")
+    L += ["", f"Moved elsewhere: {moved}; still listing the institute: {stayed}; no OpenAlex match: {unknown}.", ""]
 
     (QA / "checkpoint2.md").write_text("\n".join(L))
     pd.DataFrame(flags).to_csv(QA / "checkpoint2_flags.csv", index=False)

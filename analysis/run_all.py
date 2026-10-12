@@ -60,11 +60,25 @@ def dump(name: str, obj) -> None:
 
 
 # ---------------------------------------------------------------------------- load
+QUARTILE_SOURCE = "scimago_sjr"
+
+
+def effective_quartile(df: pd.DataFrame) -> pd.DataFrame:
+    """Use Scimago SJR quartiles when they exist; otherwise the labelled OpenAlex proxy."""
+    global QUARTILE_SOURCE
+    if df.get("quartile", pd.Series(dtype=str)).fillna("").ne("").any():
+        QUARTILE_SOURCE = "scimago_sjr"
+    elif "quartile_proxy_openalex" in df:
+        QUARTILE_SOURCE = "openalex_proxy"
+        df = df.assign(quartile=df.quartile_proxy_openalex.fillna(""))
+    return df
+
+
 def load():
     roster = pd.read_csv(DATA / "faculty_roster.csv", dtype=str).fillna("")
     allp = pd.read_parquet(PROCESSED / "papers_enriched.parquet")
     links = pd.read_parquet(PROCESSED / "faculty_paper_links.parquet")
-    mp = pd.read_parquet(PROCESSED / "main_papers.parquet")
+    mp = effective_quartile(pd.read_parquet(PROCESSED / "main_papers.parquet"))
     ml = pd.read_parquet(PROCESSED / "main_links.parquet")
     an = pd.read_csv(PROCESSED / "authorship_network.csv")
     ic = pd.read_csv(PROCESSED / "indian_connections.csv")
@@ -511,6 +525,7 @@ def main() -> None:
     merge = json.loads((PROCESSED / "merge_report.json").read_text())
     dump("meta", {
         "collection_date": collection_date(), "year_start": Y0, "year_end": Y1, "partial_year": YP,
+        "quartile_source": QUARTILE_SOURCE,
         "qa_rows": qa_rows + [{"metric": "fuzzy_title_threshold", "value": merge["fuzzy_threshold_used"]},
                               {"metric": "overmerge_filtered_links", "value": merge["overmerge_filtered"]}],
         "sources": [

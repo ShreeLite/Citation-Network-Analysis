@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { INSTS } from "../data";
+import { INSTS, meta } from "../data";
 import { useFilters } from "../filters";
 import { ChartCard, cssVar, fmt, instColor, Kpi, pct } from "../components/ui";
 import { quality } from "./Overview";
@@ -41,7 +41,7 @@ export default function Venues() {
         ])}
       </div>
       <div className="grid lg:grid-cols-2 gap-4">
-        <ChartCard title="Journal quartiles" caption="Share of each institute's journal papers in Scimago Q1–Q4 (unranked shown in the table)." deps={[by]}
+        <ChartCard title={meta.quartile_source === "openalex_proxy" ? "Journal quartiles (proxy)" : "Journal quartiles"} caption={meta.quartile_source === "openalex_proxy" ? "PROXY: quartile of each journal's OpenAlex 2-year mean citedness within its field — Scimago SJR files were not available at build time." : "Share of each institute's journal papers in Scimago Q1–Q4 (unranked shown in the table)."} deps={[by]}
           method="Scimago SJR best quartile across the journal's subject categories, for the paper's publication year (nearest available year when missing). Joined by print or electronic ISSN."
           option={shareOpt(QS, "qd", "nJ")}
           table={() => ({ columns: ["institute", ...QS, "unranked", "journal papers"], rows: insts.map((i) => [i, ...by[i].qd, by[i].unJ, by[i].nJ]) })} />

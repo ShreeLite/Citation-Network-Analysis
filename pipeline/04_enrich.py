@@ -72,7 +72,9 @@ def decide_type(row, w) -> tuple[str, str]:
         votes.append(("dblp", row.dblp_type))
     src = ((w or {}).get("primary_location") or {}).get("source") or {}
     st, wt = src.get("type"), (w or {}).get("type")
-    if st == "journal" and wt in ("article", "review", None):
+    if wt == "conference-paper":
+        votes.append(("openalex", "conference"))
+    elif st == "journal" and wt in ("article", "review", None):
         votes.append(("openalex", "journal"))
     elif st == "conference" or (st == "book series" and re.search(r"lecture notes|proceedings|ceur|pmlr|lipics", (src.get("display_name") or ""), re.I)):
         votes.append(("openalex", "conference"))

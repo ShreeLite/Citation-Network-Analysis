@@ -1,0 +1,71 @@
+check,faculty,institution,detail
+unmatched,Acushla Saraswat,IIIT-D,no OpenAlex candidate with a similar name
+unmatched,Anuj Kumar,IIIT-D,"best candidate Anuj Kumar (A5148062652, conf 0.4, fuzzy_name_only, works 2)"
+unmatched,Ashok K. Mittal,IIIT-D,"best candidate Ansh Mittal (A5041245919, conf 0.4, fuzzy_name_only, works 8)"
+unmatched,Ashwin Srinivasan,IIIT-D,"best candidate Ashwin Srinivasan (A5103083219, conf 0.65, fuzzy_name+institution, works 145)"
+unmatched,K.K. Biswas,IIIT-D,"best candidate Koushik Biswas (A5010852509, conf 0.65, fuzzy_name+institution, works 63)"
+unmatched,Nikhil Gupta,IIIT-D,"best candidate Nikhil Gupta (A5101584977, conf 0.4, fuzzy_name_only, works 36)"
+unmatched,Prahllad Deb,IIIT-D,"best candidate Prahllad Deb (A5001680567, conf 0.4, fuzzy_name_only, works 10)"
+unmatched,Pydi Ganga Mamba Bahubalindruni,IIIT-D,"best candidate Pydi Ganga Bahubalindruni (A5072984355, conf 0.65, fuzzy_name+institution, works 95)"
+unmatched,Raj Ayyar,IIIT-D,"best candidate Raj Ayyar (A5092263205, conf 0.4, fuzzy_name_only, works 1)"
+unmatched,Shireen Mirza,IIIT-D,"best candidate Shireen Mirza (A5047286275, conf 0.4, fuzzy_name_only, works 3)"
+unmatched,Somitra Kr. Sanadhya,IIIT-D,"best candidate Somitra Kumar Sanadhya (A5015932261, conf 0.65, fuzzy_name+institution, works 109)"
+unmatched,Timothy Scott Moyers Jr,IIIT-D,no OpenAlex candidate with a similar name
+unmatched,Indrani De Parker,IIIT-D,"best candidate Indrani De Parker (A5009213571, conf 0.4, fuzzy_name_only, works 3)"
+unmatched,Manohar Khushalani,IIIT-D,no OpenAlex candidate with a similar name
+unmatched,Samaresh Chatterji,IIIT-D,no OpenAlex candidate with a similar name
+unmatched,Abdul Rehaman Moughal Shahi,IIIT-H,"best candidate Abdul Rehaman Moughal Shahi (A5024107851, conf 0.4, fuzzy_name_only, works 16)"
+unmatched,Acharya Nand Kishore,IIIT-H,"best candidate Nand Kishore Acharya (A5057370058, conf 0.4, fuzzy_name_only, works 14)"
+unmatched,Angarika Rakshit,IIIT-H,"best candidate Angarika Rakshit (A5118641999, conf 0.4, fuzzy_name_only, works 2)"
+unmatched,Don Wallace Freeman Dcruz,IIIT-H,"best candidate Don Dcruz (A5079318207, conf 0.4, fuzzy_name_only, works 7)"
+unmatched,Isha Dubey,IIIT-H,"best candidate Isha Dubey (A5130383779, conf 0.8, dblp_doi_overlap, works 2)"
+unmatched,Kaul C. N.,IIIT-H,"best candidate N-C Kaul (A5010864513, conf 0.4, fuzzy_name_only, works 1)"
+unmatched,Khaliq Parkar,IIIT-H,"best candidate Khaliq Parkar (A5040304786, conf 0.4, fuzzy_name_only, works 10)"
+unmatched,Kishore S Prahallad,IIIT-H,"best candidate Kishore Prahallad (A5113522207, conf 0.65, fuzzy_name+institution, works 58)"
+unmatched,Pawan Kumar,IIIT-H,"best candidate Pawan Kumar (A5147428670, conf 0.88, name+last_known_institution, works 1)"
+unmatched,Rakesh Kiran Chand Thumaty,IIIT-H,"best candidate Kiran Chand Thumaty (A5058930167, conf 0.65, fuzzy_name+institution, works 17)"
+unmatched,Rambabu Kalla,IIIT-H,"best candidate Rambabu Kalla (A5026178435, conf 0.4, fuzzy_name_only, works 5)"
+unmatched,Rao P. R. K,IIIT-H,"best candidate P Raghuveer Rao (A5123879159, conf 0.65, fuzzy_name+institution, works 4)"
+unmatched,Semparithi Aravindan,IIIT-H,"best candidate Aravindan Semparithi (A5063171932, conf 0.4, fuzzy_name_only, works 5)"
+unmatched,Vijaya Sankara Rao P.,IIIT-H,"best candidate P. Vijaya Sankara Rao (A5068595559, conf 0.65, fuzzy_name+institution, works 15)"
+unmatched,Viswanath K,IIIT-H,"best candidate Kapinaiah Viswanath (A5040760446, conf 0.8, dblp_doi_overlap, works 35)"
+count_vs_dblp,Richa Singh,IIIT-D,DBLP 258 vs OpenAlex 404
+count_vs_dblp,Kuldeep Ramchandra Kurte,IIIT-H,DBLP 26 vs OpenAlex 51
+count_vs_dblp,Priyesh Shukla,IIIT-H,DBLP 13 vs OpenAlex 18
+count_vs_dblp,Manohar Kumar,IIIT-D,DBLP 5 vs OpenAlex 19
+topic_incoherent,Anindita Das,IIIT-D,unit ; topics ['Smart Agriculture and AI']
+topic_incoherent,Chetan Arora,IIIT-D,unit CSE; topics ['AI in cancer detection']
+topic_incoherent,Dhruv Kumar,IIIT-D,"unit CSE; topics ['Fiber-reinforced polymer composites', 'Cancer, Hypoxia, and Metabolism', 'Head and Neck Cancer Studies']"
+topic_incoherent,J. V. Meenakshi,IIIT-D,"unit SSH; topics ['Economics of Agriculture and Food Markets', 'Agricultural Innovations and Practices', 'Agricultural Economics and Practices']"
+topic_incoherent,Rajesh Kumar,IIIT-D,"unit HCD; topics ['Lung Cancer Research Studies', 'Lung Cancer Treatments and Mutations', 'PARP inhibition in cancer therapy']"
+topic_incoherent,Satish Kumar Pandey,IIIT-D,unit MATH; topics ['Agricultural Science and Fertilization']
+topic_incoherent,Subhashree Mohapatra,IIIT-D,unit MATH; topics ['AI in cancer detection']
+topic_incoherent,Abhijit Mitra,IIIT-H,unit ; topics ['DNA and Nucleic Acid Chemistry']
+topic_incoherent,Anirban Dasgupta,IIIT-H,"unit HSRC; topics ['Agriculture, Land Use, Rural Development']"
+topic_incoherent,Anshu Sarje,IIIT-H,unit CVEST; topics ['Analytical Chemistry and Sensors']
+topic_incoherent,Arjun Rajasekar,IIIT-H,unit RCTS; topics ['COVID-19 Clinical Research Studies']
+topic_incoherent,Rama Chandra Prasad P,IIIT-H,unit LSI; topics ['Remote Sensing in Agriculture']
+topic_incoherent,Syed Azeemuddin,IIIT-H,unit ; topics ['Remote Sensing in Agriculture']
+affiliated_years_before_joining,Bijoy Chand Chatterjee,IIIT-D,"joined 2025 (inferred_first_affiliated_paper); institute-affiliated papers in [2017, 2018, 2021, 2022]"
+affiliated_years_before_joining,G.P.S. Raghava,IIIT-D,"joined 2017 (stated_homepage); institute-affiliated papers in [2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015]"
+affiliated_years_before_joining,Rajesh Kumar,IIIT-D,"joined 2025 (wayback_absent_until); institute-affiliated papers in [2018, 2019, 2020, 2021, 2022]"
+affiliated_years_before_joining,Abhishek Srivastava,IIIT-H,"joined 2026 (stated_homepage); institute-affiliated papers in [2021, 2022, 2023, 2024]"
+affiliated_years_before_joining,Lini Teresa Thomas,IIIT-H,"joined 2019 (wayback_first_listed); institute-affiliated papers in [2006, 2010, 2015]"
+affiliated_years_before_joining,Manish Gupta,IIIT-H,"joined 2025 (inferred_first_affiliated_paper); institute-affiliated papers in [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]"
+former_still_at_institute,Aman Parnami,IIIT-D,Indraprastha Institute of Information Technology Delhi
+former_still_at_institute,Dhruv Kumar,IIIT-D,"Amrita Vishwa Vidyapeetham; Birla Institute of Technology and Science, Pilani; Indraprastha Institute of Information Technology Delhi; Birla Institute of Technology and Science, Pilani; Indraprastha Institute of Information Technology Delhi; Chitkara University; National Institute of Technology Agartala; Birla Institute of Technology and Science, Pilani; University of Petroleum and Energy Studies; Visvesvaraya Technological University"
+former_still_at_institute,Donghoon Chang,IIIT-D,Indraprastha Institute of Information Technology Delhi; National Institute of Standards and Technology; National Institute of Science and Technology
+former_still_at_institute,G.S. Visweswaran,IIIT-D,Indraprastha Institute of Information Technology Delhi
+former_still_at_institute,Payel C Mukherjee,IIIT-D,Indraprastha Institute of Information Technology Delhi
+former_still_at_institute,Samrith Ram,IIIT-D,Indraprastha Institute of Information Technology Delhi; University of British Columbia
+former_still_at_institute,Swapna Purandare,IIIT-D,Indraprastha Institute of Information Technology Delhi
+former_still_at_institute,Tammam Tillo,IIIT-D,Indraprastha Institute of Information Technology Delhi; Taiyuan University of Science and Technology
+former_still_at_institute,Tanmoy Chakraborty,IIIT-D,Defence Research and Development Organisation; Indian Institute of Art & Design; Indian Institute of Art & Design; Indian Institute of Technology Delhi; Indian Institute of Art & Design; Indian Institute of Technology Delhi Abu Dhabi; Indian Institute of Technology Delhi; Indian Institute of Technology Delhi; Indian Institute of Technology Delhi Abu Dhabi; Indian Institute of Technology Delhi; Virginia Tech; Indraprastha Institute of Information Technology Delhi
+former_still_at_institute,Lavanya Ramapantulu,IIIT-H,"International Institute of Information Technology, Hyderabad"
+former_still_at_institute,Nagamanikandan Govindan,IIIT-H,"Indian Institute of Information Technology, Design and Manufacturing, Kancheepuram; International Institute of Information Technology, Hyderabad"
+former_still_at_institute,Navjyoti Singh,IIIT-H,"International Institute of Information Technology, Hyderabad"
+former_still_at_institute,Ram Murthy Garimella,IIIT-H,"International Institute of Information Technology, Hyderabad; Mahindra University"
+former_still_at_institute,Soma Paul,IIIT-H,"Indian Institute of Technology BHU; International Institute of Information Technology, Hyderabad"
+former_still_at_institute,Srivatsava Jandhyala,IIIT-H,"International Institute of Information Technology, Hyderabad"
+former_still_at_institute,Suryakanth V. Gangashetty,IIIT-H,"International Institute of Information Technology, Hyderabad; International Institute of Information Technology, Hyderabad; Koneru Lakshmaiah Education Foundation"
+former_still_at_institute,Vishal Garg,IIIT-H,"Lawrence Berkeley National Laboratory; International Institute of Information Technology, Hyderabad; Plaksha University; Plaksha University; International Institute of Information Technology, Hyderabad"

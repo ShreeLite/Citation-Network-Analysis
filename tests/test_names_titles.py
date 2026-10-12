@@ -14,7 +14,8 @@ def test_reordered_south_indian_names():
 
 def test_initials_vs_full():
     assert name_similarity("C. V. Jawahar", "C V Jawahar") >= 0.95
-    assert name_similarity("Vineet Gandhi", "V. Gandhi") >= 0.85
+    assert 0.75 <= name_similarity("Vineet Gandhi", "V. Gandhi") <= 0.8  # initial-only given name: weak
+    assert name_similarity("Anuj Kumar", "A. Kumar") <= 0.8
     assert name_similarity("Vikram Pudi", "Vineet Gandhi") < 0.5
 
 
@@ -27,6 +28,10 @@ def test_dropped_middle_name_and_spelling_variant():
 def test_distinct_people_with_overlapping_tokens():
     assert name_similarity("Prasad Krishnan", "Krishna Reddy P") < 0.7
     assert name_similarity("Raghu Babu Reddy Y.", "Y. Raghu Reddy") >= 0.85
+
+
+def test_matching_initials_are_not_a_full_match():
+    assert name_similarity("K S Rajan", "K. Srinathan") < 0.5
 
 
 def test_different_people_same_surname():
