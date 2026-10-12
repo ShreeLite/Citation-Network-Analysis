@@ -72,6 +72,48 @@ def oa_paginate(path: str, filter: str, select: str | None = None, **extra) -> I
             break
 
 
+_budget_gone = False
+
+
+def oa_singleton(entity: str, ident: str, select: str | None = None) -> dict | None:
+    """GET /<entity>/<ident> (ident may be 'W123', 'doi:10.x/y', 'orcid:0000-...').
+    Singleton requests cost 0 credits. Returns None on 404."""
+    from .http import PermanentHTTPError
+    try:
+        return oa_get(f"{entity}/{ident}", **({"select": select} if select else {}))
+    except PermanentHTTPError as e:
+        if e.status == 404:
+            return None
+        raise
+
+
+def oa_lookup(entity: str, filter_key: str, values: list[str], select: str | None = None,
+              batch: int = OA_MAX_OR, singleton_prefix: str = "") -> list[dict]:
+    """Fetch many entities by an ID-like filter. Uses OR-batched list calls (1 credit per
+    `batch` values); once the daily budget is exhausted, continues with free singleton calls
+    (`/<entity>/<singleton_prefix><value>`) so the step still completes."""
+    from .http import BudgetExhausted
+    global _budget_gone
+    out, vals = [], sorted(set(v for v in values if v))
+    i = 0
+    while i < len(vals) and not _budget_gone:
+        ch = vals[i : i + batch]
+        try:
+            res = oa_get(entity, filter=f"{filter_key}:" + "|".join(ch), **{"per-page": OA_MAX_PER_PAGE},
+                         **({"select": select} if select else {}))
+        except BudgetExhausted:
+            log.warning("OpenAlex list budget exhausted; switching to free singleton lookups")
+            _budget_gone = True
+            break
+        out += res.get("results", [])
+        i += batch
+    for v in vals[i:]:
+        r = oa_singleton(entity, f"{singleton_prefix}{v}", select)
+        if r:
+            out.append(r)
+    return out
+
+
 def chunks(seq, n: int):
     seq = list(seq)
     for i in range(0, len(seq), n):

@@ -28,7 +28,7 @@ from tqdm import tqdm
 from common.config import DATA, PROCESSED, REVIEW, cfg, setup_logging
 from common.dblp_parse import person_publications
 from common.names import name_similarity, normalise, surname_like, tokens
-from common.sources import OA_MAX_OR, chunks, oa_get, oa_paginate, ror, short_id
+from common.sources import oa_get, oa_lookup, oa_paginate, ror, short_id
 
 log = setup_logging("02_identity")
 Y0, Y1 = cfg()["years"]["start"], cfg()["years"]["end"]
@@ -91,30 +91,20 @@ def institution_pool(inst_ids: list[str]) -> dict[str, dict]:
 
 
 def fetch_authors(ids: list[str]) -> dict[str, dict]:
-    out = {}
-    for ch in chunks(sorted(set(ids)), OA_MAX_OR):
-        res = oa_get("authors", filter="ids.openalex:" + "|".join(ch), select=AUTHOR_SELECT, **{"per-page": 100})
-        for a in res.get("results", []):
-            out[short_id(a["id"])] = a
-    return out
+    return {short_id(a["id"]): a for a in oa_lookup("authors", "ids.openalex", ids, AUTHOR_SELECT)}
 
 
 def authors_by_orcid(orcids: list[str]) -> dict[str, list[str]]:
     out = defaultdict(list)
-    for ch in chunks(sorted(set(orcids)), OA_MAX_OR):
-        res = oa_get("authors", filter="orcid:" + "|".join(ch), select="id,orcid", **{"per-page": 100})
-        for a in res.get("results", []):
-            o = (a.get("orcid") or "").rsplit("/", 1)[-1].upper()
-            out[o].append(short_id(a["id"]))
+    for a in oa_lookup("authors", "orcid", orcids, "id,orcid", singleton_prefix="orcid:"):
+        o = (a.get("orcid") or "").rsplit("/", 1)[-1].upper()
+        out[o].append(short_id(a["id"]))
     return out
 
 
 def works_by_doi(dois: list[str]) -> list[dict]:
-    out = []
-    for ch in chunks(sorted(set(dois)), 50):  # DOI strings are long; keep URL size sane
-        res = oa_get("works", filter="doi:" + "|".join(ch), select="id,doi,authorships", **{"per-page": 100})
-        out += res.get("results", [])
-    return out
+    # DOI strings are long: 50 per call keeps the URL a sane size
+    return oa_lookup("works", "doi", dois, "id,doi,authorships", batch=50, singleton_prefix="doi:")
 
 
 # ---------------------------------------------------------------------- scoring

@@ -2,7 +2,7 @@
 PY := .venv/bin/python
 export PYTHONPATH := $(CURDIR)
 
-.PHONY: setup roster identity reingest pubs enrich networks qa analysis deliverables site all test clean-processed
+.PHONY: core scimago setup roster identity reingest pubs enrich networks qa analysis deliverables site all test clean-processed
 
 setup:
 	python3 -m venv .venv
@@ -28,3 +28,7 @@ test:
 
 clean-processed:   # keeps the download cache
 	rm -rf data/processed/*
+
+core:          # run this yourself: CORE's robots.txt disallows AI agents
+	$(PY) scripts/download_core.py
+scimago:       ; $(PY) -m pipeline.00_scimago

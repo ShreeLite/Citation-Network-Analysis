@@ -45,3 +45,9 @@ rate_limits:                      # seconds between requests per source
   ror: 0.5
   wayback: 1.5
   web: 2.5
+
+# Hosts that answer 403 to scripts but whose robots.txt allows us; the user confirmed
+# institutional permission (2026-10-12) to fetch them with a real browser (Playwright).
+# Never add a host whose robots.txt disallows us (e.g. portal.core.edu.au bans AI agents;
+# use `make core`, which you run yourself).
+browser_allowed_hosts: [www.scimagojr.com, scimagojr.com, iiit.irins.org, iiitd.irins.org]

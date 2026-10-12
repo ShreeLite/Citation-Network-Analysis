@@ -71,11 +71,13 @@ def _log_request(entry: dict) -> None:
         f.write(json.dumps(entry) + "\n")
 
 
-def cache_key(url: str, params: dict | None, data: dict | None = None) -> str:
+def cache_key(url: str, params: dict | None, data: dict | None = None, json_body=None) -> str:
     clean = {k: v for k, v in (params or {}).items() if k not in SECRET_PARAMS}
     full = url + ("?" + urlencode(sorted(clean.items()), doseq=True) if clean else "")
     if data is not None:  # POST: body is part of the identity of the request
         full = "POST " + full + " " + urlencode(sorted(data.items()), doseq=True)
+    if json_body is not None:
+        full = "POSTJSON " + full + " " + json.dumps(json_body, sort_keys=True)
     return hashlib.sha1(full.encode()).hexdigest()
 
 
@@ -118,12 +120,16 @@ class Fetcher:
         body, meta = self._paths(cache_key(url, params), ext)
         return meta.exists()
 
-    def _session_get(self, url: str, data: dict | None = None, **kw) -> requests.Response:
+    def _session_get(self, url: str, data: dict | None = None, json_body=None, **kw) -> requests.Response:
         """GET (or POST when `data` is given) that repairs incomplete TLS chains once per
         host (never verify=False)."""
         host = urlparse(url).netloc.split(":")[0]
-        call = (lambda: self.session.post(url, data=data, timeout=self.timeout, **kw)) if data is not None \
-            else (lambda: self.session.get(url, timeout=self.timeout, **kw))
+        if json_body is not None:
+            call = lambda: self.session.post(url, json=json_body, timeout=self.timeout, **kw)  # noqa: E731
+        elif data is not None:
+            call = lambda: self.session.post(url, data=data, timeout=self.timeout, **kw)  # noqa: E731
+        else:
+            call = lambda: self.session.get(url, timeout=self.timeout, **kw)  # noqa: E731
         try:
             return call()
         except requests.exceptions.SSLError:
@@ -167,10 +173,10 @@ class Fetcher:
         stop=stop_after_attempt(7),
         reraise=True,
     )
-    def _fetch(self, url: str, params: dict, headers: dict | None, data: dict | None = None) -> requests.Response:
+    def _fetch(self, url: str, params: dict, headers: dict | None, data: dict | None = None, json_body=None) -> requests.Response:
         host = urlparse(url).netloc
         self._host_limiters.get(host, self.limiter).wait()
-        r = self._session_get(url, data=data, params=params, headers=headers)
+        r = self._session_get(url, data=data, json_body=json_body, params=params, headers=headers)
         if r.status_code == 429:
             body = r.text[:500]
             if self.source == "openalex" and ("budget" in body.lower() or "Insufficient" in body):
@@ -195,12 +201,13 @@ class Fetcher:
         headers: dict | None = None,
         use_cache: bool = True,
         data: dict | None = None,
+        json_body=None,
     ):
         """Return parsed JSON (ext=json), str (html/xml/txt/csv) or bytes (bin).
         Pass `data` for a form POST (read-only search endpoints only).
         Raises PermanentHTTPError for 4xx (also cached, so it is not re-requested)."""
         params = dict(params or {})
-        key = cache_key(url, params, data)
+        key = cache_key(url, params, data, json_body)
         body_p, meta_p = self._paths(key, ext)
         if use_cache and meta_p.exists():
             meta = json.loads(meta_p.read_text())
@@ -214,14 +221,14 @@ class Fetcher:
 
         full_params = {**self.default_params, **params}
         t0 = time.time()
-        r = self._fetch(url, full_params, headers, data)
+        r = self._fetch(url, full_params, headers, data, json_body)
         self.stats["miss"] += 1
         entry = {
             "ts": time.strftime("%Y-%m-%dT%H:%M:%S"),
             "source": self.source,
             "url": url,
             "params": {k: v for k, v in params.items() if k not in SECRET_PARAMS},
-            "method": "POST" if data is not None else "GET",
+            "method": "POST" if (data is not None or json_body is not None) else "GET",
             "status": r.status_code,
             "secs": round(time.time() - t0, 2),
             "credits_remaining": r.headers.get("x-ratelimit-remaining"),

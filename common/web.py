@@ -37,6 +37,9 @@ def fetch_html(url: str, render_if_empty: bool = True) -> str | None:
     try:
         html = web().get(url, ext="html")
     except PermanentHTTPError as e:
+        if e.status == 403 and urlparse(url).netloc in cfg().get("browser_allowed_hosts", []):
+            log.info("403 for %s; host is browser-allowed (user permission) -> rendering", url)
+            return render(url)
         log.info("skip %s (%s)", url, e)
         return None
     except Exception as e:  # network failure after retries: logged, caller decides

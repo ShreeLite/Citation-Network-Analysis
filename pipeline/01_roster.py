@@ -584,13 +584,9 @@ IRINS_HOSTS = {"IIIT-H": "https://iiit.irins.org/", "IIIT-D": "https://iiitd.iri
 
 def irins_names(inst: str) -> list[str] | None:
     base = IRINS_HOSTS[inst]
-    # IRINS answers 403 to automated clients; we do not work around access blocks with a
-    # headless browser. If blocked, the cross-check is reported as unavailable.
-    try:
-        html = web().get(base + "faculty/index/", ext="html")
-    except Exception as e:
-        log.info("IRINS fetch blocked/unavailable for %s: %s", inst, e)
-        html = None
+    # IRINS answers 403 to plain scripts; fetch_html renders it in a browser because the host is
+    # in config browser_allowed_hosts (robots.txt allows us; user has institutional permission).
+    html = fetch_html(base + "faculty/index/", render_if_empty=True)
     if not html:
         return None
     names = [" ".join(a.get_text(" ").split()) for a in soup(html).select("a[href*='profile/']")]

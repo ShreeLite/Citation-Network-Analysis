@@ -47,6 +47,23 @@ def _aia_issuer_urls(cert: x509.Certificate) -> list[str]:
     ]
 
 
+def _parse_any(data: bytes) -> x509.Certificate | None:
+    """AIA URLs serve DER, PEM or PKCS#7 (.p7c)."""
+    from cryptography.hazmat.primitives.serialization import pkcs7
+    for load in (x509.load_der_x509_certificate, x509.load_pem_x509_certificate):
+        try:
+            return load(data)
+        except ValueError:
+            pass
+    for load in (pkcs7.load_der_pkcs7_certificates, pkcs7.load_pem_pkcs7_certificates):
+        try:
+            certs = load(data)
+            return certs[0] if certs else None
+        except ValueError:
+            pass
+    return None
+
+
 def repair_chain(host: str) -> str:
     """Fetch missing intermediates for `host`; return a CA bundle path to verify against."""
     cert = _leaf_cert(host)
@@ -57,10 +74,9 @@ def repair_chain(host: str) -> str:
             break
         r = requests.get(urls[0], timeout=30)
         r.raise_for_status()
-        try:
-            cert = x509.load_der_x509_certificate(r.content)
-        except ValueError:
-            cert = x509.load_pem_x509_certificate(r.content)
+        cert = _parse_any(r.content)
+        if cert is None:  # e.g. a .p7c with nothing usable: the issuer is already a trusted root
+            break
         pems.append(cert.public_bytes(Encoding.PEM).decode())
         if cert.issuer == cert.subject:
             break

@@ -25,7 +25,7 @@ from common.dblp_parse import person_publications
 from common.dedup import cluster, tune_threshold
 from common.iiith_portal import all_publications as portal_publications
 from common.names import name_similarity
-from common.sources import OA_MAX_OR, chunks, crossref, oa_get, oa_paginate, short_id
+from common.sources import OA_MAX_OR, chunks, crossref, oa_lookup, oa_paginate, short_id
 from common.titles import is_arxiv_doi, normalise_doi, normalise_title
 
 log = setup_logging("03_publications")
@@ -71,12 +71,7 @@ def oa_is_preprint(w: dict) -> bool:
 
 
 def works_by_dois(dois: list[str]) -> dict[str, dict]:
-    out = {}
-    for ch in chunks(sorted(set(dois)), 50):
-        res = oa_get("works", filter="doi:" + "|".join(ch), **{"per-page": 100})
-        for w in res.get("results", []):
-            out[short_id(w["id"])] = w
-    return out
+    return {short_id(w["id"]): w for w in oa_lookup("works", "doi", dois, batch=50, singleton_prefix="doi:")}
 
 
 # ------------------------------------------------------------------ Crossref DOI discovery
