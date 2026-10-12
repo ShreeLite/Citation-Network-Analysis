@@ -60,11 +60,29 @@ def parse_cards(html: str) -> list[dict]:
             "acronym": acronym,
             "year": year,
             "core_rank_portal": core,
-            "portal_type": {"inproceedings": "conference", "article": "journal"}.get(entry, entry or ""),
+            "bibtex_entry": entry,
             "doi": doi,
             "link": doi_link,
         })
     return out
+
+
+def journal_titles() -> set[str]:
+    """Normalised titles the portal itself classifies as 'Journal Paper' (its BibTeX entry type
+    is @inproceedings for everything, so the filter is the only reliable type signal)."""
+    from .titles import normalise_title
+    data = {"page": "1", "ajax": "1", **FORM, "sconftype": "Journal Paper"}
+    first = web().get(URL, ext="json", data=data, headers={"X-Requested-With": "XMLHttpRequest"})
+    m = re.search(r"\((\s*\d+\s*)\)", re.sub(r"<[^>]+>", " ", first.get("countHTML", "")))
+    n_pages = (int(m.group(1)) + 9) // 10 if m else 1
+    titles = {normalise_title(c["title"]) for c in parse_cards(first.get("cards", ""))}
+    for n in tqdm(range(2, n_pages + 1), desc="IIIT-H portal journal pages"):
+        try:
+            page = web().get(URL, ext="json", data={**data, "page": str(n)}, headers={"X-Requested-With": "XMLHttpRequest"})
+            titles |= {normalise_title(c["title"]) for c in parse_cards(page.get("cards", ""))}
+        except Exception as e:
+            log.warning("portal journal page %d failed: %s", n, e)
+    return titles
 
 
 def all_publications() -> list[dict]:
@@ -80,5 +98,9 @@ def all_publications() -> list[dict]:
             recs += parse_cards(_page(n).get("cards", ""))
         except Exception as e:
             log.warning("portal page %d failed: %s", n, e)
-    log.info("IIIT-H portal: %d records (reported total %d)", len(recs), total)
+    jt = journal_titles()
+    from .titles import normalise_title
+    for rec in recs:
+        rec["portal_type"] = "journal" if normalise_title(rec["title"]) in jt else ""
+    log.info("IIIT-H portal: %d records (reported total %d), %d typed journal", len(recs), total, sum(r["portal_type"] == "journal" for r in recs))
     return recs

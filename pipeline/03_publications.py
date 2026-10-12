@@ -21,7 +21,7 @@ from rapidfuzz import fuzz
 from tqdm import tqdm
 
 from common.config import DATA, PROCESSED, REVIEW, cfg, collection_date, setup_logging
-from common.dblp_parse import person_publications
+from common.dblp_parse import person_publications, prefetch
 from common.dedup import cluster, tune_threshold
 from common.iiith_portal import all_publications as portal_publications
 from common.names import name_similarity
@@ -120,6 +120,7 @@ def main() -> None:
 
     # DBLP records
     dblp_recs = {}
+    prefetch(fac[fac.dblp_pid.ne("")].dblp_pid.tolist())
     for f in tqdm(fac[fac.dblp_pid.ne("")].itertuples(), desc="DBLP"):
         try:
             dp = person_publications(f.dblp_pid)

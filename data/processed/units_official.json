@@ -1,0 +1,37 @@
+{
+ "IIIT-H": {
+  "KCIS": "Kohli Center on Intelligent Systems",
+  "SPCRC": "Signal Processing and Communication Research Center",
+  "DSAC": "Data Sciences and Analytics Center",
+  "LTRC": "Language Technologies Research Center",
+  "RRC": "Robotics Research Center",
+  "CSTAR": "Center for Security, Theory and Algorithmic Research",
+  "SERC": "Software Engineering Research Centre",
+  "CVIT": "Center for Visual Information Technology",
+  "CVEST": "Center for VLSI and Embedded System Technologies",
+  "CSG": "Computer Systems Group",
+  "MLL": "Machine Learning Lab",
+  "CQST": "Centre for Quantum Science and Technology",
+  "CSL": "Cognitive Science Lab",
+  "CCNSB": "Center for Computational Natural Sciences and Bioinformatics",
+  "EERC": "Earthquake Engineering Research Center",
+  "HSRC": "Human Sciences Research Centre",
+  "LSI": "Lab for Spatial Informatics",
+  "BMRC": "Biomedical Research Center",
+  "CIE": "Center for Innovation and Entrepreneurship",
+  "SCRC": "Smart City Research Centre",
+  "INAI": "Research Centre",
+  "RCTS": "Raj Reddy Center for Technology and Society",
+  "CDiTH": "Centre for Digital Technologies in Healthcare",
+  "CMC": "Cyber Manthan Center",
+  "CETLS": "Centre for Educational Technology and Learning Sciences"
+ },
+ "IIIT-D": {
+  "CSE": "Computer Science & Engineering",
+  "ECE": "Electronics & Communications Engineering",
+  "CB": "Computational Biology",
+  "HCD": "Human-Centered Design",
+  "MATH": "Mathematics",
+  "SSH": "Social Sciences & Humanities"
+ }
+}

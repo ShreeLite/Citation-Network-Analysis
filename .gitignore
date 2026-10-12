@@ -11,3 +11,4 @@ site/dist/
 data/raw/logs/
 data/external/ca_bundle_with_intermediates.pem
 data/external/extra_intermediates.pem
+site/public/*.zip

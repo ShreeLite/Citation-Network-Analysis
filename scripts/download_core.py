@@ -11,12 +11,13 @@ from __future__ import annotations
 
 import sys
 import time
-import urllib.robotparser
 from pathlib import Path
 
 import requests
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+from common.robots import Robots  # noqa: E402  (RFC 9309 longest-match semantics)
 OUT = ROOT / "data" / "external" / "core"
 UA = "DPCN-Group9-IIIT research mapping (mailto:krisjainhzb@gmail.com)"
 BASE = "https://portal.core.edu.au/conf-ranks/"
@@ -25,8 +26,7 @@ EDITIONS = ["CORE2023", "CORE2021", "CORE2020", "CORE2018", "CORE2017", "CORE201
 
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
-    rp = urllib.robotparser.RobotFileParser("https://portal.core.edu.au/robots.txt")
-    rp.read()
+    rp = Robots(requests.get("https://portal.core.edu.au/robots.txt", headers={"User-Agent": UA}, timeout=60).text)
     url0 = f"{BASE}?search=&by=all&source=CORE2023&sort=arank&page=1&do=Export"
     if not rp.can_fetch(UA, url0):
         sys.exit("robots.txt disallows this client for the export path; download manually from the portal instead.")

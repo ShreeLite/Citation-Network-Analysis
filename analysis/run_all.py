@@ -407,6 +407,15 @@ def finding5(core, ml, mp):
     return {"by_year": yrs, "pooled_year_normalised": pooled, "years_cross_higher": years_cross_wins, "years_compared": years_compared}
 
 
+def in_post(r, y: int) -> bool:
+    jy = pd.to_numeric(r.get("joining_year"), errors="coerce")
+    jb = pd.to_numeric(r.get("joined_by_year"), errors="coerce")
+    start = jy if pd.notna(jy) else (jb if pd.notna(jb) else -1)
+    ly = pd.to_numeric(r.get("leaving_year"), errors="coerce")
+    end = ly if (r.get("status") == "former" and pd.notna(ly)) else 9999
+    return start <= y <= end
+
+
 def finding6(core, ml, mp, G_inst):
     cit = mp.set_index("paper_id").citations.fillna(0).to_dict()
     yr = mp.set_index("paper_id").year.astype(int).to_dict()
@@ -416,9 +425,11 @@ def finding6(core, ml, mp, G_inst):
         lk = ml[ml.faculty_id.isin(fac)].copy()
         lk["year"] = lk.paper_id.map(yr)
         lk["cit"] = lk.paper_id.map(cit)
+        info = core.set_index("faculty_id")
         for y in list(range(Y0, Y1 + 1)) + ["all"]:
             sub = lk if y == "all" else lk[lk.year == y]
-            active = [f for f in fac]  # all core faculty of the institute count as the population
+            # population = core faculty in post that year (joined by then, not yet left)
+            active = fac if y == "all" else [f for f in fac if in_post(info.loc[f], y)]
             papers = sub.groupby("faculty_id").paper_id.nunique().reindex(active, fill_value=0)
             cits = sub.groupby("faculty_id").cit.sum().reindex(active, fill_value=0)
             row = {"institution": i, "year": y, "n_faculty": len(active),

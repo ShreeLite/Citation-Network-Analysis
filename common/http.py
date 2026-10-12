@@ -12,20 +12,21 @@ import json
 import logging
 import threading
 import time
-import urllib.robotparser
 from pathlib import Path
 from urllib.parse import urlencode, urlparse
 
 import requests
-from tenacity import retry, retry_if_exception, stop_after_attempt, wait_exponential_jitter
+from tenacity import Retrying, retry_if_exception, stop_after_attempt, wait_exponential_jitter
 
 from . import tls
+from .robots import Robots
 from .config import CACHE, RAW, cfg
 
 log = logging.getLogger("http")
 
 SECRET_PARAMS = {"api_key", "mailto"}
 PERMANENT_STATUSES = {400, 401, 403, 404, 410}
+NEG_TTL = 7 * 24 * 3600  # seconds a network failure is remembered (source 'web' only)
 
 
 class BudgetExhausted(RuntimeError):
@@ -47,6 +48,17 @@ def _is_transient(exc: BaseException) -> bool:
     if isinstance(exc, requests.exceptions.SSLError):
         return False  # certificate problems do not fix themselves
     return isinstance(exc, (TransientHTTPError, requests.ConnectionError, requests.Timeout))
+
+
+def _looks_like_challenge(body: bytes, ext: str) -> bool:
+    head = body[:600].lstrip().lower()
+    if ext == "json":
+        try:
+            json.loads(body)
+            return False
+        except ValueError:
+            return True
+    return head.startswith(b"<!doctype html") or b"not a bot" in head
 
 
 class _RateLimiter:
@@ -92,6 +104,9 @@ class Fetcher:
         default_params: dict | None = None,
         obey_robots: bool = False,
         timeout: float = 60,
+        max_attempts: int = 7,
+        max_wait: float = 120,
+        negative_cache: bool = False,
     ):
         self.source = source
         self.dir = CACHE / source
@@ -105,7 +120,9 @@ class Fetcher:
         self.default_params = default_params or {}
         self.obey_robots = obey_robots
         self.timeout = timeout
-        self._robots: dict[str, urllib.robotparser.RobotFileParser | None] = {}
+        self.max_attempts, self.max_wait = max_attempts, max_wait
+        self.negative_cache = negative_cache
+        self._robots: dict[str, Robots | None] = {}
         self._host_limiters: dict[str, _RateLimiter] = {}
         self._tls_repaired: set[str] = set()
         self.session.verify = tls.bundle_path()
@@ -125,11 +142,11 @@ class Fetcher:
         host (never verify=False)."""
         host = urlparse(url).netloc.split(":")[0]
         if json_body is not None:
-            call = lambda: self.session.post(url, json=json_body, timeout=self.timeout, **kw)  # noqa: E731
+            call = lambda: self.session.post(url, json=json_body, timeout=(10, self.timeout), **kw)  # noqa: E731
         elif data is not None:
-            call = lambda: self.session.post(url, data=data, timeout=self.timeout, **kw)  # noqa: E731
+            call = lambda: self.session.post(url, data=data, timeout=(10, self.timeout), **kw)  # noqa: E731
         else:
-            call = lambda: self.session.get(url, timeout=self.timeout, **kw)  # noqa: E731
+            call = lambda: self.session.get(url, timeout=(10, self.timeout), **kw)  # noqa: E731
         try:
             return call()
         except requests.exceptions.SSLError:
@@ -147,10 +164,9 @@ class Fetcher:
         host = urlparse(url)
         base = f"{host.scheme}://{host.netloc}"
         if base not in self._robots:
-            rp = urllib.robotparser.RobotFileParser()
             try:
                 r = self._session_get(base + "/robots.txt")
-                rp.parse(r.text.splitlines() if r.status_code == 200 else [])
+                rp = Robots(r.text if r.status_code == 200 else "")
             except requests.RequestException:
                 rp = None  # unreachable robots.txt: treat as allow, but log
                 log.warning("robots.txt unreachable for %s", base)
@@ -167,13 +183,17 @@ class Fetcher:
         return all(rp.can_fetch(ua, url) for ua in (self.session.headers["User-Agent"], "Claude-User", "anthropic-ai"))
 
     # ---------- network ----------
-    @retry(
-        retry=retry_if_exception(_is_transient),
-        wait=wait_exponential_jitter(initial=2, max=120),
-        stop=stop_after_attempt(7),
-        reraise=True,
-    )
-    def _fetch(self, url: str, params: dict, headers: dict | None, data: dict | None = None, json_body=None) -> requests.Response:
+    def _fetch(self, *a, **kw) -> requests.Response:
+        """Retry transient failures with exponential backoff. APIs get 7 attempts (up to 2 min
+        apart); personal homepages (source 'web') get 3 short attempts so a dead site costs
+        seconds, not minutes."""
+        for attempt in Retrying(retry=retry_if_exception(_is_transient), reraise=True,
+                                wait=wait_exponential_jitter(initial=2, max=self.max_wait),
+                                stop=stop_after_attempt(self.max_attempts)):
+            with attempt:
+                return self._fetch_once(*a, **kw)
+
+    def _fetch_once(self, url: str, params: dict, headers: dict | None, data: dict | None = None, json_body=None) -> requests.Response:
         host = urlparse(url).netloc
         self._host_limiters.get(host, self.limiter).wait()
         r = self._session_get(url, data=data, json_body=json_body, params=params, headers=headers)
@@ -211,17 +231,26 @@ class Fetcher:
         body_p, meta_p = self._paths(key, ext)
         if use_cache and meta_p.exists():
             meta = json.loads(meta_p.read_text())
-            self.stats["hit"] += 1
-            if meta["status"] != 200:
-                raise PermanentHTTPError(url, meta["status"], meta.get("body", ""))
-            return self._decode(body_p, ext)
+            if meta["status"] == -1 and time.time() - meta.get("epoch", 0) > NEG_TTL:
+                meta_p.unlink()  # negative entry expired: try the network again
+            else:
+                self.stats["hit"] += 1
+                if meta["status"] != 200:
+                    raise PermanentHTTPError(url, meta["status"], meta.get("body", ""))
+                return self._decode(body_p, ext)
 
         if not self.allowed(url):
             raise PermanentHTTPError(url, 999, "disallowed by robots.txt")
 
         full_params = {**self.default_params, **params}
         t0 = time.time()
-        r = self._fetch(url, full_params, headers, data, json_body)
+        try:
+            r = self._fetch(url, full_params, headers, data, json_body)
+        except (requests.ConnectionError, requests.Timeout) as e:
+            if self.negative_cache:  # dead host / DNS failure: remember for NEG_TTL so re-runs stay fast
+                body_p.parent.mkdir(parents=True, exist_ok=True)
+                meta_p.write_text(json.dumps({"url": url, "status": -1, "epoch": time.time(), "body": str(e)[:200]}))
+            raise
         self.stats["miss"] += 1
         entry = {
             "ts": time.strftime("%Y-%m-%dT%H:%M:%S"),
@@ -243,6 +272,10 @@ class Fetcher:
                 meta["body"] = r.text[:300]
                 meta_p.write_text(json.dumps(meta))
             raise PermanentHTTPError(url, r.status_code, r.text[:300])
+        if ext in ("json", "xml") and _looks_like_challenge(r.content, ext):
+            # bot-check / challenge pages (e.g. Anubis) arrive as HTTP 200: never cache them,
+            # and do not try to get around them.
+            raise PermanentHTTPError(url, 403, "bot-check challenge page instead of data")
         tmp = body_p.with_suffix(body_p.suffix + ".tmp")
         tmp.write_bytes(r.content)
         tmp.replace(body_p)  # atomic: a crash never leaves a half-written cache entry

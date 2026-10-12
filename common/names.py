@@ -43,49 +43,55 @@ def initials_key(name: str) -> tuple[str, frozenset[str]]:
     return longest, frozenset(t[0] for t in rest)
 
 
-def _token_compatible(a: str, b: str) -> bool:
+def _token_match(a: str, b: str) -> str | None:
+    """'exact' | 'fuzzy' (spelling variant / prefix) | 'initial' | None."""
     if a == b:
-        return True
-    if len(a) == 1 or len(b) == 1:  # initial vs full token
-        return a[0] == b[0]
-    return fuzz.ratio(a, b) >= 85  # spelling variants: Srinivas/Srinivasa, Ponnurangam/Ponnurangum
+        return "exact"
+    if len(a) == 1 or len(b) == 1:
+        return "initial" if a[0] == b[0] else None
+    if fuzz.ratio(a, b) >= 85 or (min(len(a), len(b)) >= 4 and (a.startswith(b) or b.startswith(a))):
+        return "fuzzy"  # Srinivas/Srinivasa, Kamal/Kamalakar
+    return None
 
 
 def name_similarity(a: str, b: str) -> float:
-    """0..1. Order-insensitive, initial-aware. 1.0 = every token of the shorter name is
-    compatible with a distinct token of the longer one and at least one full (non-initial)
-    token matches exactly-ish."""
+    """0..1, order-insensitive and initial-aware.
+
+    Rules: every token of the shorter name must pair with a distinct token of the longer one;
+    when both names have ≥ 2 full (non-initial) tokens, at least 2 full tokens must match
+    (so 'Prasad Krishnan' ≠ 'Krishna Reddy P'); unmatched full tokens in the longer name
+    (dropped middle names) cost 0.1 each; spelling-variant matches cost 0.05 each."""
     ta, tb = tokens(a), tokens(b)
     if not ta or not tb:
         return 0.0
-    if ta == tb:
+    if ta == tb or sorted(ta) == sorted(tb):
         return 1.0
     short, long_ = (ta, tb) if len(ta) <= len(tb) else (tb, ta)
     used = [False] * len(long_)
-    matched, full_matched = 0, 0
-    # full tokens first so initials don't steal their partners
+    kinds = []
+    # full tokens first (longest first) so initials don't steal their partners
     for t in sorted(short, key=len, reverse=True):
-        best = None
+        best, best_kind = None, None
         for i, u in enumerate(long_):
-            if not used[i] and _token_compatible(t, u):
-                if best is None or (len(u) > 1) == (len(t) > 1):
-                    best = i
-                    if (len(u) > 1) == (len(t) > 1):
-                        break
-        if best is not None:
-            used[best] = True
-            matched += 1
-            if len(t) > 1 and len(long_[best]) > 1:
-                full_matched += 1
-    if full_matched == 0:
+            if used[i]:
+                continue
+            k = _token_match(t, u)
+            if k and (best is None or ["initial", "fuzzy", "exact"].index(k) > ["initial", "fuzzy", "exact"].index(best_kind)):
+                best, best_kind = i, k
+        if best is None:
+            return 0.0 if not kinds else round(0.5 * len(kinds) / len(short), 3)
+        used[best] = True
+        kinds.append(best_kind)
+    full_short = sum(1 for t in short if len(t) > 1)
+    full_long = sum(1 for t in long_ if len(t) > 1)
+    full_matches = sum(1 for k in kinds if k in ("exact", "fuzzy"))
+    if full_matches == 0:
         return 0.0
-    coverage = matched / len(short)
-    # penalise unmatched full tokens in the longer name lightly (dropped middle names are common)
+    if full_short >= 2 and full_long >= 2 and full_matches < 2:
+        return 0.6
     extra_full = sum(1 for i, u in enumerate(long_) if not used[i] and len(u) > 1)
-    score = coverage - 0.08 * extra_full
-    # fall back to plain fuzzy on the joined string for transliteration differences
-    plain = fuzz.token_sort_ratio(" ".join(ta), " ".join(tb)) / 100
-    return max(0.0, min(1.0, max(score, plain if coverage == 1 else plain * 0.9)))
+    score = 1.0 - 0.1 * extra_full - 0.05 * kinds.count("fuzzy")
+    return round(max(0.0, min(1.0, score)), 3)
 
 
 def surname_like(name: str) -> str:

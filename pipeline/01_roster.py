@@ -22,7 +22,8 @@ from common.config import DATA, PROCESSED, REVIEW, cfg, collection_date, setup_l
 from common.http import PermanentHTTPError
 from common.joining import extract_joining_year
 from common.names import name_similarity, normalise
-from common.sources import dblp, wayback, web
+from common.dblp_parse import persons_by_affiliation, persons_by_names
+from common.sources import wayback, web
 from common.web import (
     extract_identifiers,
     fetch_html,
@@ -57,6 +58,52 @@ IIITD_UNIT_NAMES = {
     "CB": "Computational Biology", "HCD": "Human-Centered Design", "MATH": "Mathematics",
     "SSH": "Social Sciences & Humanities",
 }
+
+
+UNIT_ALIASES = {"COGSCI": "CSL", "COGNITIVE SCIENCE": "CSL", "COMPBIO": "CB", "MATHS": "MATH", "DES": "HCD", "AM": "MATH", "SS": "SSH"}
+_OFFICIAL: dict[str, dict[str, str]] = {}
+
+
+def official_units(inst: str) -> dict[str, str]:
+    """{acronym: full name} as published by the institute (IIIT-H research-centres page;
+    IIIT-D department tabs on the faculty page)."""
+    if inst in _OFFICIAL:
+        return _OFFICIAL[inst]
+    out: dict[str, str] = {}
+    if inst == "IIIT-H":
+        html = fetch_html("https://www.iiit.ac.in/research-centres/", render_if_empty=False) or ""
+        txt = " ".join(visible_text(html).split())
+        for name, acr in re.findall(r"([A-Z][A-Za-z,&'\- ]{3,90}?)\s*\(\s*([A-Z][A-Za-z]{1,8})\s*\)", txt):
+            name = re.sub(r"^(?:Technology Research Cent(?:er|re)s|Domain Research Cent(?:er|re)s|Innovation Cent(?:er|re)s|The|the)\s+", "", name).strip()
+            # keep research units only (drops 'Tata Consultancy Services (TCS)', '(IP)', '(AI)', ...)
+            if acr not in out and len(name.split()) >= 2 and re.search(r"Cent(?:er|re)|\bLab\b|Group", name) and len(name.split()) <= 10:
+                out[acr] = name
+    else:
+        out = dict(IIITD_UNIT_NAMES)
+    _OFFICIAL[inst] = out
+    return out
+
+
+def normalise_unit(u: str, inst: str) -> str | None:
+    """Map a profile's unit string to an official acronym; None if it cannot be mapped."""
+    off = official_units(inst)
+    if not u:
+        return None
+    key = u.strip().upper().replace(".", "")
+    if u in off:
+        return u
+    if key in UNIT_ALIASES and UNIT_ALIASES[key] in off:
+        return UNIT_ALIASES[key]
+    if key in IIITD_UNITS and inst == "IIIT-D":
+        return IIITD_UNITS[key]
+    for acr in sorted(off, key=len, reverse=True):  # acronym mentioned inside a longer string
+        if re.search(rf"\b{re.escape(acr)}\b", u):
+            return acr
+    from rapidfuzz import fuzz
+    best = max(off.items(), key=lambda kv: fuzz.token_set_ratio(u.lower(), kv[1].lower()), default=None)
+    if best and fuzz.token_set_ratio(u.lower(), best[1].lower()) >= 85:
+        return best[0]
+    return None
 
 
 def designation_class(designation: str, page_category: str) -> str:
@@ -444,56 +491,87 @@ DBLP_AFFIL = {
 }
 
 
+_AFFIL_PERSONS: list[dict] | None = None
+_NAME_HITS: list[dict] | None = None
+
+
+def prefetch_dblp_names(rows: list[dict]) -> None:
+    """One batched SPARQL pass over every name variant of every roster person."""
+    global _NAME_HITS
+    variants = sorted({v for r in rows for v in name_variants_for_dblp(r["name"])})
+    try:
+        _NAME_HITS = persons_by_names(variants)
+    except Exception as e:
+        log.warning("dblp batched name lookup failed: %s", e)
+        _NAME_HITS = []
+
+
+def affiliated_dblp_persons() -> list[dict]:
+    global _AFFIL_PERSONS
+    if _AFFIL_PERSONS is None:
+        _AFFIL_PERSONS = persons_by_affiliation(["iiit hyderabad", "iiit-hyderabad", "international institute of information technology, hyderabad",
+                                                 "international institute of information technology hyderabad", "iiit-h,",
+                                                 "indraprastha institute", "iiit delhi", "iiit-delhi", "iiitd"])
+    return _AFFIL_PERSONS
+
+
+def name_variants_for_dblp(name: str) -> list[str]:
+    """DBLP writes names like 'C. V. Jawahar' or 'Anoop M. Namboodiri'."""
+    toks = name.replace(".", " ").split()
+    out = {name, " ".join(toks)}
+    dotted = " ".join(t + "." if len(t) == 1 else t for t in toks)
+    out.add(dotted)
+    if len(toks) >= 3:  # middle names as initials
+        out.add(" ".join([toks[0]] + [t[0] + "." for t in toks[1:-1]] + [toks[-1]]))
+    return sorted(out)
+
+
 def resolve_dblp(r: dict) -> None:
-    """Fill dblp_pid: legacy URL -> pid via DBLP redirect; else DBLP author search with
-    affiliation note. Non-unique matches go to review with candidates listed."""
+    """Fill dblp_pid via DBLP SPARQL: homepage link > institute-affiliated DBLP person with a
+    matching name > unique exact-name match with matching affiliation. Ambiguous -> review."""
     r["dblp_source"] = "homepage" if r.get("dblp_pid") else ""
-    if not r.get("dblp_pid") and r.get("dblp_legacy"):
-        try:
-            xml = dblp().get(f"https://dblp.org/pers/xx/{r['dblp_legacy'][0].lower()}/{r['dblp_legacy']}.xml", ext="xml")
-            if m := re.search(r'<dblpperson[^>]*pid="([^"]+)"', xml):
-                r["dblp_pid"], r["dblp_source"] = m.group(1), "homepage_legacy"
-        except Exception as e:
-            log.info("legacy dblp resolve failed for %s: %s", r["name"], e)
     if r.get("dblp_pid"):
         r["dblp_confidence"] = 1.0
         return
-    try:
-        res = dblp().get("https://dblp.org/search/author/api", params={"q": r["name"], "format": "json", "h": 30})
-    except Exception as e:
-        log.warning("dblp search failed for %s: %s", r["name"], e)
+    names = [r["name"]] + ([r["dblp_legacy"].split(":")[-1]] if r.get("dblp_legacy") else [])
+    aff = [p for p in affiliated_dblp_persons() if DBLP_AFFIL[r["institution"]].search(" | ".join(p["affiliations"]))
+           and max(name_similarity(n, p["name"]) for n in names) >= 0.85]
+    if len(aff) == 1:
+        r["dblp_pid"], r["dblp_source"], r["dblp_confidence"] = aff[0]["pid"], "dblp_affiliation+name", 0.92
         return
-    hits = (res.get("result", {}).get("hits", {}) or {}).get("hit", []) or []
-    cands = []
-    for h in hits:
-        info = h.get("info", {})
-        notes = info.get("notes", {}).get("note", [])
-        notes = notes if isinstance(notes, list) else [notes]
-        affs = " | ".join(n.get("text", "") for n in notes if isinstance(n, dict) and n.get("@type") == "affiliation")
-        sim = name_similarity(r["name"], info.get("author", ""))
-        aliases = info.get("aliases", {}).get("alias", [])
-        aliases = aliases if isinstance(aliases, list) else [aliases]
-        sim = max([sim] + [name_similarity(r["name"], a) for a in aliases])
-        pid = info.get("url", "").split("/pid/")[-1]
-        cands.append({"pid": pid, "name": info.get("author"), "sim": round(sim, 2), "affil": affs,
-                      "affil_match": bool(DBLP_AFFIL[r["institution"]].search(affs))})
-    good = [c for c in cands if c["sim"] >= 0.85 and c["affil_match"]]
+    wanted = set(name_variants_for_dblp(r["name"]))
+    if _NAME_HITS is None:
+        prefetch_dblp_names([r])
+    cands = [c for c in _NAME_HITS if c["query_name"] in wanted]
+    by_pid = {}
+    for c in cands:
+        by_pid.setdefault(c["pid"], c)
+    good = [c for c in by_pid.values() if DBLP_AFFIL[r["institution"]].search(c["affiliation"] or "")]
     if len(good) == 1:
-        r["dblp_pid"], r["dblp_source"], r["dblp_confidence"] = good[0]["pid"], "dblp_search_affil", 0.9
-    elif len(good) > 1:
-        r["dblp_candidates"] = good
+        r["dblp_pid"], r["dblp_source"], r["dblp_confidence"] = good[0]["pid"], "dblp_name+affiliation", 0.9
+    elif len(by_pid) == 1 and not aff:
+        c = next(iter(by_pid.values()))
+        # unique exact name in all of DBLP but no affiliation recorded: plausible, needs confirming in step 2
+        r["dblp_pid"], r["dblp_source"], r["dblp_confidence"] = c["pid"], "dblp_unique_exact_name", 0.7
+    elif by_pid or aff:
+        r["dblp_candidates"] = [{"pid": c["pid"], "name": c["name"], "sim": round(name_similarity(r["name"], c["name"]), 2), "affil": c.get("affiliation", "")}
+                                for c in list(by_pid.values())[:6]] + [{"pid": a["pid"], "name": a["name"], "sim": 1.0, "affil": "; ".join(a["affiliations"])} for a in aff]
         r["dblp_confidence"] = 0.5
-    else:
-        named = [c for c in cands if c["sim"] >= 0.95]
-        if named:
-            r["dblp_candidates"] = named[:5]
-            r["dblp_confidence"] = 0.3
 
 
 # --------------------------------------------------------------------------------------
 # Former faculty from Wayback snapshots
 # --------------------------------------------------------------------------------------
 NAME_LIKE = re.compile(r"^(?:(?:Dr|Prof)\.?\s+)?[A-Z][a-zA-Z.'\-]*(?:\s+[A-Z][a-zA-Z.'\-]*){1,4}$")
+NON_PERSON_TOKENS = {
+    "about", "links", "link", "internal", "admission", "admissions", "body", "governing", "group", "science", "sciences", "sci",
+    "maths", "math", "mathematics", "equations", "differential", "partial", "students", "student", "facts", "quick", "coverage",
+    "media", "information", "right", "identity", "graphic", "directory", "contact", "twitter", "facebook", "youtube", "linkedin",
+    "instagram", "tenders", "webmail", "outreach", "advisor", "research", "scientists", "ugc", "post", "phd", "bsc", "sponsored",
+    "rolling", "computational", "biology", "social", "cog", "centre", "center", "lab", "department", "programme", "program",
+    "faculty", "staff", "project", "coordinator", "engineering", "electronics", "communication", "design", "humanities",
+    "sahaai", "office", "dean", "registrar", "library", "campus", "news", "events", "alumni", "placement", "careers", "login",
+}
 NOT_NAMES = {"home", "faculty", "research", "people", "about", "contact", "admissions", "news", "events",
              "academics", "centres", "centers", "students", "staff", "alumni", "publications", "visiting faculty",
              "adjunct faculty", "read more", "view profile", "know more", "computer science", "electronics"}
@@ -501,42 +579,46 @@ DESIG_NEAR = re.compile(r"(assistant|associate)?\s*professor|faculty|lecturer|sc
 
 
 def wayback_list_urls(inst: str) -> list[str]:
-    """Historical faculty-list URLs on the institute domain, via CDX (urlkey-collapsed)."""
+    """Historical faculty-list URLs, via path-prefix CDX queries (a domain-wide query is too
+    large for the CDX server)."""
     dom = urlparse(cfg()["institutes"][inst]["homepage"]).netloc.removeprefix("www.")
-    try:
-        rows = wayback().get(
-            "https://web.archive.org/cdx/search/cdx",
-            params={"url": dom, "matchType": "domain", "from": "2015", "to": "2026", "output": "json",
-                    "fl": "original", "collapse": "urlkey", "filter": ["statuscode:200", "mimetype:text/html",
-                    "original:.*[Ff]acult.*"], "limit": "20000"},
-        )
-    except Exception as e:
-        log.warning("Wayback CDX unavailable for %s: %s", inst, e)
-        return []
-    urls = [r[0] for r in rows[1:]] if rows else []
     out = set()
-    for u in urls:
-        path = urlparse(u).path.lower().rstrip("/")
-        q = urlparse(u).query
-        if q and "page" not in q:
+    for prefix in (f"{dom}/people/", f"{dom}/faculty", f"www.{dom}/people/", f"www.{dom}/faculty"):
+        try:
+            rows = wayback().get("https://web.archive.org/cdx/search/cdx",
+                                 params={"url": prefix, "matchType": "prefix", "from": "2015", "to": "2026", "output": "json",
+                                         "fl": "original", "collapse": "urlkey", "filter": ["statuscode:200", "mimetype:text/html"], "limit": "5000"})
+        except Exception as e:
+            log.warning("Wayback CDX %s: %s", prefix, e)
             continue
-        last = path.rsplit("/", 1)[-1]
-        if re.fullmatch(r"(people/)?faculty|faculty[-_]?(list|members|directory)?|(core|regular)[-_]faculty", last) or path.endswith("/people/faculty") or path in ("/faculty", "/people/faculty"):
-            if "career" not in path and "recruit" not in path:
-                out.add(u.split("#")[0])
-    return sorted(out)
+        for (u,) in (rows[1:] if rows else []):
+            path = urlparse(u).path.lower().rstrip("/")
+            if urlparse(u).query:
+                continue
+            if path in ("/faculty", "/people/faculty") and "career" not in path:
+                out.add(u.split("#")[0].replace(":80/", "/"))
+    # one canonical URL per path (http/https/www variants are the same page)
+    canon = {}
+    for u in sorted(out):
+        canon.setdefault(urlparse(u).path.rstrip("/"), u)
+    log.info("%s Wayback list URLs: %s", inst, list(canon.values()))
+    return list(canon.values())
 
 
-def wayback_names(inst: str, current_names: list[str]) -> list[dict]:
-    yr0, yr1 = cfg()["years"]["start"], cfg()["years"]["end"] - 1
-    found: dict[str, dict] = {}
+DESIG_RE = re.compile(r"(Distinguished Professor|Professor Emeritus|Emeritus Professor|Adjunct (?:Assistant |Associate )?Professor|Visiting (?:Assistant |Associate )?Professor|"
+                      r"Assistant Professor|Associate Professor|Professor of Practice|Professor|Lecturer|Research Scientist|Scientist)", re.I)
+
+
+def wayback_presence(inst: str) -> pd.DataFrame:
+    """One row per (snapshot year, name) seen on the institute's archived faculty-list pages,
+    with the designation shown next to the name."""
+    yr0, yr1 = cfg()["years"]["start"] - 1, cfg()["years"]["end"] - 1
+    rows = []
     for lu in wayback_list_urls(inst):
         try:
-            snaps = wayback().get(
-                "https://web.archive.org/cdx/search/cdx",
-                params={"url": lu, "from": str(yr0), "to": str(yr1), "output": "json",
-                        "fl": "timestamp,original", "collapse": "timestamp:4", "filter": "statuscode:200"},
-            )
+            snaps = wayback().get("https://web.archive.org/cdx/search/cdx",
+                                  params={"url": lu, "from": str(yr0), "to": str(yr1), "output": "json",
+                                          "fl": "timestamp,original", "collapse": "timestamp:4", "filter": "statuscode:200"})
         except Exception as e:
             log.warning("CDX snapshots failed %s: %s", lu, e)
             continue
@@ -547,21 +629,45 @@ def wayback_names(inst: str, current_names: list[str]) -> list[dict]:
                 log.info("snapshot fetch failed %s %s: %s", ts, orig, e)
                 continue
             for name, ctx in candidate_names(html):
-                key = normalise(name)
-                d = found.setdefault(key, {"name": name, "years": set(), "snapshots": set(), "context": ctx})
-                d["years"].add(int(ts[:4]))
-                d["snapshots"].add(f"https://web.archive.org/web/{ts}/{orig}")
+                m = DESIG_RE.search(ctx[len(name):len(name) + 120])
+                rows.append({"institution": inst, "snapshot": ts, "year": int(ts[:4]), "name": name,
+                             "designation_seen": m.group(1).title() if m else "", "snapshot_url": f"https://web.archive.org/web/{ts}/{orig}"})
+    return pd.DataFrame(rows)
+
+
+def wayback_names(inst: str, current_names: list[str], presence: pd.DataFrame) -> list[dict]:
+    """Names on archived lists that are not on today's site (fuzzy), with years seen and the
+    designation they were listed under."""
+    if presence.empty:
+        return []
     out = []
-    for key, d in found.items():
-        best = max((name_similarity(d["name"], c) for c in current_names), default=0)
+    # order-insensitive key so 'B. S. Lakshmi' and 'Lakshmi B.S' are one person
+    for key, g in presence.assign(key=presence.name.map(lambda n: " ".join(sorted(normalise(n).split())))).groupby("key"):
+        name = g.name.iloc[-1]
+        best = max((name_similarity(name, c) for c in current_names), default=0)
         if best >= 0.85:
-            continue  # still listed today (possibly under a variant)
-        out.append({
-            "name": d["name"], "first_seen": min(d["years"]), "last_seen": max(d["years"]),
-            "n_snapshots": len(d["snapshots"]), "snapshot_example": sorted(d["snapshots"])[-1],
-            "context": d["context"][:200], "closest_current_similarity": round(best, 2),
-        })
+            continue
+        desig = g.designation_seen.replace("", pd.NA).dropna()
+        if desig.empty:
+            continue  # never shown with a designation: menu text, headings, or non-faculty
+        out.append({"name": name, "first_seen": int(g.year.min()), "last_seen": int(g.year.max()), "n_snapshots": g.snapshot.nunique(),
+                    "snapshot_example": g.snapshot_url.iloc[-1], "designation_seen": desig.iloc[-1] if len(desig) else "",
+                    "context": "", "closest_current_similarity": round(best, 2)})
     return out
+
+
+def first_listed(presence: pd.DataFrame, name: str) -> tuple[int | None, int | None, str]:
+    """(first year listed, earliest snapshot year, evidence) for a current faculty member."""
+    if presence.empty:
+        return None, None, ""
+    hit = presence[presence.name.map(lambda n: name_similarity(n, name) >= 0.85)]
+    first_snap = int(presence.year.min())
+    if hit.empty:
+        return None, first_snap, ""
+    y = int(hit.year.min())
+    prev = presence[presence.year < y].snapshot.max()
+    first = hit.sort_values("snapshot").snapshot.iloc[0]
+    return y, first_snap, f"first listed in Wayback snapshot {first[:8]}" + (f"; absent from {str(prev)[:8]}" if isinstance(prev, str) else "")
 
 
 def candidate_names(html: str) -> list[tuple[str, str]]:
@@ -579,6 +685,8 @@ def candidate_names(html: str) -> list[tuple[str, str]]:
         if not (5 <= len(t) <= 45) or not NAME_LIKE.match(t) or t.lower() in NOT_NAMES:
             continue
         if any(w in t.lower() for w in ("professor", "faculty", "department", "centre", "center", "institute", "lab")):
+            continue
+        if {re.sub(r"[^a-z]", "", w) for w in t.lower().split()} & NON_PERSON_TOKENS:
             continue
         i = full.find(t)
         ctx = full[i : i + 220] if i >= 0 else ""
@@ -616,7 +724,9 @@ def finalise(rows: list[dict]) -> pd.DataFrame:
         desig_raw = r.get("designation_main") or r.get("designation_raw", "")
         cls = designation_class(desig_raw, r.get("page_category", ""))
         rank = core_rank(desig_raw) if cls == "core" else ""
-        units = r.get("units") or []
+        raw_units = r.get("units") or []
+        units = list(dict.fromkeys(x for x in (normalise_unit(u, inst) for u in raw_units) if x))
+        unmapped = [u for u in raw_units if not normalise_unit(u, inst)]
         variants = {r["name"], normalise(r["name"]).title()}
         if r.get("email"):
             variants.add(r["email"].split("@")[0])
@@ -634,6 +744,7 @@ def finalise(rows: list[dict]) -> pd.DataFrame:
             "units_secondary": "; ".join(units[1:]),
             "unit_type": cfg()["institutes"][inst]["unit_type"],
             "unit_text": r.get("unit_text", ""),
+            "units_unmapped": "; ".join(unmapped),
             "centres_affiliated": r.get("centres_affiliated", ""),
             "admin_roles": r.get("admin_roles", ""),
             "joining_year": r.get("joining_year"),
@@ -643,6 +754,8 @@ def finalise(rows: list[dict]) -> pd.DataFrame:
             "phd": r.get("phd", ""),
             "status": r.get("status", "current"),
             "leaving_year": r.get("leaving_year"),
+            "joined_by_year": r.get("joined_by_year"),
+            "joined_after_year": r.get("joined_after_year"),
             "homepage": r.get("homepage", ""),
             "institute_profile": r.get("institute_profile", ""),
             "publications_portal": r.get("publications_portal", ""),
@@ -679,29 +792,51 @@ def main() -> None:
 
     for r in tqdm(rows, desc="homepages/CVs"):
         enrich_from_pages(r)
+    prefetch_dblp_names(rows)
     for r in tqdm(rows, desc="DBLP"):
         resolve_dblp(r)
 
     review = []
-    # Former faculty
+    # Former faculty + joining-year proxy from yearly Wayback snapshots
     former_rows = []
+    presence_all: list[pd.DataFrame] = []
     if not args.skip_wayback:
         for inst in ("IIIT-H", "IIIT-D"):
             if args.only and inst != args.only:
                 continue
             cur = [r["name"] for r in rows if r["institution"] == inst]
-            for f in wayback_names(inst, cur):
+            pres = wayback_presence(inst)
+            presence_all.append(pres)
+            # joining-year proxy for current faculty: first year on the archived list
+            for r in rows:
+                if r["institution"] != inst or r.get("joining_year"):
+                    continue
+                y, first_snap, ev = first_listed(pres, r["name"])
+                if y and first_snap and y > first_snap:
+                    r["joining_year"], r["joining_year_confidence"], r["joining_year_evidence"] = y, 0.6, ev
+                    r["joining_year_source"] = "wayback_first_listed"
+                elif y and first_snap and y == first_snap:
+                    r["joined_by_year"] = first_snap  # listed in the earliest snapshot: joined on/before it
+                elif y is None and not pres.empty:
+                    r["joined_after_year"] = int(pres[pres.snapshot_url.str.contains("/people/faculty")].year.max()
+                                                 if pres.snapshot_url.str.contains("/people/faculty").any() else pres.year.max())
+            for f in wayback_names(inst, cur, pres):
+                d = f["designation_seen"]
                 former_rows.append({
-                    "institution": inst, "name": f["name"], "designation_raw": "", "units": [],
+                    "institution": inst, "name": f["name"], "designation_raw": d, "units": [],
                     "status": "former", "roster_source": "wayback", "leaving_year": f["last_seen"],
-                    "notes": f"seen {f['first_seen']}-{f['last_seen']} in {f['n_snapshots']} snapshots; e.g. {f['snapshot_example']}",
+                    "notes": f"listed {f['first_seen']}-{f['last_seen']} in {f['n_snapshots']} yearly snapshots as '{d}'; e.g. {f['snapshot_example']}",
                     "page_category": "",
                 })
                 review.append({"issue": "former_faculty_from_wayback", "institution": inst, "name": f["name"],
-                               "detail": f"{f['first_seen']}-{f['last_seen']}; ctx: {f['context']}",
-                               "evidence_url": f["snapshot_example"], "action": "confirm former core faculty (Y/N), add designation+unit"})
+                               "detail": f"{f['first_seen']}-{f['last_seen']} as '{d}'",
+                               "evidence_url": f["snapshot_example"], "action": "confirm departure; set unit"})
+    if former_rows:
+        prefetch_dblp_names(rows + former_rows)
     for r in former_rows:
         resolve_dblp(r)
+    if presence_all:
+        pd.concat(presence_all).to_csv(PROCESSED / "wayback_presence.csv", index=False)
     df = finalise(rows + former_rows)
     # former: designation unknown from generic snapshot parsing -> provisional class
     df.loc[df.status.eq("former") & df.designation_class.eq("other"), "designation_class"] = "former_unverified"
@@ -746,6 +881,11 @@ def main() -> None:
                 review.append({"issue": "name_collision_across_institutes", "institution": f"{ia}/{ib}", "name": f"{na} / {nb}",
                                "detail": "", "evidence_url": "", "action": "same person (moved)? different?"})
 
+    for _, r in df[df.units_unmapped.ne("")].iterrows():
+        review.append({"issue": "unit_not_in_official_list", "institution": r.institution, "name": r["name"],
+                       "detail": r.units_unmapped, "evidence_url": r.institute_profile, "action": "map to an official unit"})
+    import json as _json
+    (PROCESSED / "units_official.json").write_text(_json.dumps({i: official_units(i) for i in ("IIIT-H", "IIIT-D")}, indent=1))
     DATA.mkdir(exist_ok=True)
     df.to_csv(DATA / "faculty_roster.csv", index=False)
     pd.DataFrame(review).to_csv(REVIEW / "roster_to_review.csv", index=False)

@@ -50,7 +50,7 @@ def wayback() -> Fetcher:
 @lru_cache(maxsize=None)
 def web() -> Fetcher:
     """Institute websites and faculty homepages: robots.txt obeyed, polite delay."""
-    return Fetcher("web", obey_robots=True, timeout=45)
+    return Fetcher("web", obey_robots=True, timeout=30, max_attempts=3, max_wait=15, negative_cache=True)
 
 
 def oa_get(path: str, **params) -> dict:

@@ -7,7 +7,7 @@ import random
 import pandas as pd
 
 from common.config import DATA, PROCESSED, QA, REVIEW, cfg, collection_date, setup_logging
-from common.dblp_parse import person_publications
+from common.dblp_parse import person_publications, prefetch
 from common.sources import oa_get, short_id
 from common.titles import normalise_title
 
@@ -24,6 +24,7 @@ def dblp_check(roster, src, ml) -> pd.DataFrame:
     papers = pd.read_parquet(PROCESSED / "papers_enriched.parquet")[["cluster", "paper_id"]]
     cl_to_paper = dict(zip(papers.cluster, papers.paper_id))
     rows = []
+    prefetch(roster[(roster.is_core == "True") & roster.dblp_pid.ne("")].dblp_pid.tolist())
     for f in roster[(roster.is_core == "True") & roster.dblp_pid.ne("")].itertuples():
         try:
             dp = person_publications(f.dblp_pid)

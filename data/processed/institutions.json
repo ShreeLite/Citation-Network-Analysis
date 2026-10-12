@@ -1,0 +1,24 @@
+{
+  "IIIT-H": {
+    "ror": "https://ror.org/05f11g639",
+    "ror_name": "International Institute of Information Technology, Hyderabad",
+    "openalex_id": "I64189192",
+    "openalex_name": "International Institute of Information Technology, Hyderabad",
+    "openalex_ids_all": [
+      "I64189192"
+    ],
+    "children": [],
+    "works_count": 8291
+  },
+  "IIIT-D": {
+    "ror": "https://ror.org/03vfp4g33",
+    "ror_name": "Indraprastha Institute of Information Technology Delhi",
+    "openalex_id": "I119939252",
+    "openalex_name": "Indraprastha Institute of Information Technology Delhi",
+    "openalex_ids_all": [
+      "I119939252"
+    ],
+    "children": [],
+    "works_count": 6326
+  }
+}

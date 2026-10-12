@@ -26,7 +26,7 @@ import pandas as pd
 from tqdm import tqdm
 
 from common.config import DATA, PROCESSED, REVIEW, cfg, setup_logging
-from common.dblp_parse import person_publications
+from common.dblp_parse import person_publications, prefetch
 from common.names import name_similarity, normalise, surname_like, tokens
 from common.sources import oa_get, oa_lookup, oa_paginate, ror, short_id
 
@@ -178,21 +178,13 @@ def resolve(roster: pd.DataFrame, insts: dict) -> pd.DataFrame:
 
     # ORCIDs: roster + DBLP person records
     dblp_cache = {}
+    prefetch([p for p in roster.dblp_pid if p])  # batched SPARQL
     for _, r in tqdm(roster.iterrows(), total=len(roster), desc="DBLP person records"):
         if r.dblp_pid:
             try:
                 dblp_cache[r.faculty_id] = person_publications(r.dblp_pid)
             except Exception as e:
                 log.warning("DBLP %s (%s): %s", r.dblp_pid, r["name"], e)
-    orcid_of = {}
-    for _, r in roster.iterrows():
-        o = (r.orcid or "").upper()
-        dp = dblp_cache.get(r.faculty_id)
-        if not o and dp and dp["orcids"]:
-            o = dp["orcids"][0].upper()
-        if o:
-            orcid_of[r.faculty_id] = o
-    by_orcid = authors_by_orcid(list(orcid_of.values()))
 
     # DBLP DOI overlap -> author ids on those works
     dblp_hits: dict[str, Counter] = {}
@@ -208,6 +200,26 @@ def resolve(roster: pd.DataFrame, insts: dict) -> pd.DataFrame:
                    name_similarity(dp["name"], au["author"].get("display_name") or "") >= 0.75:
                     c[short_id(au["author"]["id"])] += 1
         dblp_hits[fid] = c
+
+    # weak DBLP PIDs (unique exact name, no affiliation in DBLP) must be confirmed by DOI overlap
+    weak = set(roster[roster.dblp_source.eq("dblp_unique_exact_name")].faculty_id) if "dblp_source" in roster else set()
+    for fid in list(dblp_cache):
+        if fid in weak and sum(dblp_hits.get(fid, Counter()).values()) == 0:
+            log.info("dropping unconfirmed DBLP pid for %s", fid)
+            dblp_cache.pop(fid)
+            dblp_hits.pop(fid, None)
+            roster.loc[roster.faculty_id == fid, ["dblp_pid", "dblp_source"]] = ["", "rejected_no_doi_overlap"]
+
+    # ORCIDs: homepage first, else from the (verified) DBLP person record
+    orcid_of = {}
+    for _, r in roster.iterrows():
+        o = (r.orcid or "").upper()
+        dp = dblp_cache.get(r.faculty_id)
+        if not o and dp and dp["orcids"]:
+            o = dp["orcids"][0].upper()
+        if o:
+            orcid_of[r.faculty_id] = o
+    by_orcid = authors_by_orcid(list(orcid_of.values()))
 
     # candidate ids per faculty
     cand_ids: dict[str, set[str]] = {}
@@ -292,7 +304,11 @@ def sample_titles(aid: str, inst_ids: set[str], n: int = 3) -> str:
 
 
 def write_review(cands: pd.DataFrame, insts: dict) -> None:
-    rev = cands[(cands.confidence < AUTO) & (cands.confidence >= 0.4)].copy()
+    hi = cands[cands.confidence >= AUTO]
+    n = hi.groupby("author_id").faculty_id.nunique()
+    shared = set(n[n > 1].index)
+    rev = cands[((cands.confidence < AUTO) & (cands.confidence >= 0.4)) | cands.author_id.isin(shared)].copy()
+    rev.loc[rev.author_id.isin(shared), "reason"] = rev.loc[rev.author_id.isin(shared), "reason"] + " | SHARED_ID_CONFLICT"
     ids = {i: set(v["openalex_ids_all"]) for i, v in insts.items()}
     rev["sample_titles"] = [sample_titles(a, ids[i]) for a, i in tqdm(zip(rev.author_id, rev.institution), total=len(rev), desc="sample titles")]
     rev["accept"] = ""  # you fill: Y / N
@@ -304,7 +320,12 @@ def write_review(cands: pd.DataFrame, insts: dict) -> None:
 
 
 def finalise(cands: pd.DataFrame) -> pd.DataFrame:
-    acc = cands[cands.confidence >= AUTO][["faculty_id", "author_id", "confidence", "reason"]].assign(decided_by="auto")
+    hi = cands[cands.confidence >= AUTO]
+    shared = hi.groupby("author_id").faculty_id.nunique()
+    shared = set(shared[shared > 1].index)  # one OpenAlex ID claimed by two faculty: never auto-accept
+    if shared:
+        log.warning("author ids claimed by >1 faculty (sent to review): %s", sorted(shared))
+    acc = hi[~hi.author_id.isin(shared)][["faculty_id", "author_id", "confidence", "reason"]].assign(decided_by="auto")
     rp = REVIEW / "author_matches_to_review.csv"
     if rp.exists():
         rev = pd.read_csv(rp, dtype=str).fillna("")
@@ -328,16 +349,24 @@ def update_roster(roster: pd.DataFrame, acc: pd.DataFrame, cands: pd.DataFrame, 
     inst_ids = {i: set(v["openalex_ids_all"]) for i, v in insts.items()}
     c = cands.merge(acc[["faculty_id", "author_id"]])
     for i, r in roster.iterrows():
-        if pd.notna(r.joining_year) and str(r.joining_year) not in ("", "nan"):
+        if r.joining_year:
             continue
         yrs = sorted({int(y) for s in c[c.faculty_id == r.faculty_id].affiliated_years for y in str(s).split(",") if y})
         phd = re.search(r"((?:19|20)\d{2})", str(r.phd or ""))
-        if phd:
+        if phd:  # institute affiliation during a PhD there is not employment
             yrs = [y for y in yrs if y >= int(phd.group(1))]
+        if r.get("joined_after_year"):  # absent from every archived list up to that year
+            yrs = [y for y in yrs if y >= int(float(r.joined_after_year))]
+        if r.get("joined_by_year"):
+            continue  # on the earliest archived list: joined before the window, exact year not needed
         if yrs:
-            roster.at[i, "joining_year"] = yrs[0]
+            roster.at[i, "joining_year"] = str(yrs[0])
             roster.at[i, "joining_year_source"] = "inferred_first_affiliated_paper"
-            roster.at[i, "joining_year_confidence"] = 0.5
+            roster.at[i, "joining_year_confidence"] = "0.5"
+        elif r.get("joined_after_year"):
+            roster.at[i, "joining_year"] = str(int(float(r.joined_after_year)))
+            roster.at[i, "joining_year_source"] = "wayback_absent_until"
+            roster.at[i, "joining_year_confidence"] = "0.4"
     roster.to_csv(DATA / "faculty_roster.csv", index=False)
     return roster
 
@@ -346,7 +375,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--reingest", action="store_true")
     args = ap.parse_args()
-    roster = pd.read_csv(DATA / "faculty_roster.csv", dtype={"dblp_pid": str, "orcid": str}).fillna({"orcid": "", "dblp_pid": "", "research_areas": "", "unit_text": "", "unit": "", "name_variants": ""})
+    roster = pd.read_csv(DATA / "faculty_roster.csv", dtype=str).fillna("")
     insts = json.loads((PROCESSED / "institutions.json").read_text()) if args.reingest else resolve_institutions()
     if args.reingest:
         cands = pd.read_parquet(PROCESSED / "author_candidates.parquet")
@@ -356,7 +385,7 @@ def main() -> None:
     acc = finalise(cands)
     roster = update_roster(roster, acc, cands, insts)
 
-    core = roster[roster.is_core.astype(str).eq("True") | roster.designation_class.eq("former_unverified")]
+    core = roster[roster.is_core.eq("True")]
     print("\n=== IDENTITY SUMMARY ===")
     for inst, g in core.groupby("institution"):
         matched = g.openalex_ids.ne("")

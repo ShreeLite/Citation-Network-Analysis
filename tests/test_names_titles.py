@@ -24,6 +24,11 @@ def test_dropped_middle_name_and_spelling_variant():
     assert name_similarity("Srinivasa Rao Kotha", "Srinivas Kotha") >= 0.8
 
 
+def test_distinct_people_with_overlapping_tokens():
+    assert name_similarity("Prasad Krishnan", "Krishna Reddy P") < 0.7
+    assert name_similarity("Raghu Babu Reddy Y.", "Y. Raghu Reddy") >= 0.85
+
+
 def test_different_people_same_surname():
     assert name_similarity("Arun Kumar", "Ravi Kumar") < 0.7
 
