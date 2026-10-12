@@ -277,6 +277,11 @@ def parse_iiitd_cards(list_url: str) -> list[dict]:
         if not a:
             continue
         name = " ".join(a.get_text(" ").split())
+        # adjunct/visiting cards: "Abhinav Dhall (HCD)" — unit in the name, no profile page
+        name_units = []
+        if m := re.match(r"^(.*?)\s*\(([^)]*)\)\s*$", name):
+            name = m.group(1).strip()
+            name_units = [IIITD_UNITS.get(u.strip().upper().replace(".", ""), u.strip()) for u in m.group(2).split(",") if u.strip()]
         sub = c.select_one(".team-subtitle")
         desig = " ".join(sub.get_text(" ").split()) if sub else ""
         email = ""
@@ -292,8 +297,9 @@ def parse_iiitd_cards(list_url: str) -> list[dict]:
             "designation_raw": desig,
             "email": email,
             "phd": phd,
-            "institute_profile": urljoin(list_url, a["href"]),
+            "institute_profile": "" if urljoin(list_url, a["href"]).rstrip("/") == list_url.rstrip("/") else urljoin(list_url, a["href"]),
             "card_type": c.get("type", ""),
+            "name_units": name_units,
         })
     if not out:
         log.warning("no cards parsed on %s", list_url)
@@ -344,7 +350,7 @@ def build_iiitd() -> list[dict]:
     rows, seen = [], {}
     for list_url, cat in cats.items():
         for card in parse_iiitd_cards(list_url):
-            key = card["institute_profile"].rstrip("/")
+            key = card["institute_profile"].rstrip("/") or f"name:{normalise(card['name'])}"
             if key in seen and seen[key]["page_category"] == "regular":
                 continue
             card["page_category"] = cat
@@ -352,7 +358,12 @@ def build_iiitd() -> list[dict]:
     log.info("IIIT-D: %d people across %d category pages", len(seen), len(cats))
     for card in tqdm(list(seen.values()), desc="IIIT-D profiles"):
         desig, units, roles = split_iiitd_designation(card["designation_raw"])
-        card.update(parse_iiitd_profile(card["institute_profile"]))
+        units = units or card.get("name_units", [])
+        if not card["designation_raw"]:
+            desig = {"adjunct": "Adjunct Faculty", "visiting": "Visiting Faculty", "emeritus": "Professor Emeritus",
+                     "professor_of_practice": "Professor of Practice"}.get(card["page_category"], "")
+        if card["institute_profile"]:
+            card.update(parse_iiitd_profile(card["institute_profile"]))
         card.update({
             "institution": inst,
             "designation_main": desig,
