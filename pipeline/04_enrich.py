@@ -26,6 +26,7 @@ from tqdm import tqdm
 from common.config import DATA, EXTERNAL, PROCESSED, REVIEW, cfg, setup_logging
 from common.http import BudgetExhausted
 from common.partners import classify
+from common.quartile_proxy import proxy_quartiles
 from common.sources import OA_MAX_OR, chunks, crossref, oa_get, oa_lookup, oa_paginate, s2, short_id
 from common.titles import is_arxiv_doi
 from common.venues import dblp_acronym, extract_acronym, venue_key
@@ -322,6 +323,13 @@ def main() -> None:
     q = [quartile_for(r.issns.split(";") if r.issns else [], int(r.year or Y1), sj) if r.type == "journal" else ("", "", None, "")
          for r in papers.itertuples()]
     papers["quartile"], papers["sjr_category"], papers["sjr_year_used"], papers["quartile_rule"] = zip(*q) if q else ([], [], [], [])
+
+    # proxy quartile (OpenAlex impact within field) — only a fallback, kept in its own column
+    jsrc = sorted({x for x in papers[papers.type.eq("journal")].openalex_source_id.dropna() if x})
+    prox = proxy_quartiles(jsrc) if jsrc else {}
+    papers["quartile_proxy_openalex"] = papers.openalex_source_id.map(lambda x: prox.get(x, {}).get("quartile_proxy_openalex", "") if x else "")
+    papers.loc[~papers.type.eq("journal"), "quartile_proxy_openalex"] = ""
+    papers["quartile_source"] = np.where(papers.quartile.ne(""), "scimago_sjr", np.where(papers.quartile_proxy_openalex.ne(""), "openalex_proxy", ""))
 
     # CORE
     core = load_core()

@@ -51,3 +51,4 @@ rate_limits:                      # seconds between requests per source
 # Never add a host whose robots.txt disallows us (e.g. portal.core.edu.au bans AI agents;
 # use `make core`, which you run yourself).
 browser_allowed_hosts: [www.scimagojr.com, scimagojr.com, iiit.irins.org, iiitd.irins.org]
+# (Scimago and IRINS still answer a real browser with a bot challenge; we stop there and use manual downloads.)

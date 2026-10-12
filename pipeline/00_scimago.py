@@ -35,8 +35,13 @@ def main() -> None:
         page = ctx.new_page()
         for y in years:
             try:
-                page.goto(PAGE.format(y=y), timeout=90000, wait_until="domcontentloaded")
+                resp = page.goto(PAGE.format(y=y), timeout=90000, wait_until="domcontentloaded")
                 page.wait_for_timeout(3000)
+                if (resp and resp.status == 403) or "just a moment" in page.title().lower():
+                    # Cloudflare bot challenge: we do not try to defeat it; fall back to a manual download
+                    log.warning("Scimago serves a bot challenge; switching to manual download instructions")
+                    failed = years
+                    break
                 with page.expect_download(timeout=180000) as dl:
                     page.evaluate("u => { const a = document.createElement('a'); a.href = u; document.body.appendChild(a); a.click(); }",
                                   EXPORT.format(y=y))
@@ -53,7 +58,8 @@ def main() -> None:
             time.sleep(cfg()["rate_limits"]["web"] * 2)
         b.close()
     if failed:
-        print("Could not fetch these years; download by hand into data/external/scimago/ as scimagojr_<year>.csv:")
+        print("Scimago blocks automated access (Cloudflare challenge). Open each link in your browser and save it to\n"
+              "data/external/scimago/ as scimagojr_<year>.csv, then run: make enrich analysis deliverables site")
         for y in failed:
             print("  ", EXPORT.format(y=y))
 

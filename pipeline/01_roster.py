@@ -629,9 +629,12 @@ def wayback_presence(inst: str) -> pd.DataFrame:
                 log.info("snapshot fetch failed %s %s: %s", ts, orig, e)
                 continue
             for name, ctx in candidate_names(html):
-                m = DESIG_RE.search(ctx[len(name):len(name) + 120])
+                tail = ctx[len(name):len(name) + 160]
+                m = DESIG_RE.search(tail)
+                um = re.match(r"\s*\(([A-Za-z ,&.]{2,40})\)", tail[m.end():]) if m else None  # IIIT-D: "Professor (ECE, CSE)"
                 rows.append({"institution": inst, "snapshot": ts, "year": int(ts[:4]), "name": name,
-                             "designation_seen": m.group(1).title() if m else "", "snapshot_url": f"https://web.archive.org/web/{ts}/{orig}"})
+                             "designation_seen": m.group(1).title() if m else "", "units_seen": um.group(1) if um else "",
+                             "snapshot_url": f"https://web.archive.org/web/{ts}/{orig}"})
     return pd.DataFrame(rows)
 
 
@@ -650,7 +653,9 @@ def wayback_names(inst: str, current_names: list[str], presence: pd.DataFrame) -
         desig = g.designation_seen.replace("", pd.NA).dropna()
         if desig.empty:
             continue  # never shown with a designation: menu text, headings, or non-faculty
-        out.append({"name": name, "first_seen": int(g.year.min()), "last_seen": int(g.year.max()), "n_snapshots": g.snapshot.nunique(),
+        units = g.units_seen.replace("", pd.NA).dropna() if "units_seen" in g else pd.Series(dtype=str)
+        out.append({"units_seen": [u.strip() for u in units.iloc[-1].split(",")] if len(units) else [],
+                    "name": name, "first_seen": int(g.year.min()), "last_seen": int(g.year.max()), "n_snapshots": g.snapshot.nunique(),
                     "snapshot_example": g.snapshot_url.iloc[-1], "designation_seen": desig.iloc[-1] if len(desig) else "",
                     "context": "", "closest_current_similarity": round(best, 2)})
     return out
@@ -823,7 +828,7 @@ def main() -> None:
             for f in wayback_names(inst, cur, pres):
                 d = f["designation_seen"]
                 former_rows.append({
-                    "institution": inst, "name": f["name"], "designation_raw": d, "units": [],
+                    "institution": inst, "name": f["name"], "designation_raw": d, "units": f["units_seen"],
                     "status": "former", "roster_source": "wayback", "leaving_year": f["last_seen"],
                     "notes": f"listed {f['first_seen']}-{f['last_seen']} in {f['n_snapshots']} yearly snapshots as '{d}'; e.g. {f['snapshot_example']}",
                     "page_category": "",
