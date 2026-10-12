@@ -8,3 +8,6 @@ data/raw/request_log.jsonl
 site/node_modules/
 site/dist/
 *.log
+data/raw/logs/
+data/external/ca_bundle_with_intermediates.pem
+data/external/extra_intermediates.pem
