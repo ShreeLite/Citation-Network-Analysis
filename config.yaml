@@ -1,0 +1,47 @@
+# Group 9 — IIIT Hyderabad + IIIT Delhi research mapping (DPCN)
+group: 9
+contact_email: krisjainhzb@gmail.com
+user_agent: "DPCN-Group9-IIIT research mapping (mailto:krisjainhzb@gmail.com)"
+
+years:
+  start: 2016
+  end: 2026
+  partial_year: 2026
+
+institutes:
+  IIIT-H:
+    full_name: International Institute of Information Technology, Hyderabad
+    homepage: https://www.iiit.ac.in/
+    ror_query: International Institute of Information Technology Hyderabad
+    email_domains: [iiit.ac.in, research.iiit.ac.in]
+    unit_type: centre
+  IIIT-D:
+    full_name: Indraprastha Institute of Information Technology Delhi
+    homepage: https://www.iiitd.ac.in/
+    ror_query: Indraprastha Institute of Information Technology Delhi
+    email_domains: [iiitd.ac.in]
+    unit_type: department
+
+core_designations: [assistant professor, associate professor, professor]
+
+flags:
+  include_preprints: false        # arXiv-only works excluded from main analysis
+  big_paper_authors: 25           # >25 authors: flagged and down-weighted
+  big_paper_weight_cap: 0.04      # max per-edge weight for big papers (=1/25)
+
+thresholds:
+  author_match_auto_accept: 0.85
+  title_fuzzy: 93                 # rapidfuzz token_set_ratio; re-tuned and reported in QA
+  roster_name_fuzzy: 90
+  hidden_glue_betweenness_pct: 0.85
+  topic_jaccard_min: 0.30
+  null_model_samples: 200
+
+rate_limits:                      # seconds between requests per source
+  openalex: 0.12
+  crossref: 0.25
+  dblp: 1.5
+  s2: 1.1
+  ror: 0.5
+  wayback: 1.5
+  web: 2.5

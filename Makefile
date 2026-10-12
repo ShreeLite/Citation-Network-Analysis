@@ -1,0 +1,30 @@
+# One command: `make all`. Every step is idempotent and resumes from data/cache.
+PY := .venv/bin/python
+export PYTHONPATH := $(CURDIR)
+
+.PHONY: setup roster identity reingest pubs enrich networks qa analysis deliverables site all test clean-processed
+
+setup:
+	python3 -m venv .venv
+	$(PY) -m pip install -r requirements.txt
+	$(PY) -m playwright install chromium
+	cd site && npm install
+
+roster:        ; $(PY) -m pipeline.01_roster
+identity:      ; $(PY) -m pipeline.02_identity
+reingest:      ; $(PY) -m pipeline.02_identity --reingest
+pubs:          ; $(PY) -m pipeline.03_publications
+enrich:        ; $(PY) -m pipeline.04_enrich
+networks:      ; $(PY) -m pipeline.05_networks
+qa:            ; $(PY) -m pipeline.06_qa
+analysis:      ; $(PY) -m analysis.run_all
+deliverables:  ; $(PY) -m analysis.deliverables
+site:          ; cd site && npm run build
+
+all: roster identity pubs enrich networks qa analysis deliverables site
+
+test:
+	$(PY) -m pytest -q tests
+
+clean-processed:   # keeps the download cache
+	rm -rf data/processed/*
