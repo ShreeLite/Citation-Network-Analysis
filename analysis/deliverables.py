@@ -70,9 +70,10 @@ def main() -> None:
     assert list(off.columns) == SPEC_COLS, off.columns
     off = off.sort_values(["institution", "author", "year", "title"])
     DELIVERABLES.mkdir(exist_ok=True)
-    off.to_csv(DELIVERABLES / "group9_data.csv", index=False)
+    # UTF-8 with BOM: Excel then decodes accented / Indic characters correctly
+    off.to_csv(DELIVERABLES / "group9_data.csv", index=False, encoding="utf-8-sig")
     for f in ("citation_network.csv", "authorship_network.csv", "indian_connections.csv"):
-        shutil.copy(PROCESSED / f, DELIVERABLES / f)
+        pd.read_csv(PROCESSED / f).to_csv(DELIVERABLES / f, index=False, encoding="utf-8-sig")
 
     # workbook
     sheets = {

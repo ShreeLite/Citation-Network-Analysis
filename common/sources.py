@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import logging
+import re
 from functools import lru_cache
 from typing import Iterator
 
@@ -92,23 +93,36 @@ def oa_lookup(entity: str, filter_key: str, values: list[str], select: str | Non
     """Fetch many entities by an ID-like filter. Uses OR-batched list calls (1 credit per
     `batch` values); once the daily budget is exhausted, continues with free singleton calls
     (`/<entity>/<singleton_prefix><value>`) so the step still completes."""
-    from .http import BudgetExhausted
+    from .http import BudgetExhausted, PermanentHTTPError
     global _budget_gone
-    out, vals = [], sorted(set(v for v in values if v))
+    allv = sorted(set(v for v in values if v))
+    # values containing filter syntax (',' '|' '+' etc.) cannot go into an OR filter
+    bad = [v for v in allv if re.search(r"[,|+&<>\s]", v)]
+    vals = [v for v in allv if v not in set(bad)]
+    out, single = [], list(bad)
     i = 0
     while i < len(vals) and not _budget_gone:
         ch = vals[i : i + batch]
         try:
             res = oa_get(entity, filter=f"{filter_key}:" + "|".join(ch), **{"per-page": OA_MAX_PER_PAGE},
                          **({"select": select} if select else {}))
+            out += res.get("results", [])
         except BudgetExhausted:
             log.warning("OpenAlex list budget exhausted; switching to free singleton lookups")
             _budget_gone = True
             break
-        out += res.get("results", [])
+        except PermanentHTTPError as e:
+            if e.status != 400:
+                raise
+            single += ch  # one malformed value spoils the batch: look these up one by one
         i += batch
-    for v in vals[i:]:
-        r = oa_singleton(entity, f"{singleton_prefix}{v}", select)
+    single += vals[i:]
+    for v in single:
+        try:
+            r = oa_singleton(entity, f"{singleton_prefix}{v}", select)
+        except PermanentHTTPError as e:
+            log.info("singleton %s %s failed: %s", entity, v, e)
+            continue
         if r:
             out.append(r)
     return out

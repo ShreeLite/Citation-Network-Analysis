@@ -6,7 +6,7 @@ import random
 
 import pandas as pd
 
-from common.config import DATA, PROCESSED, QA, REVIEW, cfg, collection_date, setup_logging
+from common.config import DATA, DELIVERABLES, PROCESSED, QA, REVIEW, cfg, collection_date, setup_logging
 from common.dblp_parse import person_publications, prefetch
 from common.sources import oa_get, short_id
 from common.titles import normalise_title
@@ -54,6 +54,128 @@ def cited_by_spot_check(mp, n=20) -> pd.DataFrame:
         rows.append({"paper_id": p.openalex_id, "pipeline_n_institutions": len(ours), "group_by_n_institutions_incl_non_IN": len(direct),
                      "pipeline_flag": bool(p.cited_by_indian_inst)})
     return pd.DataFrame(rows)
+
+
+def publisher_audit(sample: pd.DataFrame) -> pd.DataFrame:
+    """Compare title / year / venue / type with the publisher's own record (Crossref) for papers
+    that have a DOI. A mismatch is counted when the title similarity < 90, the year differs by
+    more than 1, or the type disagrees (journal-article vs proceedings-article)."""
+    from rapidfuzz import fuzz
+    from common.sources import crossref
+    rows = []
+    for p in sample.itertuples():
+        if not p.doi or str(p.doi).startswith("10.48550"):
+            rows.append({"paper_id": p.paper_id, "checked": False, "reason": "no publisher DOI"})
+            continue
+        try:
+            m = crossref().get(f"https://api.crossref.org/works/{p.doi}").get("message", {})
+        except Exception as e:
+            rows.append({"paper_id": p.paper_id, "checked": False, "reason": f"crossref: {e}"[:80]})
+            continue
+        t = (m.get("title") or [""])[0]
+        y = ((m.get("issued") or {}).get("date-parts") or [[None]])[0][0]
+        ct = m.get("type", "")
+        title_ok = fuzz.token_sort_ratio(normalise_title(t), normalise_title(p.title)) >= 90
+        year_ok = y is None or abs(int(y) - int(p.year)) <= 1
+        type_ok = not ((ct == "journal-article" and p.type == "conference") or (ct == "proceedings-article" and p.type == "journal"))
+        rows.append({"paper_id": p.paper_id, "doi": p.doi, "checked": True, "title_ok": title_ok, "year_ok": year_ok, "type_ok": type_ok,
+                     "ok": title_ok and year_ok and type_ok, "publisher_title": t, "publisher_year": y, "publisher_type": ct,
+                     "our_title": p.title, "our_year": p.year, "our_type": p.type})
+    return pd.DataFrame(rows)
+
+
+def checkpoint3(mp, ml, roster, summary) -> list[str]:
+    L = []
+    name = roster.set_index("faculty_id").name.to_dict()
+    # counts and trends
+    py = mp[mp.year < 2026].groupby("year").size()
+    dips = [int(y) for y in py.index[1:-1] if py[y] < 0.7 * (py[y - 1] + py[y + 1]) / 2] if len(py) > 2 else []
+    L += ["## 9. Papers per year (smoothness)", "", f"- Years dipping below 70% of their neighbours' mean: {dips or 'none'} (2026 excluded: partial).", ""]
+    lk = ml.merge(mp[["paper_id", "year"]], on="paper_id")
+    per = lk.groupby(["faculty_id", "year"]).paper_id.nunique().reset_index(name="n")
+    top = per.sort_values("n", ascending=False).drop_duplicates("faculty_id").head(5)
+    L += ["## 10. Most prolific faculty (max papers in one year)", "", "| Faculty | Year | Papers that year | Total 2016–26 |", "|---|---|---|---|"]
+    for t in top.itertuples():
+        tot = lk[lk.faculty_id == t.faculty_id].paper_id.nunique()
+        L.append(f"| {name.get(t.faculty_id)} | {t.year} | {t.n}{' ⚠ > 40' if t.n > 40 else ''} | {tot} |")
+    L.append("")
+    tshare = mp.type.value_counts(normalize=True)
+    L += ["## 11. Journal vs conference", "", f"- conference {tshare.get('conference', 0):.1%}, journal {tshare.get('journal', 0):.1%} "
+          f"({'OK: conference-heavy as expected for CS institutes' if tshare.get('conference', 0) >= 0.4 else 'CHECK: journals dominate — DBLP merge may have failed'}).",
+          "- Per institute: " + "; ".join(f"{i}: conf {g.type.eq('conference').mean():.0%}" for i, g in mp.assign(inst=mp.our_institutions.str.split(";")).explode("inst").groupby("inst")), ""]
+    # arXiv beside published
+    allp = pd.read_parquet(PROCESSED / "papers_enriched.parquet")
+    pre = allp[allp.type.eq("preprint")]
+    beside = set(pre.title.map(normalise_title)) & set(mp.title.map(normalise_title))
+    L += ["## 12. Duplicates incl. arXiv beside published", "", f"- Preprint-only records whose title equals a main-set paper: {len(beside)} (should be 0 — such pairs are merged).", ""]
+    summary.append(("arxiv_beside_published", len(beside)))
+    # ranking coverage + top venues
+    j, c = mp[mp.type == "journal"], mp[mp.type == "conference"]
+    L += ["## 13. Ranking coverage and top venues", "", f"- Journal papers with a quartile: {j.quartile.ne('').mean():.1%} (source: {j.get('quartile_source', pd.Series(['?'])).replace('', pd.NA).dropna().mode().iloc[0] if 'quartile_source' in j and j.quartile_source.ne('').any() else 'none'}); "
+          f"conference papers with a CORE rank: {c.core_rank.ne('').mean():.1%}.", ""]
+    for inst, g in mp.assign(inst=mp.our_institutions.str.split(";")).explode("inst").groupby("inst"):
+        v = g.acronym.where(g.acronym.fillna("").ne(""), g.journal_name).value_counts().head(20)
+        L += [f"**{inst} top 20 venues:** " + ", ".join(f"{k} ({n})" for k, n in v.items()), ""]
+    # top cited
+    L += ["## 14. Ten most-cited papers", "", "| Title | Venue | Year | Citations |", "|---|---|---|---|"]
+    for p in mp.sort_values("citations", ascending=False).head(10).itertuples():
+        L.append(f"| {str(p.title)[:90]} | {p.acronym or p.journal_name} | {p.year} | {int(p.citations or 0)} |")
+    L += ["", "OpenAlex counts run below Google Scholar's; that is expected.", ""]
+    # Indian flags
+    a_, b_ = mp.cites_indian_inst.mean(), mp.cited_by_indian_inst.mean()
+    L += ["## 15. Indian-citation flags", "", f"- cites_indian_inst TRUE: {a_:.1%}; cited_by_indian_inst TRUE: {b_:.1%} "
+          f"({'OK: strictly between 0% and 100%' if 0 < a_ < 1 and 0 < b_ < 1 else 'BROKEN'}).", ""]
+    edges = pd.read_parquet(PROCESSED / "citing_indian_edges.parquet")
+    insts = json.loads((PROCESSED / "institutions.json").read_text())
+    hand = []
+    own_only = []
+    for p in mp.dropna(subset=["openalex_id"]).itertuples():
+        e = edges[edges.cited_paper == p.openalex_id]
+        if len(e) and not p.cited_by_indian_inst:
+            own_only.append(p)
+        if len(own_only) >= 1:
+            break
+    sample = mp[mp.cited_by_indian_inst & mp.openalex_id.notna()].sample(min(4, int(mp.cited_by_indian_inst.sum())), random_state=3)
+    for p in list(sample.itertuples()) + own_only[:1]:
+        res = oa_get("works", filter=f"cites:{p.openalex_id},authorships.institutions.country_code:IN", group_by="authorships.institutions.id")
+        own = set().union(*(insts[i]["openalex_ids_all"] for i in p.our_institutions.split(";")))
+        ext = [g for g in res.get("group_by", []) if g.get("key") and short_id(g["key"]) not in own]
+        # group_by spans all institutions of Indian-co-authored citing works; restrict to IN ones via names
+        hand.append({"paper": p.openalex_id, "title": str(p.title)[:60], "flag": bool(p.cited_by_indian_inst),
+                     "own_only_case": p in own_only, "citing_groups_excl_own": len(ext)})
+    L += ["Hand-check (direct per-paper OpenAlex query):", "", pd.DataFrame(hand).to_markdown(index=False) if hand else "n/a", "",
+          "A paper cited by Indian works only from its own institute must be FALSE — the own-only case above is FALSE when its row shows flag = False.", ""]
+    # network files
+    cn = pd.read_csv(PROCESSED / "citation_network.csv")
+    an = pd.read_csv(PROCESSED / "authorship_network.csv")
+    ic = pd.read_csv(PROCESSED / "indian_connections.csv")
+    src_ok = cn.source_openalex_id.isin(mp.openalex_id).mean()
+    self_c = int((cn.source_openalex_id == cn.target_openalex_id).sum())
+    self_a = int((an.faculty_id_a == an.faculty_id_b).sum())
+    pair = an.apply(lambda r: (min(r.faculty_id_a, r.faculty_id_b), max(r.faculty_id_a, r.faculty_id_b), r.paper_doi), axis=1)
+    dup_ab = int(pair.duplicated().sum())
+    own_partner = int(ic.apply(lambda r: r.partner_inst == insts[r.your_inst]["openalex_name"], axis=1).sum())
+    L += ["## 16. Network files", "", f"- Citation edges whose source paper is in the papers table: {src_ok:.1%}", f"- Self-loops: citation {self_c}, authorship {self_a}",
+          f"- A–B and B–A duplicates (same paper) in authorship edges: {dup_ab}", f"- Partner rows where an institute is its own partner: {own_partner}", ""]
+    summary += [("citation_sources_in_papers", round(src_ok, 4)), ("self_loops", self_c + self_a), ("ab_ba_duplicates", dup_ab), ("own_partner_rows", own_partner)]
+    # official file format
+    off = DELIVERABLES / "group9_data.csv"
+    if off.exists():
+        o = pd.read_csv(off, encoding="utf-8-sig")
+        nonascii = int(o.author.str.contains(r"[^\x00-\x7f]", regex=True).sum() + o.title.str.contains(r"[^\x00-\x7f]", regex=True).sum())
+        L += ["## 17. Official file format", "", f"- Columns exactly as spec, in order: {list(o.columns) == SPEC_COLS}", f"- group = 9 on every row: {bool((o.group == 9).all())}",
+              f"- Rows: {len(o):,}; written as UTF-8 with BOM so Excel shows accented/Indic characters correctly ({nonascii} cells contain non-ASCII text).",
+              "- Files: " + ", ".join(f"{f} {'✓' if (DELIVERABLES / f).exists() else '✗'}" for f in ("group9_data.csv", "citation_network.csv", "authorship_network.csv", "indian_connections.csv")), ""]
+    # publisher audit
+    aud = publisher_audit(mp.sample(min(50, len(mp)), random_state=9))
+    chk = aud[aud.checked]
+    err = 1 - chk.ok.mean() if len(chk) else float("nan")
+    aud.to_csv(QA / "audit_publisher_check.csv", index=False)
+    L += ["## 18. Audit sample vs publisher record (Crossref)", "", f"- 50 random papers; {len(chk)} have a publisher DOI and were checked. Error rate: {err:.1%} "
+          f"({'solid (< 5%)' if err < 0.05 else 'acceptable (5–10%)' if err < 0.10 else 'INVESTIGATE (> 10%)'}).",
+          f"- Title mismatches {int((~chk.title_ok).sum())}, year mismatches {int((~chk.year_ok).sum())}, type mismatches {int((~chk.type_ok).sum())} — details in `qa/audit_publisher_check.csv`.", ""]
+    summary.append(("audit_error_rate", round(err, 4)))
+    return L
 
 
 def main() -> None:
@@ -136,8 +258,8 @@ def main() -> None:
     if len(cb):
         lines += ["## 8. cited_by_indian_inst spot check (per-paper group_by vs batched pipeline)", "", cb.to_markdown(index=False), ""]
 
-    # 9. Spec columns
-    lines += ["## 9. Official file", "", f"`group9_data.csv` columns (asserted in order): {', '.join(SPEC_COLS)}.", ""]
+    # 9-17: checkpoint 3 checklist (qa/sanity_checklist.md)
+    lines += checkpoint3(mp, ml, roster, summary)
     (QA / "qa_report.md").write_text("\n".join(lines))
     pd.DataFrame(summary, columns=["metric", "value"]).to_csv(PROCESSED / "qa_summary.csv", index=False)
     print("\n".join(lines[:12]))

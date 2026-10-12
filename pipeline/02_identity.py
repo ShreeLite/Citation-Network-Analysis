@@ -555,12 +555,21 @@ def finalise(cands: pd.DataFrame, roster: pd.DataFrame) -> pd.DataFrame:
         no = rev[rev.accept.str.strip().str.upper().str.match(r"^N(O)?\b")]
         acc = acc.merge(no[["faculty_id", "author_id"]], how="left", indicator=True)
         acc = acc[acc._merge == "left_only"].drop(columns="_merge")
+    # split profiles surfaced by step 3: exact-name authors on institute-affiliated works
+    # (written by add_from_institution_works; already topic-checked there)
+    sp = PROCESSED / "author_ids_from_inst_works.csv"
+    if sp.exists() and sp.stat().st_size > 10:
+        acc = pd.concat([acc, pd.read_csv(sp, dtype=str).assign(decided_by="auto_inst_works")])
     extra = REVIEW / "author_ids_manual_add.csv"  # optional: faculty_id,author_id you add by hand
     if extra.exists():
         acc = pd.concat([acc, pd.read_csv(extra, dtype=str).assign(confidence=1.0, reason="manual_add", decided_by="manual_add")])
-    acc = acc.drop_duplicates(["faculty_id", "author_id"])
-    manual = acc[acc.decided_by.isin(["manual_review", "manual_add"])]
-    acc, dropped = cluster_filter(acc[~acc.index.isin(manual.index)], cands)
+    # when a pair appears twice, keep the already-checked decision (yours, or step-3 evidence)
+    prio = {"manual_add": 0, "manual_review": 1, "auto_inst_works": 2}
+    acc = acc.assign(_p=acc.decided_by.map(prio).fillna(9)).sort_values("_p").drop_duplicates(["faculty_id", "author_id"]).drop(columns="_p")
+    acc = acc.reset_index(drop=True)
+    is_checked = acc.decided_by.isin(["manual_review", "manual_add", "auto_inst_works"])  # already checked
+    manual = acc[is_checked]
+    acc, dropped = cluster_filter(acc[~is_checked], cands)
     acc = pd.concat([acc, manual]).drop_duplicates(["faculty_id", "author_id"])  # your own decisions are never filtered
     pd.DataFrame(dropped).to_csv(REVIEW / "author_matches_dropped_by_topic_check.csv", index=False)
     log.info("topic-consistency filter dropped %d weak matches", len(dropped))
@@ -597,10 +606,55 @@ def update_roster(roster: pd.DataFrame, acc: pd.DataFrame, cands: pd.DataFrame, 
     return roster
 
 
+def add_from_institution_works(roster: pd.DataFrame) -> None:
+    """Accept split profiles found in step 3 (review/possibly_missed_author_ids.csv): exact name,
+    ≥ 2 institute-affiliated works, and topically consistent with the person's accepted
+    profiles (or, if none, with their homepage research areas)."""
+    m = pd.read_csv(REVIEW / "possibly_missed_author_ids.csv", dtype={"author_id": str})
+    acc = pd.read_csv(PROCESSED / "faculty_author_ids.csv", dtype=str)
+    m = m[(m.n_works >= 2)]
+    authors = fetch_authors(list(set(m.author_id) | set(acc.author_id)))
+    tops = {a: {short_id(t["id"]) for t in (v.get("topics") or [])[:10]} for a, v in authors.items()}
+    names = {a: " ".join(t["display_name"] for t in (v.get("topics") or [])[:10]).lower() for a, v in authors.items()}
+    areas = roster.set_index("faculty_id").research_areas.to_dict()
+    # how many distinct pool profiles carry (almost) exactly this name: few = a rare name
+    insts = json.loads((PROCESSED / "institutions.json").read_text())
+    pool = {}
+    for v in insts.values():
+        pool.update(institution_pool(v["openalex_ids_all"]))
+    name_count = {fid: sum(1 for a in pool.values() if best_name_sim([nm], a) >= 0.95)
+                  for fid, nm in roster.set_index("faculty_id").name.items() if fid in set(m.faculty_id)}
+    rows = []
+    for r in m.itertuples():
+        a = authors.get(r.author_id)
+        if not a or best_name_sim([r.name], a) < 0.95:
+            continue
+        mine = acc[acc.faculty_id == r.faculty_id].author_id
+        ref = set().union(*(tops.get(x, set()) for x in mine)) if len(mine) else set()
+        if ref:
+            shared = len(tops.get(r.author_id, set()) & ref)
+            rare = name_count.get(r.faculty_id, 99) <= 3
+            ok = shared >= 2 or (shared >= 1 and rare)
+            why = f"{shared} topic(s) shared with accepted profiles" + (" (rare name)" if rare and shared < 2 else "")
+        else:
+            words = set(re.findall(r"[a-z]{5,}", str(areas.get(r.faculty_id, "")).lower())) - {"research", "systems", "analysis", "applications"}
+            ok = sum(1 for w in words if w in names.get(r.author_id, "")) >= 2
+            why = "topics match homepage research areas"
+        if ok:
+            rows.append({"faculty_id": r.faculty_id, "author_id": r.author_id, "confidence": "0.9",
+                         "reason": f"split profile on {r.n_works} institute-affiliated works; {why}"})
+    pd.DataFrame(rows, columns=["faculty_id", "author_id", "confidence", "reason"]).to_csv(PROCESSED / "author_ids_from_inst_works.csv", index=False)
+    log.info("added %d split profiles from institute-affiliated works (of %d candidates)", len(rows), len(m))
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--reingest", action="store_true")
+    ap.add_argument("--from-step3", action="store_true", help="add split profiles surfaced by step 3, then re-ingest")
     args = ap.parse_args()
+    if args.from_step3:
+        add_from_institution_works(pd.read_csv(DATA / "faculty_roster.csv", dtype=str).fillna(""))
+        args.reingest = True
     roster = pd.read_csv(DATA / "faculty_roster.csv", dtype=str).fillna("")
     insts = json.loads((PROCESSED / "institutions.json").read_text()) if args.reingest else resolve_institutions()
     if args.reingest:
