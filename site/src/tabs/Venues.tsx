@@ -36,7 +36,7 @@ export default function Venues() {
     <div className="flex flex-col gap-5">
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {insts.map((i) => [
-          <Kpi key={`${i}q`} label={`${i} · Q1 share`} value={pct(by[i].q.q1)} sub={`of ${fmt(by[i].q.nJr)} ranked journal papers (${fmt(by[i].nJ)} journal papers)`} />,
+          <Kpi key={`${i}q`} label={`${i} · Q1 share${meta.quartile_source === "openalex_proxy" ? " (proxy)" : ""}`} value={pct(by[i].q.q1)} sub={`of ${fmt(by[i].q.nJr)} ranked journal papers (${fmt(by[i].nJ)} journal papers)`} />,
           <Kpi key={`${i}c`} label={`${i} · CORE A*/A`} value={pct(by[i].q.coreA)} sub={`of ${fmt(by[i].q.nCr)} ranked conference papers (${fmt(by[i].nC)})`} />,
         ])}
       </div>

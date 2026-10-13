@@ -12,3 +12,8 @@ data/raw/logs/
 data/external/ca_bundle_with_intermediates.pem
 data/external/extra_intermediates.pem
 site/public/*.zip
+data/processed/works_openalex.jsonl.gz
+data/processed/referenced_works.parquet
+data/processed/source_records.parquet
+data/processed/citing_indian_edges.parquet
+qa/site_screens/

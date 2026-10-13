@@ -35,14 +35,14 @@ DICTIONARY = [
     ("weight", "authorship_network", "1/(n_authors−1) per shared paper; big_paper = more than 25 authors."),
     ("total_citations", "indian_connections", "Citations our institute's papers received from the partner (citing work × partner institution)."),
     ("citations_given_to_partner", "indian_connections", "References from our papers to works with the partner institution."),
-    ("topic_jaccard", "indian_connections", "Jaccard of OpenAlex topic sets (our papers vs partner's 2016–2026 output); top 200 partners per institute."),
+    ("topic_jaccard", "indian_connections", "Jaccard of OpenAlex topic sets (our papers vs partner's 2016–2026 output); top 100 partners per institute."),
 ]
 
 
 def autosize(ws, df: pd.DataFrame, wb) -> None:
     hdr = wb.add_format({"bold": True, "bg_color": "#1F2937", "font_color": "#FFFFFF", "text_wrap": True, "valign": "top"})
     for j, c in enumerate(df.columns):
-        width = min(60, max(10, len(str(c)) + 2, int(df[c].astype(str).str.len().head(500).quantile(0.9)) + 2 if len(df) else 10))
+        width = min(60, max(10, len(str(c)) + 2, int(df[c].head(500).fillna("").astype(str).str.len().quantile(0.9) or 0) + 2 if len(df) else 10))
         ws.set_column(j, j, width)
         ws.write(0, j, c, hdr)
     ws.freeze_panes(1, 0)
@@ -86,7 +86,7 @@ def main() -> None:
         "citation_flow_by_year": pd.read_csv(PROCESSED / "citation_flow_by_year.csv"),
         "pre_joining_papers": links[links.status.eq("pre_joining")].merge(allp[["paper_id", "title", "year", "type", "doi"]], on="paper_id")
                               .assign(faculty_name=lambda x: x.faculty_id.map(name)),
-        "preprints": allp[allp.type.eq("preprint")],
+        "preprints": __import__("analysis.run_all", fromlist=["x"]).unpublished_preprints(allp, mp, links),
         "qa_summary": pd.read_csv(PROCESSED / "qa_summary.csv") if (PROCESSED / "qa_summary.csv").exists() else pd.DataFrame(),
     }
     findings_dir = PROCESSED / "analysis"

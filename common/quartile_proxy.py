@@ -26,14 +26,15 @@ def _top_field(src: dict) -> str | None:
 def field_thresholds(field_id: str, n_pages: int = 20) -> tuple[float, float, float] | None:
     vals = []
     for page in range(1, n_pages + 1):
-        res = oa_get("sources", filter=f"type:journal,topics.field.id:{field_id},works_count:>50", sample=2000, seed=42,
+        res = oa_get("sources", filter=f"type:journal,topics.field.id:{field_id},works_count:>500", sample=2000, seed=42,
                      select="id,summary_stats,topics", page=page, **{"per-page": 100})
         rs = res.get("results", [])
         for s in rs:
-            if _top_field(s) == field_id:
-                v = (s.get("summary_stats") or {}).get("2yr_mean_citedness")
-                if v is not None:
-                    vals.append(v)
+            st = s.get("summary_stats") or {}
+            # SJR ranks a curated (Scopus-indexed) population; OpenAlex also lists thousands of tiny,
+            # uncited journals that would drag thresholds down. Calibrate on established journals.
+            if _top_field(s) == field_id and (st.get("2yr_mean_citedness") or 0) > 0 and (st.get("h_index") or 0) >= 10:
+                vals.append(st["2yr_mean_citedness"])
         if len(rs) < 100:
             break
     if len(vals) < 50:

@@ -34,6 +34,15 @@ OUT.mkdir(exist_ok=True)
 INSTS = ["IIIT-H", "IIIT-D"]
 
 
+def unpublished_preprints(allp: pd.DataFrame, mp: pd.DataFrame, links: pd.DataFrame) -> pd.DataFrame:
+    """arXiv-only works that are not just an earlier version of a main-set paper (identical
+    normalised title — usually the arXiv version predates publication by > 2 years)."""
+    from common.titles import normalise_title
+    published = set(mp.title.map(normalise_title))
+    pre = allp[allp.type.eq("preprint") & allp.paper_id.isin(links[links.in_main_set].paper_id)]
+    return pre[~pre.title.map(normalise_title).isin(published)]
+
+
 def h_index(cites) -> int:
     c = sorted((int(x) for x in cites if pd.notna(x)), reverse=True)
     return sum(1 for i, v in enumerate(c, 1) if v >= i)
@@ -227,6 +236,11 @@ def central_question(core, G_inst):
         G = G_inst[i]
         unit = {f.faculty_id: f.unit for f in core[core.institution == i].itertuples()}
         com = g.louvain(G)
+        # unit-based comparisons use only faculty with a known unit (mostly older former
+        # faculty lack one); 'Unassigned' must not act as a unit
+        known = [n for n in G if unit.get(n) != "Unassigned"]
+        G = G.subgraph(known).copy()
+        com = {n: c for n, c in com.items() if n in G}
         active = [n for n in G if G.degree(n) > 0]
         Ga = G.subgraph(active)
         nm = g.null_model_stats(Ga, unit, samples=max(100, TH["null_model_samples"]))
@@ -235,7 +249,8 @@ def central_question(core, G_inst):
         matrix = [[sum(1 for n in active if unit[n] == u and com[n] == c) for c in comms] for u in units]
         res[i] = {
             "n_faculty": G.number_of_nodes(), "n_active": len(active), "n_edges": Ga.number_of_edges(),
-            "n_units": len(set(unit.values())), "n_communities": len(comms),
+            "n_excluded_no_unit": int(sum(1 for n in G_inst[i] if unit.get(n) == "Unassigned")),
+            "n_units": len(set(unit.values()) - {"Unassigned"}), "n_communities": len(comms),
             "nmi_units_vs_communities": g.nmi(unit, com, active),
             "modularity_communities": g.modularity_of(Ga, com), "modularity_units": g.modularity_of(Ga, unit),
             "avg_clustering": nx.average_clustering(Ga), "cross_unit_share_links": g.cross_unit_share(Ga, unit),
@@ -262,9 +277,9 @@ def finding1(core, G_inst):
                             "degree": G.degree(n), "betweenness": bet[n], "flagged": n in fl})
         for f in flagged:
             rows.append({"institution": i, "faculty_id": f["node"], "name": name[f["node"]], "unit": G.nodes[f["node"]]["unit"], **f})
-    df = pd.DataFrame(rows)
+    df = pd.DataFrame(rows, columns=["institution", "faculty_id", "name", "unit", "node", "betweenness", "degree", "lcc_before", "lcc_after", "lcc_drop", "lcc_drop_pct"])
     df.to_csv(OUT / "finding1_hidden_glue.csv", index=False)
-    head = df.sort_values("lcc_drop", ascending=False).head(1).to_dict("records")
+    head = df.sort_values(["lcc_drop", "betweenness"], ascending=False).head(1).to_dict("records")
     return {"table": rows, "scatter": scatter, "thresholds": thr, "headline_person": head[0] if head else None,
             "n_flagged": {i: int((df.institution == i).sum()) if len(df) else 0 for i in INSTS}}
 
@@ -274,7 +289,7 @@ def finding2(core, G_inst):
     name = core.set_index("faculty_id").name.to_dict()
     for i in INSTS:
         G = G_inst[i]
-        for u, grp in core[core.institution == i].groupby("unit"):
+        for u, grp in core[(core.institution == i) & core.unit.ne("Unassigned")].groupby("unit"):
             H = G.subgraph(grp.faculty_id).copy()
             aps = g.articulation_report(H)
             comps = nx.number_connected_components(H)
@@ -352,7 +367,7 @@ def coauthor_sets(mp, ml):
             if wid not in want:
                 continue
             aus = {short_id(a["author"].get("id")) for a in w.get("authorships", [])}
-            if len(aus) > TH.get("big_paper_authors", 25) if False else len(aus) > cfg()["flags"]["big_paper_authors"]:
+            if len(aus) > cfg()["flags"]["big_paper_authors"]:
                 continue  # consortium papers would make everyone share a co-author
             for f in pap_fac.get(pid_of.get(wid), ()):
                 co[f] |= aus - own.get(f, set())
@@ -364,26 +379,35 @@ def finding4(core, ml, mp, G_all):
     co = coauthor_sets(mp, ml)
     info = core.set_index("faculty_id")
     rows = []
-    ids = [f for f in core.faculty_id if topics.get(f)]
+    # a topic set of one or two topics makes Jaccard trivially 1.0: require ≥ 3 topics each
+    ids = [f for f in core.faculty_id if len(topics.get(f, ())) >= 3]
+    # 'high similarity' = top 1% of topic Jaccard among all pairs of these faculty (topics are
+    # fine-grained, so absolute values run low), with ≥ 3 topics in common
+    all_j = [g.jaccard(topics[a], topics[b]) for a, b in itertools.combinations(ids, 2)]
+    thr = float(np.quantile(all_j, 0.99)) if all_j else 1.0
     for a, b in itertools.combinations(ids, 2):
         j = g.jaccard(topics[a], topics[b])
-        if j < TH["topic_jaccard_min"]:
+        if j < thr or len(topics[a] & topics[b]) < 3:
             continue
-        if G_all.has_edge(a, b) or (co[a] & co[b]):
-            continue
+        if G_all.has_edge(a, b):
+            continue  # they already write together
+        shared_co = len(co[a] & co[b])
         ia, ib = info.at[a, "institution"], info.at[b, "institution"]
         rows.append({"faculty_a": info.at[a, "name"], "faculty_b": info.at[b, "name"], "institution_a": ia, "institution_b": ib,
                      "unit_a": info.at[a, "unit"], "unit_b": info.at[b, "unit"], "topic_jaccard": round(j, 3),
                      "shared_topics": len(topics[a] & topics[b]), "scope": "cross-institute" if ia != ib else f"within {ia}",
-                     "same_unit": ia == ib and info.at[a, "unit"] == info.at[b, "unit"], "faculty_id_a": a, "faculty_id_b": b})
-    df = pd.DataFrame(rows).sort_values("topic_jaccard", ascending=False) if rows else pd.DataFrame()
+                     "same_unit": ia == ib and info.at[a, "unit"] == info.at[b, "unit"], "faculty_id_a": a, "faculty_id_b": b,
+                     "shared_coauthors": shared_co,
+                     "tier": "1 · strangers (no joint paper, no shared co-author)" if shared_co == 0 else "2 · one introduction away (shared co-author)"})
+    df = pd.DataFrame(rows).sort_values(["tier", "topic_jaccard", "shared_topics"], ascending=[True, False, False]) if rows else pd.DataFrame()
     # topic names for display
     tn = mp.drop_duplicates("topic_id").set_index("topic_id").topic.to_dict()
     if len(df):
         df["shared_topic_names"] = [", ".join(sorted(tn.get(t, t) for t in topics[a] & topics[b])[:5]) for a, b in zip(df.faculty_id_a, df.faculty_id_b)]
     df.to_csv(OUT / "finding4_missed_collaborations.csv", index=False)
-    return {"pairs": df.to_dict("records"), "threshold": TH["topic_jaccard_min"],
-            "counts": df.scope.value_counts().to_dict() if len(df) else {}, "n_faculty_with_topics": len(ids)}
+    return {"pairs": df.to_dict("records"), "threshold": round(thr, 3), "threshold_rule": "top 1% of all faculty pairs, ≥ 3 shared topics", "min_topics": 3,
+            "counts": df.scope.value_counts().to_dict() if len(df) else {}, "n_faculty_with_topics": len(ids),
+            "tier_counts": df.tier.value_counts().to_dict() if len(df) else {}}
 
 
 def finding5(core, ml, mp):
@@ -391,6 +415,8 @@ def finding5(core, ml, mp):
     inst = core.set_index("faculty_id").institution.to_dict()
     lab = []
     for pid, grp in ml.groupby("paper_id"):
+        if any(unit.get(f) == "Unassigned" for f in grp.faculty_id):
+            continue  # a co-author's unit is unknown: cannot tell within- from cross-unit
         by_inst = defaultdict(set)
         for f in grp.faculty_id:
             by_inst[inst[f]].add(unit[f])
@@ -502,7 +528,7 @@ def main() -> None:
     papers_site = mp.assign(faculty=mp.paper_id.map(ml.groupby("paper_id").faculty_id.apply(list)))[
         ["paper_id", "title", "year", "type", "journal_name", "acronym", "doi", "citations", "quartile", "core_rank", "field",
          "subfield", "our_institutions", "faculty", "cites_indian_inst", "cited_by_indian_inst"]]
-    pre = allp[allp.type.eq("preprint") & allp.paper_id.isin(links[links.in_main_set].paper_id)]
+    pre = unpublished_preprints(allp, mp, links)
     pre_site = pre.assign(faculty=pre.paper_id.map(links[links.in_main_set].groupby("paper_id").faculty_id.apply(list)),
                           our_institutions=pre.our_institutions)[["paper_id", "title", "year", "type", "doi", "citations", "field", "our_institutions", "faculty"]]
     dump("papers", papers_site.to_dict("records"))

@@ -17,7 +17,7 @@ export function headlines(F: any): Headline[] {
     const total = INST.reduce((s, i) => s + (nf[i] || 0), 0);
     out.push({
       id: "f1", n: 1, kicker: "1 · The hidden glue", question: "Who holds the collaboration network together without being among its most connected people?",
-      number: String(total), numberLabel: hp ? `faculty with top-15% betweenness but below-median degree; removing ${hp.name} cuts the largest connected group by ${hp.lcc_drop} people (${pct(hp.lcc_drop_pct, 0)}).` : "faculty flagged as bridges with ordinary degree",
+      number: String(total), numberLabel: hp ? `faculty with top-15% betweenness but ordinary degree (not in the top quarter); removing ${hp.name} cuts the largest connected group by ${hp.lcc_drop} people (${pct(hp.lcc_drop_pct, 0)}).` : "faculty flagged as bridges with ordinary degree",
       recommendation: "Recognise and protect bridging roles in promotion and retention reviews — losing one of these people fragments collaboration more than losing a prolific author.",
       audience: "Institute leadership (Director, Dean of Faculty)",
     });
@@ -51,10 +51,11 @@ export function headlines(F: any): Headline[] {
     const c = F.f4?.counts || {};
     const cross = c["cross-institute"] || 0;
     const total = Object.values(c).reduce((s: number, v: any) => s + v, 0) as number;
+    const strangers = Object.entries(F.f4?.tier_counts || {}).filter(([k]) => k.startsWith("1")).reduce((s, [, v]) => s + (v as number), 0);
     out.push({
-      id: "f4", n: 4, kicker: "4 · Collaborations waiting to happen", question: "Which pairs work on the same topics but have never written together or shared a co-author?",
-      number: String(total), numberLabel: `high-overlap pairs (topic Jaccard ≥ ${F.f4?.threshold}) with no joint paper and no shared co-author; ${cross} span IIIT-H ↔ IIIT-D.`,
-      recommendation: "Use the list as a matchmaking shortlist for seed grants, joint workshops and an IIIT-H–IIIT-D faculty exchange.",
+      id: "f4", n: 4, kicker: "4 · Collaborations waiting to happen", question: "Which pairs work on the same topics but have never written a paper together?",
+      number: String(total), numberLabel: `of the most topically similar faculty pairs (top 1%, ≥ 3 shared topics) have never co-authored; ${strangers} share no co-author at all, the rest are one introduction away; ${cross} span IIIT-H ↔ IIIT-D.`,
+      recommendation: "Use the list as a matchmaking shortlist for seed grants, joint workshops and an IIIT-H–IIIT-D faculty exchange — start with pairs who already share a co-author.",
       audience: "Faculty and the research office",
     });
   }

@@ -1,78 +1,78 @@
 {
   "collected_at": "2026-10-12",
   "records_by_source": {
-    "openalex": 20425,
+    "openalex": 20533,
     "dblp": 12401,
     "iiith_portal": 4440
   },
-  "papers": 20789,
+  "papers": 20889,
   "papers_by_type_hint": {
-    "false": 18840,
-    "true": 1949
+    "false": 18920,
+    "true": 1969
   },
-  "links": 23454,
-  "links_main": 15068,
-  "links_pre_joining": 4490,
-  "links_after_leaving": 1833,
-  "overmerge_filtered": 2063,
+  "links": 23564,
+  "links_main": 15137,
+  "links_pre_joining": 4493,
+  "links_after_leaving": 1834,
+  "overmerge_filtered": 2100,
   "fuzzy_threshold_used": 93,
   "fuzzy_tuning": [
     {
       "threshold": 85,
-      "tp": 14976,
-      "fp": 643,
-      "fn": 363,
-      "precision": 0.9588,
-      "recall": 0.9763
+      "tp": 14950,
+      "fp": 631,
+      "fn": 361,
+      "precision": 0.9595,
+      "recall": 0.9764
     },
     {
       "threshold": 88,
-      "tp": 14974,
-      "fp": 565,
-      "fn": 365,
-      "precision": 0.9636,
-      "recall": 0.9762
+      "tp": 14948,
+      "fp": 553,
+      "fn": 363,
+      "precision": 0.9643,
+      "recall": 0.9763
     },
     {
       "threshold": 90,
-      "tp": 14972,
-      "fp": 527,
-      "fn": 367,
-      "precision": 0.966,
-      "recall": 0.9761
+      "tp": 14946,
+      "fp": 515,
+      "fn": 365,
+      "precision": 0.9667,
+      "recall": 0.9762
     },
     {
       "threshold": 92,
-      "tp": 14971,
-      "fp": 480,
-      "fn": 368,
-      "precision": 0.9689,
-      "recall": 0.976
+      "tp": 14945,
+      "fp": 484,
+      "fn": 366,
+      "precision": 0.9686,
+      "recall": 0.9761
     },
     {
       "threshold": 93,
-      "tp": 14966,
-      "fp": 473,
-      "fn": 373,
-      "precision": 0.9694,
-      "recall": 0.9757
+      "tp": 14940,
+      "fp": 477,
+      "fn": 371,
+      "precision": 0.9691,
+      "recall": 0.9758
     },
     {
       "threshold": 95,
-      "tp": 14959,
-      "fp": 443,
-      "fn": 380,
-      "precision": 0.9712,
-      "recall": 0.9752
+      "tp": 14933,
+      "fp": 447,
+      "fn": 378,
+      "precision": 0.9709,
+      "recall": 0.9753
     },
     {
       "threshold": 97,
-      "tp": 14924,
-      "fp": 418,
-      "fn": 415,
-      "precision": 0.9728,
-      "recall": 0.9729
+      "tp": 14898,
+      "fp": 422,
+      "fn": 413,
+      "precision": 0.9725,
+      "recall": 0.973
     }
   ],
-  "possibly_missed_author_ids": 87
+  "possibly_missed_author_ids": 77
 }

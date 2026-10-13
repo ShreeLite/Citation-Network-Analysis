@@ -1,0 +1,99 @@
+paper_id,doi,title,year,type,journal_name,sources
+W4366256769,10.1016/j.sysarc.2023.102876,Provably secure public key encryption with keyword search for data outsourcing in cloud environments,2023,journal,Journal of Systems Architecture,dblp;openalex
+W4382045532,10.1016/j.chaos.2023.113716,"Detection and forecasting of extreme events in stock price triggered by fundamental, technical, and external factors",2023,journal,Chaos Solitons & Fractals,openalex
+W2610170208,10.1145/3062341.3062376,"Simple, fast, and safe manual memory management",2017,conference,PLDI,dblp;openalex
+W2792900916,10.1016/j.compeleceng.2018.01.007,Introduction to the special section on Big data and IoT in e-healthcare,2018,journal,Computers & Electrical Engineering,dblp;openalex
+W3027010033,10.5220/0009395300002550,Towards a Better Management of Emergency Evacuation using Pareto Min Cost Max Flow Approach,2020,conference,International Conference on Vehicle Technology and Intelligent Transport Systems (VEHITS),openalex
+W3188984270,10.1109/cec45853.2021.9505000,A Genetic Algorithm Approach to Compute Mixed Strategy Solutions for General Stackelberg Games,2021,conference,CEC,dblp;iiith_portal;openalex
+W2491449289,10.1504/ijahuc.2016.078113,A secure and efficient time-bound hierarchical access control scheme for secure broadcasting,2016,journal,International Journal of Ad Hoc and Ubiquitous Computing,openalex
+W3178443961,10.1145/3449726.3459419,A genetic algorithm approach to compute mixed strategy solutions for general Stackelberg games,2021,conference,GECCO Companion,dblp;openalex
+W4402758701,10.1016/j.physa.2024.130122,Impact of local navigation rules on biased random walks in multiplex Markov chains,2024,journal,Physica A Statistical Mechanics and its Applications,openalex
+W4238793613,10.1504/ijahuc.2016.10000097,A secure and efficient time-bound hierarchical access control scheme for secure broadcasting,2016,journal,International Journal of Ad Hoc and Ubiquitous Computing,dblp;openalex
+W2999987410,10.1145/3140587.3062376,"Simple, fast, and safe manual memory management",2017,journal,ACM SIGPLAN Notices,openalex
+W2403341292,10.5555/2936924.2937174,Analysis of Lane Level Dynamics for Emergency Vehicle Traversal: (Extended Abstract),2016,conference,Adaptive Agents and Multi-Agents Systems,openalex
+W4229568815,10.1016/j.compeleceng.2018.07.035,Introduction to the special section on Big data and IoT in e-healthcare,2018,journal,Computers & Electrical Engineering,dblp;openalex
+W7124164702,10.65109/qoet5790,Analysis of Lane Level Dynamics for Emergency Vehicle Traversal: (Extended Abstract),2016,conference,AAMAS,dblp;openalex
+W7124343115,10.65109/avsm2784,Data Driven Strategies for Active Monocular SLAM using Inverse Reinforcement Learning,2017,conference,AAMAS,dblp;iiith_portal;openalex
+W4213031993,10.1016/j.bspc.2022.103584,Explainable AI decision model for ECG data of cardiac disorders,2022,journal,Biomedical Signal Processing and Control,dblp;openalex
+W2952965410,10.3389/fnhum.2019.00006,Atypical Flexibility in Dynamic Functional Connectivity Quantifies the Severity in Autism Spectrum Disorder,2019,journal,Frontiers in Human Neuroscience,openalex
+W3097865746,10.1039/d0cp03508d,Deep learning enabled inorganic material generator,2020,journal,Physical Chemistry Chemical Physics,openalex
+W4393132005,10.1016/j.jhydrol.2024.131079,A new nonparametric copula framework for the joint analysis of river water temperature and low flow characteristics for aquatic habitat risk assessment,2024,journal,Journal of Hydrology,openalex
+W3201730700,10.1042/bsr20212156,Computational and in vitro experimental analyses of the anti-COVID-19 potential of Mortaparib and MortaparibPlus,2021,journal,Bioscience Reports,openalex
+W4312355023,10.52648/icigs.1000_14,Explainable AI decision model for ECG data of cardiac disorders,2022,journal,International Congress for Innovation in Global Surgery � Book Of Abstracts,openalex
+W4401241829,10.1088/2631-8695/ad6ad5,A label-free sensing of creatinine using radio frequency-driven lab-on-chip (LoC) system,2024,journal,Engineering Research Express,openalex
+W4242039538,10.1109/asonam.2016.7752272,Authorship identification in Bengali language: A graph based approach,2016,conference,ASONAM,dblp;openalex
+W2556933859,10.5555/3192424.3192506,Authorship identification in Bengali language: a graph based approach,2016,conference,Advances in Social Networks Analysis and Mining,openalex
+W4237178913,10.1109/comsnets48256.2020.9027407,Predicting Human Response in Feature Binding Experiment using EEG Data,2020,conference,COMSNETS,dblp;openalex
+W4414209250,10.1039/d5cp02155c,Leveraging high-spin DFT features for prediction of spin state gaps in 3d transition metal complexes,2025,journal,Physical Chemistry Chemical Physics,openalex
+W3011518451,10.1109/comsnets48256.2020.9027381,Predicting Human Response in Feature Binding Experiment Using EEG Data,2020,conference,COMSNETS,dblp;openalex
+W4238342021,10.1042/bcj20210626,Computational and in vitro experimental analyses of the Anti-COVID-19 potential of Mortaparib and MortaparibPlus,2021,journal,Bioscience Reports,openalex
+W4411120202,10.18653/v1/2025.repl4nlp-1.6,Choose Your Words Wisely: Domain-adaptive Masking Makes Language Models Learn Faster,2025,conference,Workshop on Representation Learning for NLP (RepL4NLP),iiith_portal;openalex
+W4411507105,10.1007/978-3-031-95841-0_40,Choose Your Words Wisely: Domain-Adaptive Masking Makes Language Models Learn Faster,2025,conference,AIME (2),dblp;openalex
+W7117883505,10.47191/ijmcr/v13i12.18,Quantifying Bias in Text Genrative AI models,2025,journal,INTERNATIONAL JOURNAL OF MATHEMATICS AND COMPUTER RESEARCH,iiith_portal;openalex
+W7117899715,10.5281/zenodo.18104863,Quantifying Bias in Text Genrative AI models,2025,journal,INTERNATIONAL JOURNAL OF MATHEMATICS AND COMPUTER RESEARCH,openalex
+W2950928424,10.1371/journal.pone.0216068,Meta-analysis of drought-tolerant genotypes in Oryza sativa: A network-based approach,2019,journal,PLoS ONE,openalex
+W4290075482,10.1093/database/baac060,NetREx: Network-based Rice Expression Analysis Server for abiotic stress conditions,2022,journal,Database,dblp;openalex
+W4234858422,10.1109/asonam.2016.7752234,Hiding in plain sight: Characterizing and detecting malicious Facebook pages,2016,conference,ASONAM,dblp;openalex
+W4241891342,10.1109/iccons.2018.8663168,Framework for Image Forgery Detection and Classification Using Machine Learning,2018,conference,International Conference on Intelligent Computing and Control Systems (ICICCS),openalex
+W2597203947,10.1111/cgf.13140,Zooming On All Actors: Automatic Focus+Context Split Screen Video Generation,2017,journal,Computer Graphics Forum,dblp;iiith_portal;openalex
+W2902598405,10.1109/icoei.2018.8553924,Framework for Image Forgery Detection and Classification Using Machine Learning,2018,conference,International Conference on Trends in Electronics and Informatics (ICOEI),openalex
+W4250588632,10.1109/ia3.2016.019,Optimized Distributed Work-Stealing,2016,conference,IA3@SC,dblp;openalex
+W2914234795,10.1145/3299771.3299782,A knowledge centric approach to conceptualizing robotic solutions,2019,conference,ISEC,dblp;iiith_portal;openalex
+W2550145321,10.5555/3192424.3192460,Hiding in plain sight: characterizing and detecting malicious Facebook pages,2016,conference,Advances in Social Networks Analysis and Mining,openalex
+W2561288426,10.5555/3018843.3018857,Optimized distributed work-stealing,2016,conference,Irregular Applications: Architectures and Algorithms,openalex
+W2952009958,10.1504/ijact.2017.086223,A new authenticated encryption technique for handling long ciphertexts in memory constrained devices,2017,journal,International Journal of Applied Cryptography,openalex
+W3186437921,10.5220/0010547700002993,A Comparative Study on Inflated and Dispersed Count Data,2021,conference,"International Conference on Data Science, Agents & Artificial Intelligence (ICDSAAI)",openalex
+W2799914476,10.1504/ijsnm.2017.10012952,Multiple metric aware YouTube tutorial videos virality analysis,2017,journal,International Journal of Social Network Mining,dblp;openalex
+W2620923370,10.5555/3091125.3091408,Data Driven Strategies for Active Monocular SLAM using Inverse Reinforcement Learning,2017,conference,Adaptive Agents and Multi-Agents Systems,openalex
+W4388677569,10.1007/978-3-031-45170-6_43,Attention-CNN Model for COVID-19 Diagnosis Using Chest CT Images,2023,conference,PReMI,dblp;iiith_portal;openalex
+W4229633818,10.1504/ijsnm.2017.091811,Multiple metric aware YouTube tutorial videos virality analysis,2017,journal,International Journal of Social Network Mining,openalex
+W2746864170,10.1504/ijact.2017.10007290,Sponge-based CCA2 secure asymmetric encryption for arbitrary length message (extended version),2017,journal,International Journal of Applied Cryptography,dblp;openalex
+W4231948178,10.1504/ijact.2017.086222,Sponge-based CCA2 secure asymmetric encryption for arbitrary length message (extended version),2017,journal,International Journal of Applied Cryptography,openalex
+W4381619553,10.1016/j.physleta.2023.128977,Extraction of product and higher moment weak values: Applications in quantum state reconstruction and entanglement detection,2023,journal,Physics Letters A,openalex
+W4318715446,10.2139/ssrn.4329951,A Provably Secure Public Key Encryption with Keyword Search for Data Outsourcing in Cloud Environments,2023,journal,SSRN Electronic Journal,iiith_portal;openalex
+W2460790558,10.1145/2938559.2948862,Poster,2016,conference,MobiSys (Companion Volume),dblp;openalex
+W2466871832,10.1145/2938559.2948784,POSTER,2016,conference,MobiSys (Companion Volume),dblp;openalex
+W2470330117,10.1145/2938559.2948841,Poster,2016,conference,MobiSys (Companion Volume),dblp;openalex
+W2794619911,10.1007/978-3-030-10659-1_4,Use of Facial Landmarks for Adaptive Compression of Videos on Mobile Devices,2018,conference,COMSNETS,dblp;openalex
+W4232255832,10.1109/comsnets.2018.8328214,Use of facial landmarks for adaptive compression of videos on mobile devices,2018,conference,COMSNETS,dblp;openalex
+W4323897158,10.1109/hipcw57629.2022.00003,Keynote 1: Computing & Computer Vision: The Synergy,2022,conference,HiPCW,dblp;openalex
+W7135097363,10.1109/ms.2025.3637338,LEAF: A Layered Emission Assessment Framework for Cloud Deployments,2026,journal,IEEE Software,dblp;openalex
+W4230737732,10.1109/micro.2016.7783752,Chainsaw: Von-neumann accelerators to leverage fused instruction chains,2016,conference,MICRO,dblp;openalex
+W2564142802,10.5555/3195638.3195698,CHAINSAW: von-neumann accelerators to leverage fused instruction chains,2016,conference,,openalex
+W4415669949,10.1093/nsr/nwaf465,Analogous environments across the tropics have similar levels of tree species alpha diversity,2025,journal,National Science Review,openalex
+W4390746196,10.3389/fpsyg.2023.1277741,Examining dependencies among different time scales in episodic memory – an experience sampling study,2024,journal,Frontiers in Psychology,openalex
+W4383749539,10.1109/ccgrid57682.2023.00046,AggFirstJoin: Optimizing Geo-Distributed Joins using Aggregation-Based Transformations,2023,conference,CCGrid,dblp;openalex
+W2536746040,10.5555/2936924.2937121,Wheeled Robots playing Chain Catch: Strategies and Evaluation (Extended Abstract),2016,conference,Adaptive Agents and Multi-Agents Systems,openalex
+W4384834978,10.1109/ccgridw59191.2023.00067,AggFirstJoin: Optimizing Geo-Distributed Joins using Aggregation-Based Transformations*,2023,conference,CCGridW,dblp;openalex
+W7124181220,10.65109/wenf5827,Wheeled Robots playing Chain Catch: Strategies and Evaluation (Extended Abstract),2016,conference,AAMAS,dblp;openalex
+W7162940423,10.1016/j.cognition.2026.106592,Functional role and semantic structure shape word memorability: Cue–target asymmetries in cued recall,2026,journal,Cognition,openalex
+W7160154072,10.1016/s0016-5085(26)02402-9,916 EFFICACY AND TOLERABILITY OF PLANT-BASED DIET IN ULCERATIVE COLITIS IN REMISSION: A RANDOMISED CONTROLLED TRIAL,2026,journal,Gastroenterology,openalex
+W7160195963,10.1016/s0016-5107(26)02333-3,916 EFFICACY AND TOLERABILITY OF PLANT-BASED DIET IN ULCERATIVE COLITIS IN REMISSION: A RANDOMISED CONTROLLED TRIAL,2026,journal,Gastrointestinal Endoscopy,openalex
+W7168373689,10.3389/frobt.2026.1853007,Benchmark evaluation in task and motion planning using iteratively deepened AND/OR graph networks,2026,journal,Frontiers in Robotics and AI,openalex
+W4417433261,10.3991/ijep.v15i8.59381,Guest Editorial,2025,journal,International Journal of Engineering Pedagogy (iJEP),dblp;openalex
+W4416765708,10.3991/ijep.v15i7.59073,Guest Editorial,2025,journal,International Journal of Engineering Pedagogy (iJEP),dblp;openalex
+W4412722734,10.3991/ijim.v19i14.57053,Guest Editorial,2025,journal,International Journal of Interactive Mobile Technologies (iJIM),dblp;openalex
+W7153171268,10.3991/ijim.v20i07.61251,Guest Editorial,2026,journal,International Journal of Interactive Mobile Technologies (iJIM),dblp;openalex
+W7165186017,10.3991/ijoe.v22i06.61647,Guest Editorial,2026,journal,International Journal of Online and Biomedical Engineering (iJOE),dblp;openalex
+doi:10.1504/ijact.2017.10007291,10.1504/ijact.2017.10007291,A new authenticated encryption technique for handling long ciphertexts in memory constrained devices,2017,journal,Int. J. Appl. Cryptogr.,dblp
+doi:10.5220/0010547700290038,10.5220/0010547700290038,A Comparative Study on Inflated and Dispersed Count Data,2021,conference,Data,dblp
+doi:10.1109/hipcw57629.2022.00017,10.1109/hipcw57629.2022.00017,Keynote 1: Computing & Computer Vision: The Synergy,2022,conference,HiPCW,dblp
+doi:10.5220/0009395302370244,10.5220/0009395302370244,Towards a Better Management of Emergency Evacuation using Pareto Min Cost Max Flow Approach,2020,conference,VEHITS,dblp;iiith_portal
+doi:10.2312/wiced.20171070,10.2312/wiced.20171070,Zooming On All Actors: Automatic Focus+Context Split Screen Video Generation,2017,conference,WICED@Eurographics,dblp
+doi:10.3389/frobt.2026.1853007/full,10.3389/frobt.2026.1853007/full,Benchmark evaluation in task and motion planning using iteratively deepened AND/OR graph networks,2026,journal,Frontiers in Robotics and AI,iiith_portal
+doi:10.31234/osf.io/xm3fn_v1,10.31234/osf.io/xm3fn_v1,Functional Role and Semantic Structure Shape Word Memorability: Cue-Target Asymmetries in Cued Recall,2026,journal,Cognition,iiith_portal
+doi:10.36227/techrxiv.175086646.69392157/v3,10.36227/techrxiv.175086646.69392157/v3,LEAF: A Layered Emission Assessment Framework for Cloud Deployments,2026,journal,IEEE Software,iiith_portal
+doi:10.1093/nsr/nwaf465/8305913?searchresult=1,10.1093/nsr/nwaf465/8305913?searchresult=1,Analogous Environments Across the Tropics Have Similar Levels of Tree Species Alpha Diversity,2025,journal,National Science Review,iiith_portal
+doi:10.26434/chemrxiv-2025-t7h5p,10.26434/chemrxiv-2025-t7h5p,Leveraging High-Spin DFT Features for Prediction of Spin State Gaps in 3d Transition Metal Complexes,2025,journal,Physical Chemistry Chemical Physics,iiith_portal
+doi:10.22541/essoar.169008316.61877910/v1,10.22541/essoar.169008316.61877910/v1,A new nonparametric copula framework for the joint analysis of river water temperature and low flow characteristics for aquatic habitat risk assessment,2024,journal,Journal of Hydrology,iiith_portal
+doi:10.2139/ssrn.4805829,10.2139/ssrn.4805829,Impact of local navigation rules on biased random walks in multiplex Markov chains,2024,journal,Physica A Statistical Mechanics and its Applications,iiith_portal
+doi:10.3389/fpsyg.2023.1277741/full,10.3389/fpsyg.2023.1277741/full,Examining dependencies among different time scales in episodic memory--an experience sampling study,2024,journal,Frontiers in Psychology,iiith_portal
+doi:10.1088/2631-8695/ad6ad5/meta,10.1088/2631-8695/ad6ad5/meta,A label-free sensing of creatinine using radio frequency-driven lab-on-chip (loc) system,2024,journal,Engineering Research Express,iiith_portal
+doi:10.1007/978-3-031-45170-6_43#chapter-info,10.1007/978-3-031-45170-6_43#chapter-info,Attention-CNN Model for COVID-19 Diagnosis Using Chest CT Images,2023,journal,Lecture notes in computer science,iiith_portal
+doi:10.2139/ssrn.4441532,10.2139/ssrn.4441532,"Detection and forecasting of extreme events in stock price triggered by fundamental, technical, and external factors",2023,journal,Chaos,iiith_portal
+doi:10.2139/ssrn.4415845,10.2139/ssrn.4415845,Extraction of product and higher moment weak values: Applications in quantum state reconstruction and entanglement detection,2023,journal,Physics Letters A,iiith_portal
+doi:10.1101/2021.12.24.474096,10.1101/2021.12.24.474096,NetREx: Network-based Rice Expression Analysis Server for abiotic stress conditions,2022,journal,Database,iiith_portal
+doi:10.26434/chemrxiv.12312260.v1,10.26434/chemrxiv.12312260.v1,Deep Learning Enabled Inorganic Material Generator,2020,journal,Physical Chemistry Chemical Physics,iiith_portal
+"doi:10.1145/3299771.3299782#:~:text=conceptualization%20should%20include%20the%20creation,gain%20confidence%20in%20the%20solution.","10.1145/3299771.3299782#:~:text=conceptualization%20should%20include%20the%20creation,gain%20confidence%20in%20the%20solution.",A knowledge centric approach to conceptualizing robotic solutions,2019,conference,Innovations in Software Engineering Conference (ISEC),iiith_portal
+doi:10.1101/450205,10.1101/450205,Meta-analysis of drought-tolerant genotypes in Oryza sativa: A network-based approach,2019,journal,PLoS ONE,iiith_portal
+doi:10.1101/387886,10.1101/387886,Atypical Flexibility in Dynamic Functional Connectivity Quantifies the Severity in Autism Spectrum Disorder,2019,journal,Frontiers in Human Neuroscience,iiith_portal

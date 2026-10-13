@@ -1,6 +1,4 @@
 faculty_id,name,author_id,author_name,n_works,example
-IIIT-D:tavpritesh_sethi,Tavpritesh Sethi,A5000733841,Tavpritesh Sethi,21,"Artificial Intelligence in Surveillance, Diagnosis, Drug Discovery and Vaccine Development against COVID-19"
-IIIT-H:pawan_kumar,Pawan Kumar,A5067384528,Pawan Kumar,13,Two-Grid Preconditioned Solver for Bundle Adjustment
 IIIT-H:vijaya_sankara_rao_p,Vijaya Sankara Rao P.,A5112225261,Vijaya Sankara Rao Pasupureddi,9,100-Mb/s enhanced data rate MIL-STD-1553B controller in 65-nm CMOS technology
 IIIT-H:pawan_kumar,Pawan Kumar,A5100325648,Pawan Kumar,8,Alpha Elimination: Using Deep Reinforcement Learning to Reduce Fill-In During Sparse Matrix Decomposition
 IIIT-D:gaurav_arora,Gaurav Arora,A5034791731,Gaurav Arora,7,Evidence of climate change impacts on crop comparative advantage and land use
@@ -9,75 +7,67 @@ IIIT-H:diganta_das,Diganta Das,A5000080854,Diganta Das,5,Renormalization group i
 IIIT-D:sayak_bhattacharya,Sayak Bhattacharya,A5000228324,Sayak Bhattacharya,4,Experimental demonstration of broadband solar absorption beyond the lambertian limit in certain thin silicon photonic crystals
 IIIT-D:ranjitha_prasad,Ranjitha Prasad,A5061329869,Ranjitha Prasad,4,On homomorphic encryption based strategies for class imbalance in federated learning
 IIIT-H:abhishek_srivastava,Abhishek Srivastava,A5089636982,Abhishek Srivastava,4,Optimized Hardware Architecture for Respiration Rate Classification using Quadratic SVM and mmWave Radar Sensor
-IIIT-H:spandan_roy,Spandan Roy,A5121472792,Spandan Roy,4,Impedance and Stability Targeted Adaptation for Aerial Manipulator with Unknown Coupling Dynamics
-IIIT-H:priyanka_srivastava,Priyanka Srivastava,A5133798797,Priyanka Srivastava,3,P159 Development of digital neuropsychological battery: a use case in Indian SLE patients
-IIIT-H:krishna_reddy_p,Krishna Reddy P,A5078111818,Krishna Reddy Polepalli,3,Analysis of similar weather conditions to improve reuse in weather-based decision support systems
 IIIT-D:souvik_dutta,Souvik Dutta,A5009232251,Souvik Dutta,3,Did clickbait crack the code on virality?
 IIIT-H:krishna_reddy_p,Krishna Reddy P,A5112731841,P. Krishna Reddy,3,Big Data Analytics
-IIIT-H:krishna_reddy_p,Krishna Reddy P,A5112328115,P. Krishna Reddy,2,Graph Neural Networks Based Explainability of Drug-Target Interactions
-IIIT-H:avinash_sharma,Avinash Sharma,A5150606893,Avinash Sharma,2,HyperBones: Realtime Bone-driven Neural Garment Simulation with Hypernetwork Conditioning
+IIIT-H:krishna_reddy_p,Krishna Reddy P,A5078111818,Krishna Reddy Polepalli,3,Analysis of similar weather conditions to improve reuse in weather-based decision support systems
 IIIT-D:anubha_gupta,Anubha Gupta,A5139823130,Anubha Gupta,2,MORPHOGEN: A Multilingual Benchmark for Evaluating Gender-Aware Morphological Generation
 IIIT-D:anubha_gupta,Anubha Gupta,A5123181306,Anubha Gupta,2,Association between retinal AV ratio and coronary artery disease severity in acute coronary syndrome and chronic coronary syndrome patients: A prospective study
+IIIT-H:krishna_reddy_p,Krishna Reddy P,A5112328115,P. Krishna Reddy,2,Graph Neural Networks Based Explainability of Drug-Target Interactions
+IIIT-H:ponnurangam_kumaraguru,Ponnurangam Kumaraguru,A5051630722,Ponnurangam Kumaragaguru,2,An Empirical Analysis of Facebook's Free Basics
+IIIT-H:siddhartha_das,Siddhartha Das,A5104113558,Siddhartha Das,2,Maximum entropy principle for quantum processes
+IIIT-H:pawan_kumar,Pawan Kumar,A5139616166,Pawan Kumar,2,SignMuon: Communication-Efficient Distributed Muon Optimization
+IIIT-D:pushpendra_singh,Pushpendra Singh,A5028987835,Pushpendra Singh,2,A Process Narrative of Developing a Mobile App (Saksham) for Patients with Schizophrenia and Related Disorders in Low-Resource Settings
 IIIT-D:ponnurangam_kumaraguru,Ponnurangam Kumaraguru,A5051630722,Ponnurangam Kumaragaguru,2,An Empirical Analysis of Facebook's Free Basics
 IIIT-D:monika_arora,Monika Arora,A5101902470,Monika Arora,2,EM Estimation for Zero- and k-Inflated Poisson Regression Model
-IIIT-D:arjun_ray,Arjun Ray,A5137513528,Arjun Ray,2,KinaseDB: an integrated multi-omics platform for the human kinome with disease-specific target prioritisation
-IIIT-D:pushpendra_singh,Pushpendra Singh,A5028987835,Pushpendra Singh,2,A Process Narrative of Developing a Mobile App (Saksham) for Patients with Schizophrenia and Related Disorders in Low-Resource Settings
-IIIT-H:neelima_satyam_d,Neelima Satyam D.,A5054360481,Neelima Satyam Devarakonda,2,"Estimation of ground response and local site effects for Vishakhapatnam, India"
-IIIT-H:narayanan_p_j,Narayanan P J,A5138980299,P. J. Narayanan,2,Algebraic Dead Directions in LayerNorm Transformers: A Forward-Pass-Only Diagnostic at LLM Scale
-IIIT-H:ponnurangam_kumaraguru,Ponnurangam Kumaraguru,A5051630722,Ponnurangam Kumaragaguru,2,An Empirical Analysis of Facebook's Free Basics
-IIIT-H:raghubabu_reddy_y,Raghubabu Reddy Y,A5025016697,Raghu Reddy Y.,2,KIET Framework for Cloud Adoption
-IIIT-H:pawan_kumar,Pawan Kumar,A5139616166,Pawan Kumar,2,SignMuon: Communication-Efficient Distributed Muon Optimization
-IIIT-H:siddhartha_das,Siddhartha Das,A5104113558,Siddhartha Das,2,Maximum entropy principle for quantum processes
 IIIT-D:gautam_shroff,Gautam Shroff,A5102947606,Gautam Shroff,1,AlgoEvolve: LLM-driven Meta-evolution of Algorithmic Trading Programs
-IIIT-D:manohar_kumar,Manohar Kumar,A5112857567,Manohar Kumar,1,Conclusion
-IIIT-D:ashish_kumar_pandey,Ashish Kumar Pandey,A5101872092,Ashish Kumar Pandey,1,Modulational Instability in the Ostrovsky Equation and Related Models
+IIIT-D:angshul_majumdar,Angshul Majumdar,A5055850869,Angshul Majumda,1,"DeepVir -- Graphical Deep Matrix Factorization for ""In Silico"" Antiviral Repositioning: Application to COVID-19"
+IIIT-D:a_v_subramanyam,A V Subramanyam,A5153629234,A. V. Subramanyam,1,Scene-Consistent Illumination Transfer for Inserted Advertising Graphics
 IIIT-D:dhruv_kumar,Dhruv Kumar,A5064254710,Mr. Dhruv Kumar,1,Sakshm AI: Advancing AI-Assisted Coding Education for Engineering Students in India Through Socratic Tutoring and Comprehensive Feedback
 IIIT-D:ashish_kumar_pandey,Ashish Kumar Pandey,A5102921660,Ashish Kumar Pandey,1,Forecasting Formation of a Tropical Cyclone Using Reanalysis Data
-IIIT-D:a_v_subramanyam,A V Subramanyam,A5153629234,A. V. Subramanyam,1,Scene-Consistent Illumination Transfer for Inserted Advertising Graphics
-IIIT-D:angshul_majumdar,Angshul Majumdar,A5128776384,Angshul Majumdar,1,Hinduism as an Open Normative System: An Axiomatic and Model-Theoretic Analysis
-IIIT-D:angshul_majumdar,Angshul Majumdar,A5055850869,Angshul Majumda,1,"DeepVir -- Graphical Deep Matrix Factorization for ""In Silico"" Antiviral Repositioning: Application to COVID-19"
-IIIT-D:angshul_majumdar,Angshul Majumdar,A5134441452,Angshul Majumdar,1,The Existential Theory of Research: Why Discovery Is Hard
 IIIT-D:anubha_gupta,Anubha Gupta,A5157832853,Anubha Gupta,1,Comparative evaluation of machine learning models versus TIMI score in ST-segment-elevation myocardial infarction patients
-IIIT-D:pushpendra_singh,Pushpendra Singh,A5145600056,Pushpendra Singh,1,FEEL: Quantifying Heterogeneity in Physiological Signals for Generalizable Emotion Recognition
-IIIT-D:pushpendra_singh,Pushpendra Singh,A5100770168,Pushpendra Singh,1,A Pedagogical Reconceptualization of Complex Numbers as Two-Dimensional Real Numbers: A Signal Processing Perspective [Lecture Notes]
-IIIT-D:pushpendra_singh,Pushpendra Singh,A5066528455,Pushpendra P. Singh,1,Sangoshthi
-IIIT-D:ponnurangam_kumaraguru,Ponnurangam Kumaraguru,A5108672423,Ponnurangam Kumarguru,1,Analysing Indicator of Compromises for Ransomware: Leveraging IOCs with Machine Learning Techniques
-IIIT-D:n_arul_murugan,N. Arul Murugan,A5114990141,Arul Murugan,1,"Microglia undergoes chemokine receptor, CX3CR1-mediated internalization of extracellular Tau"
-IIIT-D:p_b_sujit,P B Sujit,A5142880723,P.B. Sujit,1,Robust Autonomous Landing of a Quadrotor on a Moving Target
-IIIT-D:tavpritesh_sethi,Tavpritesh Sethi,A5158386216,Tavpritesh Sethi,1,Antibiotic prescribing and resistance beyond hospital surveillance networks in India
-IIIT-D:vivek_kumar,Vivek Kumar,A5018868633,Vivek Kumar,1,Cuttlefish-offline (Artifact)
-IIIT-D:vivek_kumar,Vivek Kumar,A5100357367,Vivek Kumar,1,RPM: Reward Power Manager for Power Distribution over a Cluster
-IIIT-D:vivek_kumar,Vivek Kumar,A5100357357,Vivek Kumar,1,OneStopTuner: An End to End Architecture for JVM Tuning of Spark Applications
-IIIT-D:vivek_kumar,Vivek Kumar,A5042046313,Vive Kumar,1,A Scalable Learning Analytics Platform for Automated Writing Feedback
-IIIT-D:sambuddho_chakravarty,Sambuddho Chakravarty,A5094194085,Sambuddho Chakravaty,1,Out in the Open: On the Implementation of Mobile App Filtering in India
+IIIT-D:ashish_kumar_pandey,Ashish Kumar Pandey,A5101872092,Ashish Kumar Pandey,1,Modulational Instability in the Ostrovsky Equation and Related Models
+IIIT-D:angshul_majumdar,Angshul Majumdar,A5128776384,Angshul Majumdar,1,Hinduism as an Open Normative System: An Axiomatic and Model-Theoretic Analysis
+IIIT-D:angshul_majumdar,Angshul Majumdar,A5134441452,Angshul Majumdar,1,The Existential Theory of Research: Why Discovery Is Hard
+IIIT-D:manohar_kumar,Manohar Kumar,A5112857567,Manohar Kumar,1,Conclusion
 IIIT-D:rajiv_ratn_shah,Rajiv Ratn Shah,A5153657290,Rajiv Ratn Shah,1,NutriVision: Ingredient-Conditioned Fusion and Prediction for Single-Image Food Nutrition Estimation
-IIIT-D:rajiv_ratn_shah,Rajiv Ratn Shah,A5147782383,Rajiv Ratn Shah,1,StocksTalk: A Voice-Enabled Conversational Agent for Structured Query Generation over Web Data
 IIIT-D:rajiv_ratn_shah,Rajiv Ratn Shah,A5134367315,Rajiv Ratan Shah,1,CareerCompass: An Intelligent AI Agent Framework for Student Career Guidance
-IIIT-D:rajiv_raman,Rajiv Raman,A5060172197,Rajiv Raman,1,On Hypergraph Supports.
-IIIT-H:makarand_tapaswi,Makarand Tapaswi,A5085699874,Makar Tapaswi,1,Learning Object Manipulation Skills from Video via Approximate Differentiable Physics
-IIIT-H:krishna_reddy_p,Krishna Reddy P,A5093091669,Krishna Reddy Polipalli,1,Periodic-confidence: a null-invariant measure to discover partial periodic patterns in non-uniform temporal databases
-IIIT-H:karthik_vaidhyanathan,Karthik Vaidhyanathan,A5116038834,Karthik Vaidhyanathan,1,LoCoML: A Framework for Real-World ML Inference Pipelines
-IIIT-H:karthik_vaidhyanathan,Karthik Vaidhyanathan,A5125729277,Karthik Vaidhyanathan,1,Archbench
-IIIT-H:kannan_srinathan,Kannan Srinathan,A5072215109,Kannan Srinathand,1,Automatic Tracking of Tourism Spots for Tourists
-IIIT-H:ashok_kumar_das,Ashok Kumar Das,A5123959692,Ashok Kumar Das,1,Machine learning models for forecasting municipal solid waste generation: a case study of Malaysia
-IIIT-H:charu_sharma,Charu Sharma,A5128376884,Charu Sharma,1,SymGS: Leveraging Reflective Symmetries for 3DGS Compression
-IIIT-H:deva_priyakumar_u,Deva Priyakumar U,A5010477805,Deva Priyakumar,1,TorRNA - Improved Prediction of Backbone Torsion Angles of RNA by Leveraging Large Language Models
-IIIT-H:avinash_sharma,Avinash Sharma,A5125733261,Avinash Sharma,1,SymGS: Leveraging Reflective Symmetries for 3DGS Compression
+IIIT-D:rajiv_ratn_shah,Rajiv Ratn Shah,A5147782383,Rajiv Ratn Shah,1,StocksTalk: A Voice-Enabled Conversational Agent for Structured Query Generation over Web Data
+IIIT-D:vivek_kumar,Vivek Kumar,A5018868633,Vivek Kumar,1,Cuttlefish-offline (Artifact)
 IIIT-D:sumit_j_darak,Sumit J Darak,A5056931478,Sumit. J. Darakt,1,Distributed Algorithm for Opportunistic Spectrum Access in Dynamic Ad Hoc Networks
 IIIT-D:tanmoy_chakraborty,Tanmoy Chakraborty,A5092703401,Tanmoy Charaborty,1,Political mud slandering and power dynamics during Indian assembly elections
-IIIT-H:pawan_kumar,Pawan Kumar,A5103941584,Pawan Kumar,1,SCIMAT: Science and Mathematics Dataset
-IIIT-H:pawan_kumar,Pawan Kumar,A5100703179,Pawan Kumar,1,SCIMAT: Dataset of Problems in Science and Mathematics
+IIIT-D:tavpritesh_sethi,Tavpritesh Sethi,A5158386216,Tavpritesh Sethi,1,Antibiotic prescribing and resistance beyond hospital surveillance networks in India
+IIIT-D:sambuddho_chakravarty,Sambuddho Chakravarty,A5094194085,Sambuddho Chakravaty,1,Out in the Open: On the Implementation of Mobile App Filtering in India
+IIIT-D:pushpendra_singh,Pushpendra Singh,A5066528455,Pushpendra P. Singh,1,Sangoshthi
+IIIT-D:pushpendra_singh,Pushpendra Singh,A5145600056,Pushpendra Singh,1,FEEL: Quantifying Heterogeneity in Physiological Signals for Generalizable Emotion Recognition
+IIIT-D:rajiv_raman,Rajiv Raman,A5060172197,Rajiv Raman,1,On Hypergraph Supports.
+IIIT-D:pushpendra_singh,Pushpendra Singh,A5100770168,Pushpendra Singh,1,A Pedagogical Reconceptualization of Complex Numbers as Two-Dimensional Real Numbers: A Signal Processing Perspective [Lecture Notes]
+IIIT-D:ponnurangam_kumaraguru,Ponnurangam Kumaraguru,A5108672423,Ponnurangam Kumarguru,1,Analysing Indicator of Compromises for Ransomware: Leveraging IOCs with Machine Learning Techniques
+IIIT-D:p_b_sujit,P B Sujit,A5142880723,P.B. Sujit,1,Robust Autonomous Landing of a Quadrotor on a Moving Target
+IIIT-D:n_arul_murugan,N. Arul Murugan,A5114990141,Arul Murugan,1,"Microglia undergoes chemokine receptor, CX3CR1-mediated internalization of extracellular Tau"
+IIIT-H:kannan_srinathan,Kannan Srinathan,A5072215109,Kannan Srinathand,1,Automatic Tracking of Tourism Spots for Tourists
+IIIT-H:deva_priyakumar_u,Deva Priyakumar U,A5010477805,Deva Priyakumar,1,TorRNA - Improved Prediction of Backbone Torsion Angles of RNA by Leveraging Large Language Models
+IIIT-H:charu_sharma,Charu Sharma,A5128376884,Charu Sharma,1,SymGS: Leveraging Reflective Symmetries for 3DGS Compression
+IIIT-H:avinash_sharma,Avinash Sharma,A5125733261,Avinash Sharma,1,SymGS: Leveraging Reflective Symmetries for 3DGS Compression
+IIIT-H:ashok_kumar_das,Ashok Kumar Das,A5123959692,Ashok Kumar Das,1,Machine learning models for forecasting municipal solid waste generation: a case study of Malaysia
+IIIT-D:vivek_kumar,Vivek Kumar,A5042046313,Vive Kumar,1,A Scalable Learning Analytics Platform for Automated Writing Feedback
+IIIT-D:vivek_kumar,Vivek Kumar,A5100357357,Vivek Kumar,1,OneStopTuner: An End to End Architecture for JVM Tuning of Spark Applications
+IIIT-D:vivek_kumar,Vivek Kumar,A5100357367,Vivek Kumar,1,RPM: Reward Power Manager for Power Distribution over a Cluster
+IIIT-H:narayanan_p_j,Narayanan P J,A5141137896,NARAYANAN P J,1,AI-Enabled Autonomous Network Slicing Optimization for 6G Communication Systems
+IIIT-H:makarand_tapaswi,Makarand Tapaswi,A5085699874,Makar Tapaswi,1,Learning Object Manipulation Skills from Video via Approximate Differentiable Physics
 IIIT-H:pawan_kumar,Pawan Kumar,A5055788692,Pawan Kumar,1,Structured Low-Rank Tensor Learning
 IIIT-H:neelima_satyam_d,Neelima Satyam D.,A5113398680,Devarakonda Neelima Satyam,1,Deterministic Seismic Hazard Analysis of Tindharia Site Using ANBU-13 GMPE
-IIIT-H:narayanan_p_j,Narayanan P J,A5141137896,NARAYANAN P J,1,AI-Enabled Autonomous Network Slicing Optimization for 6G Communication Systems
-IIIT-H:ponnurangam_kumaraguru,Ponnurangam Kumaraguru,A5108672423,Ponnurangam Kumarguru,1,Analysing Indicator of Compromises for Ransomware: Leveraging IOCs with Machine Learning Techniques
-IIIT-H:pawan_kumar,Pawan Kumar,A5147428670,Pawan Kumar,1,Discrete Diffusion Language Models Are Training-Free Multi-Label Classifiers
+IIIT-H:pawan_kumar,Pawan Kumar,A5101905990,Pawan Kumar,1,List of contributors
+IIIT-H:karthik_vaidhyanathan,Karthik Vaidhyanathan,A5125729277,Karthik Vaidhyanathan,1,Archbench
+IIIT-H:krishna_reddy_p,Krishna Reddy P,A5093091669,Krishna Reddy Polipalli,1,Periodic-confidence: a null-invariant measure to discover partial periodic patterns in non-uniform temporal databases
+IIIT-H:karthik_vaidhyanathan,Karthik Vaidhyanathan,A5116038834,Karthik Vaidhyanathan,1,LoCoML: A Framework for Real-World ML Inference Pipelines
 IIIT-H:pawan_kumar,Pawan Kumar,A5139750069,Pawan Kumar,1,Speculative Refinement: A Hybrid Autoregressive Diffusion Decoding Strategy and Its Behavior Across Benchmarks
 IIIT-H:pawan_kumar,Pawan Kumar,A5139735918,Pawan Kumar,1,Speculative Refinement: A Hybrid Autoregressive Diffusion Decoding Strategy and Its Behavior Across Benchmarks
-IIIT-H:pawan_kumar,Pawan Kumar,A5101905990,Pawan Kumar,1,List of contributors
-IIIT-H:raghubabu_reddy_y,Raghubabu Reddy Y,A5154979104,Y Raghu REDDY,1,Muse: A Musically Inspired Game To Teach Arrays and Linked Lists
-IIIT-H:pradeep_kumar_ramancharla,Pradeep Kumar Ramancharla,A5103933463,R. Pradeep Kumar,1,"Tremors and built environment of Hyderabad, Telangana, India: safety of buildings using recorded ground motions"
+IIIT-H:pawan_kumar,Pawan Kumar,A5103941584,Pawan Kumar,1,SCIMAT: Science and Mathematics Dataset
+IIIT-H:pawan_kumar,Pawan Kumar,A5147428670,Pawan Kumar,1,Discrete Diffusion Language Models Are Training-Free Multi-Label Classifiers
 IIIT-H:pradeep_kumar_ramancharla,Pradeep Kumar Ramancharla,A5111127032,R Pradeep Kumar,1,Earthquake forecasting in the Himalayan region using neural networks models
+IIIT-H:raghubabu_reddy_y,Raghubabu Reddy Y,A5154979104,Y Raghu REDDY,1,Muse: A Musically Inspired Game To Teach Arrays and Linked Lists
+IIIT-H:ponnurangam_kumaraguru,Ponnurangam Kumaraguru,A5108672423,Ponnurangam Kumarguru,1,Analysing Indicator of Compromises for Ransomware: Leveraging IOCs with Machine Learning Techniques
+IIIT-H:pradeep_kumar_ramancharla,Pradeep Kumar Ramancharla,A5103933463,R. Pradeep Kumar,1,"Tremors and built environment of Hyderabad, Telangana, India: safety of buildings using recorded ground motions"
 IIIT-H:rama_chandra_prasad_p,Rama Chandra Prasad P,A5103878734,Pillutla Rama Chandra Prasad,1,"Structure, composition and diversity of trees within the dry evergreen reserve forest of Kondapalli (Eastern Ghats, southern India)"
 IIIT-H:rama_chandra_prasad_p,Rama Chandra Prasad P,A5036272376,Rama Chandra Prasad Pillulata,1,Editorial: Forest fire emissions and their impact on global climate change
 IIIT-H:spandan_roy,Spandan Roy,A5152118466,Spandan Roy,1,AnyViewDex: View-Invariant Dexterous Manipulation from RGB Observations

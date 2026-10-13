@@ -10,6 +10,25 @@ Indian-connection networks, a "centres vs departments" analysis, and seven actio
 - **QA:** `qa/qa_report.md`, `qa/checkpoint1.md`, `qa/checkpoint2.md`, `qa/checkpoint3.md`.
 
 <!-- RESULTS:START -->
+## Results at a glance
+
+Collected 2026-10-12 (2026 partial).
+
+| | IIIT-H | IIIT-D |
+|---|---|---|
+| Core faculty (current) | 109 | 102 |
+| Former core faculty (2016–2026) | 35 | 49 |
+| Papers (journal + conference) | 4710 | 4329 |
+| Conference share | 61% | 54% |
+| NMI official units vs communities | 0.54 | 0.35 |
+| Cross-unit share of collaborations | 70% | 38% |
+
+**Quality checks:** dblp pooled recall = 0.7621; dup doi rows = 0.0; dup title rows = 98.0; filled doi = 0.9559; filled quartile (journals) = 0.0; filled CORE rank (conferences) = 0.498; filled quartile proxy (journals) = 0.9606; self loops = 0.0; ab ba duplicates = 0.0; own partner rows = 0.0; audit error rate = 0.0217
+Quartiles from: openalex_proxy.
+
+**Deliverables:** `deliverables/group9_deliverables.zip` (28.3 MB) · website `site/dist/index.html`.
+
+QA reports: `qa/checkpoint1.md`, `qa/checkpoint2.md`, `qa/qa_report.md` (checkpoint 3), `qa/robustness.md`, `qa/findings_handcheck.md`, `qa/site_check.md`.
 <!-- RESULTS:END -->
 
 ## Running it

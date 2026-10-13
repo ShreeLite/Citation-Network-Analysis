@@ -25,7 +25,7 @@ def normalise_title(title: str | None) -> str:
 
 
 def normalise_doi(doi: str | None) -> str | None:
-    if not doi:
+    if not isinstance(doi, str) or not doi:
         return None
     d = doi.strip().lower()
     d = re.sub(r"^(https?://)?(dx\.)?doi\.org/", "", d)
@@ -34,7 +34,11 @@ def normalise_doi(doi: str | None) -> str | None:
 
 
 ARXIV_DOI = re.compile(r"^10\.48550/arxiv\.", re.I)
+# preprint servers: bioRxiv/medRxiv, SSRN, Research Square, TechRxiv, OSF, Preprints.org, ChemRxiv
+PREPRINT_DOI = re.compile(r"^10\.(48550|1101|2139|21203|36227|31219|20944|26434)/", re.I)
 
 
 def is_arxiv_doi(doi: str | None) -> bool:
-    return bool(doi and ARXIV_DOI.match(doi))
+    """True for arXiv and other preprint-server DOIs (treated alike: merged into the published
+    version when both exist)."""
+    return isinstance(doi, str) and bool(PREPRINT_DOI.match(doi))

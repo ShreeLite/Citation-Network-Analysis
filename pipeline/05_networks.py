@@ -19,13 +19,13 @@ import pandas as pd
 from tqdm import tqdm
 
 from common.config import DATA, EXTERNAL, PROCESSED, cfg, setup_logging
-from common.sources import oa_get, short_id
+from common.sources import oa_get, short_id, slim_work
 
 log = setup_logging("05_networks")
 Y0, Y1 = cfg()["years"]["start"], cfg()["years"]["end"]
 BIG = cfg()["flags"]["big_paper_authors"]
 INCLUDE_PREPRINTS = cfg()["flags"]["include_preprints"]
-TOPIC_PARTNERS = 200  # partners for which topic sets are fetched (by shared papers + citations)
+TOPIC_PARTNERS = 100  # partners per institute for which topic sets are fetched (by shared papers + citations)
 
 
 def main_set():
@@ -34,7 +34,16 @@ def main_set():
     roster = pd.read_csv(DATA / "faculty_roster.csv", dtype=str).fillna("")
     core_ids = set(roster[(roster.is_core == "True")].faculty_id)
     keep_types = {"journal", "conference"} | ({"preprint"} if INCLUDE_PREPRINTS else set())
-    ml = links[links.in_main_set & links.faculty_id.isin(core_ids)]
+    ml = links[links.in_main_set & links.faculty_id.isin(core_ids)].copy()
+    # one person with records at both institutes (moved, or adjunct at the other) must be credited
+    # once per paper: the record whose institute is on the paper, else the one within tenure,
+    # else the current one — otherwise they would 'co-author with themselves'
+    status = roster.set_index("faculty_id").status.to_dict()
+    ml["_person"] = ml.faculty_id.str.split(":", n=1).str[1]
+    ml["_rank"] = (~ml.affiliated_on_paper.astype(bool)) * 4 + (~ml.within_tenure.astype(bool)) * 2 + ml.faculty_id.map(status).ne("current")
+    before = len(ml)
+    ml = ml.sort_values("_rank").drop_duplicates(["_person", "paper_id"]).drop(columns=["_person", "_rank"])
+    log.info("credited %d duplicate same-person links to a single institute record", before - len(ml))
     mp = papers[papers.paper_id.isin(ml.paper_id) & papers.type.isin(keep_types) & papers.year.between(Y0, Y1)].copy()
     ml = ml[ml.paper_id.isin(mp.paper_id)].copy()
     mp["our_institutions"] = mp.paper_id.map(ml.groupby("paper_id").institution.apply(lambda s: ";".join(sorted(set(s)))))
@@ -51,7 +60,7 @@ def load_works(ids: set[str]) -> dict[str, dict]:
             w = json.loads(line)
             wid = short_id(w["id"])
             if wid in ids:
-                works[wid] = w
+                works[wid] = slim_work(w)
     return works
 
 
@@ -63,6 +72,8 @@ def citation_network(mp, works) -> pd.DataFrame:
         src_doi = p.doi or wid
         for ref in (works.get(wid) or {}).get("referenced_works", []):
             t = short_id(ref)
+            if t == wid:
+                continue  # OpenAlex lists a few works as citing themselves: data error, dropped
             internal = t in ours.index
             if internal:
                 tdoi, tinst = ours.at[t, "doi"] or t, ours.at[t, "our_institutions"]
@@ -83,7 +94,8 @@ def authorship_networks(mp, ml, roster, works):
     for p in tqdm(mp.itertuples(), total=len(mp), desc="authorship edges"):
         facs = by_paper.get(p.paper_id, [])
         w = works.get(p.openalex_id) if p.openalex_id else None
-        n = len((w or {}).get("authorships", [])) or int(p.n_authors or 0) or len(facs)
+        n_meta = int(p.n_authors) if pd.notna(p.n_authors) else 0
+        n = len((w or {}).get("authorships", [])) or n_meta or len(facs)
         weight = 1 / max(1, n - 1)
         big = n > BIG
         doi = p.doi or p.paper_id
@@ -201,7 +213,7 @@ def indian_connections(mp, works, insts) -> tuple[pd.DataFrame, pd.DataFrame]:
     fy = flow.groupby(["your_inst", "year", "direction"]).size().unstack("direction", fill_value=0).reset_index() if len(flow) else pd.DataFrame()
     if len(fy):
         fy = fy.rename(columns={"in": "citations_in_from_indian", "out": "citations_out_to_indian"})
-        fy["impact_ratio_in_out"] = (fy.citations_in_from_indian / fy.citations_out_to_indian.replace(0, pd.NA)).round(3)
+        fy["impact_ratio_in_out"] = (fy.citations_in_from_indian / fy.citations_out_to_indian.replace(0, float("nan"))).round(3)
         fy["partial_year"] = fy.year.eq(cfg()["years"]["partial_year"])
     return ic, fy
 

@@ -38,7 +38,7 @@ export default function Findings() {
   const pairCols = useMemo(() => [
     pairCol.accessor("faculty_a", { header: "Faculty A" }), pairCol.accessor("unit_a", { header: "Unit A" }), pairCol.accessor("institution_a", { header: "Inst. A" }),
     pairCol.accessor("faculty_b", { header: "Faculty B" }), pairCol.accessor("unit_b", { header: "Unit B" }), pairCol.accessor("institution_b", { header: "Inst. B" }),
-    pairCol.accessor("topic_jaccard", { header: "Topic Jaccard" }), pairCol.accessor("shared_topic_names", { header: "Shared topics", cell: (c) => <span className="block max-w-[360px]">{c.getValue()}</span> }),
+    pairCol.accessor("topic_jaccard", { header: "Topic Jaccard" }), pairCol.accessor("tier", { header: "Tier" }), pairCol.accessor("shared_coauthors", { header: "Shared co-authors" }), pairCol.accessor("shared_topic_names", { header: "Shared topics", cell: (c) => <span className="block max-w-[360px]">{c.getValue()}</span> }),
   ], []);
   const apCols = useMemo(() => [
     pairCol.accessor("institution", { header: "Inst." }), pairCol.accessor("unit", { header: "Unit" }), pairCol.accessor("name", { header: "Articulation point" }),
@@ -50,12 +50,12 @@ export default function Findings() {
       <nav className="card p-3 flex flex-wrap gap-2 text-[13px] no-print" aria-label="Findings">{H.map((h) => <a key={h.id} className="chip" href={`#${h.id}`} onClick={(e) => { e.preventDefault(); document.getElementById(h.id)?.scrollIntoView({ behavior: "smooth" }); }}>{h.kicker}</a>)}</nav>
 
       {/* 1 */}
-      <Card h={H[0]} note={<>Thresholds: {INSTS.map((i) => { const t = F.f1.thresholds[i] || {}; return `${i}: betweenness ≥ ${t.betweenness_threshold?.toFixed(4)} (top ${Math.round((1 - (t.betweenness_percentile ?? 0.85)) * 100)}%), degree < median ${t.degree_median}, n = ${t.n_connected} connected faculty`; }).join(" · ")}. Try it live on the Collaboration Network tab (click-to-remove).</>}>
+      <Card h={H[0]} note={<>Thresholds: {INSTS.map((i) => { const t = F.f1.thresholds[i] || {}; return `${i}: betweenness ≥ ${t.betweenness_threshold?.toFixed(4)} (top ${Math.round((1 - (t.betweenness_percentile ?? 0.85)) * 100)}%) and degree ≤ ${t.degree_threshold} (not in the top quarter; median ${t.degree_median}); ${t.n_flagged_strict_median_rule} would also pass the stricter below-median rule; n = ${t.n_connected} connected faculty`; }).join(" · ")}. Try it live on the Collaboration Network tab (click-to-remove).</>}>
         <ChartCard title="Betweenness vs degree" caption="Every faculty member; flagged bridges outlined. Within-institute networks." deps={[]} height={380}
           method="Betweenness: normalised shortest-path betweenness on each institute's unweighted faculty co-authorship graph. LCC drop = people disconnected from the largest connected group when the person is removed."
           option={() => ({ tooltip: { trigger: "item", formatter: (p: any) => `${p.data.name} (${p.data.unit})<br/>degree ${p.data.value[0]}, betweenness ${p.data.value[1].toFixed(4)}${p.data.flagged ? "<br/><b>flagged bridge</b>" : ""}` },
             xAxis: { type: "value", name: "degree (co-authors in institute)" }, yAxis: { type: "value", name: "betweenness" },
-            series: INSTS.map((i) => ({ name: i, type: "scatter", symbolSize: (v: any, p: any) => (p.data.flagged ? 14 : 9),
+            series: INSTS.map((i) => ({ name: i, type: "scatter", itemStyle: { color: instColor(i) }, symbolSize: (v: any, p: any) => (p.data.flagged ? 14 : 9),
               data: (F.f1.scatter as any[]).filter((s) => s.institution === i).map((s) => ({ value: [s.degree, s.betweenness], name: s.name, unit: s.unit, flagged: s.flagged,
                 itemStyle: { color: instColor(i), borderColor: s.flagged ? cssVar("--ink") : cssVar("--surface"), borderWidth: 2, opacity: s.flagged ? 1 : 0.7 } })) })) })}
           table={() => ({ columns: ["name", "institute", "unit", "degree", "betweenness", "flagged"], rows: (F.f1.scatter as any[]).map((s) => [s.name, s.institution, s.unit, s.degree, s.betweenness.toFixed(4), s.flagged ? "yes" : ""]) })} />
@@ -87,7 +87,7 @@ export default function Findings() {
       </Card>
 
       {/* 4 */}
-      <Card h={H[3]} note={`Topic sets: OpenAlex topics appearing in ≥ 2 of a person's papers (all topics for people with < 5 papers); ${F.f4.n_faculty_with_topics} faculty have topic sets. Excluded: pairs with a joint paper or any shared co-author (papers with > 25 authors ignored for shared co-authors).`}>
+      <Card h={H[3]} note={`Topic sets: OpenAlex topics appearing in ≥ 2 of a person's papers (all topics for people with < 5 papers); only people with ≥ 3 topics are compared (smaller sets make Jaccard trivially high); ${F.f4.n_faculty_with_topics} faculty have topic sets. Pairs that already have a joint paper are excluded. Tier 1 = no shared co-author either (the strict definition); tier 2 = already connected through a shared co-author (papers with > 25 authors ignored).`}>
         <div className="flex flex-wrap gap-2 text-[13px] no-print">Show:
           {["all", "cross-institute", "within IIIT-H", "within IIIT-D"].map((s) => <button key={s} className={`btn ${scope === s ? "btn-primary" : ""}`} onClick={() => setScope(s)}>{s} {s === "all" ? `(${(F.f4.pairs as any[]).length})` : `(${F.f4.counts[s] || 0})`}</button>)}</div>
         <DataTable title="Missed collaborations" data={pairs} columns={pairCols} filename="missed_collaborations.csv" pageSize={15} />
@@ -122,7 +122,7 @@ export default function Findings() {
           method="x: co-authored main-set papers; y: citations received from works with that institution. Log scales (value + 1)."
           option={() => ({ tooltip: { trigger: "item", formatter: (p: any) => `${p.data.name}<br/>${p.data.value[1] - 1} citations · ${p.data.value[0] - 1} joint papers` },
             xAxis: { type: "log", name: "co-authored papers + 1" }, yAxis: { type: "log", name: "citations to us + 1" },
-            series: INSTS.map((i) => ({ name: i, type: "scatter", data: ((F.f7[i]?.partners || []) as any[]).map((r) => ({ name: r.partner_inst, value: [r.shared_papers + 1, r.total_citations + 1],
+            series: INSTS.map((i) => ({ name: i, type: "scatter", itemStyle: { color: instColor(i) }, data: ((F.f7[i]?.partners || []) as any[]).map((r) => ({ name: r.partner_inst, value: [r.shared_papers + 1, r.total_citations + 1],
               itemStyle: { color: instColor(i), borderColor: r.cites_us_not_collab ? cssVar("--ink") : cssVar("--surface"), borderWidth: 2 } })), symbolSize: 10 })) })}
           table={() => ({ columns: ["institute", "partner", "type", "citations to us", "joint papers", "flag"], rows: INSTS.flatMap((i) => ((F.f7[i]?.partners || []) as any[]).map((r) => [i, r.partner_inst, r.partner_type, r.total_citations, r.shared_papers, r.cites_us_not_collab ? "yes" : ""])) })} />
         <div className="grid md:grid-cols-2 gap-3">{INSTS.map((i) => (

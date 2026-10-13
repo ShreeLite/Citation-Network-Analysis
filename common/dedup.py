@@ -78,9 +78,13 @@ def cluster(records: list[dict], threshold: float = 93, preprint_year_gap: int =
                 gap = preprint_year_gap if (a.get("is_preprint") or b.get("is_preprint")) else 1
                 if a.get("year") and b.get("year") and abs(a["year"] - b["year"]) > gap:
                     continue
-                # two different non-arXiv DOIs = two different works (e.g. conf + journal version)
+                # two different DOIs usually mean two works (conference + extended journal version),
+                # EXCEPT the same normalised title in the same year: that is one paper registered
+                # twice (ACM DL mirror DOIs, bioRxiv + journal, URL-suffixed DOIs, supplements)
                 da, db = a.get("doi"), b.get("doi")
-                if da and db and da != db and not is_arxiv_doi(da) and not is_arxiv_doi(db):
+                same_paper = a["_nt"] == b["_nt"] and len(a["_nt"].split()) >= 5 and a.get("year") == b.get("year")
+                if da and db and da != db and not is_arxiv_doi(da) and not is_arxiv_doi(db) and not same_paper \
+                        and not (da.startswith(db) or db.startswith(da)):
                     continue
                 if title_match(a["_nt"], b["_nt"], threshold):
                     uf.union(a["rid"], b["rid"])

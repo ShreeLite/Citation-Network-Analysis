@@ -43,3 +43,20 @@ def test_year_gap_too_large_for_published_pair():
 
 def test_short_title_not_matching_long():
     assert not title_match("graph", "graph neural networks survey benchmarks", 85)
+
+
+def test_same_title_same_year_two_dois_is_one_paper():
+    c = cluster([rec("a", "openalex", "Analysis of Lane Level Dynamics for Autonomous Driving", 2016, "10.5555/2936924.2937174"),
+                 rec("b", "dblp", "Analysis of Lane Level Dynamics for Autonomous Driving", 2016, "10.65109/qoet5790")])
+    assert c["a"] == c["b"]
+
+
+def test_url_suffixed_doi_joins():
+    c = cluster([rec("a", "openalex", "Analogous environments across the tree of life", 2025, "10.1093/nsr/nwaf465"),
+                 rec("b", "iiith_portal", "Analogous Environments Across the Tree of Life", 2025, "10.1093/nsr/nwaf465/8305913?searchresult=1")])
+    assert c["a"] == c["b"]
+
+
+def test_biorxiv_counts_as_preprint_doi():
+    from common.titles import is_arxiv_doi
+    assert is_arxiv_doi("10.1101/387886") and not is_arxiv_doi("10.3389/fnhum.2019.00006")

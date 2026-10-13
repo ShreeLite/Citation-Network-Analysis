@@ -88,6 +88,9 @@ def oa_singleton(entity: str, ident: str, select: str | None = None) -> dict | N
         raise
 
 
+MAX_SINGLETON_FALLBACK = 3000  # beyond this, stop and resume after the daily reset instead
+
+
 def oa_lookup(entity: str, filter_key: str, values: list[str], select: str | None = None,
               batch: int = OA_MAX_OR, singleton_prefix: str = "") -> list[dict]:
     """Fetch many entities by an ID-like filter. Uses OR-batched list calls (1 credit per
@@ -117,6 +120,9 @@ def oa_lookup(entity: str, filter_key: str, values: list[str], select: str | Non
             single += ch  # one malformed value spoils the batch: look these up one by one
         i += batch
     single += vals[i:]
+    if _budget_gone and len(vals) - i > MAX_SINGLETON_FALLBACK:
+        raise BudgetExhausted(f"{len(vals) - i} {entity} lookups left after the daily budget ran out: "
+                              "re-run after the reset (completed batches are cached)")
     for v in single:
         try:
             r = oa_singleton(entity, f"{singleton_prefix}{v}", select)
@@ -125,6 +131,31 @@ def oa_lookup(entity: str, filter_key: str, values: list[str], select: str | Non
             continue
         if r:
             out.append(r)
+    return out
+
+
+def oa_lookup_iter(entity: str, filter_key: str, values: list[str], select: str | None = None,
+                   batch: int = OA_MAX_OR, singleton_prefix: str = ""):
+    """Like oa_lookup but yields results batch by batch, so callers can keep only what they
+    need (memory: 350k referenced works do not fit as full JSON on a small machine)."""
+    vals = sorted(set(v for v in values if v))
+    for i in range(0, len(vals), batch * 20):
+        yield from oa_lookup(entity, filter_key, vals[i : i + batch * 20], select, batch, singleton_prefix)
+
+
+WORK_KEYS = ("id", "doi", "title", "display_name", "publication_year", "type", "primary_location", "authorships",
+             "referenced_works", "cited_by_count", "primary_topic")
+
+
+def slim_work(w: dict) -> dict:
+    """Keep only the fields the pipeline uses (drops abstracts, locations, concepts, ...)."""
+    out = {k: w.get(k) for k in WORK_KEYS}
+    pl = out.get("primary_location") or {}
+    out["primary_location"] = {"source": pl.get("source")} if pl else {}
+    out["authorships"] = [{"author": {"id": (a.get("author") or {}).get("id"), "display_name": (a.get("author") or {}).get("display_name")},
+                           "author_position": a.get("author_position"), "raw_author_name": a.get("raw_author_name"),
+                           "institutions": [{k: i.get(k) for k in ("id", "display_name", "country_code", "type", "lineage")} for i in a.get("institutions", [])]}
+                          for a in (w.get("authorships") or [])]
     return out
 
 

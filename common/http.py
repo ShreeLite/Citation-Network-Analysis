@@ -46,7 +46,8 @@ class PermanentHTTPError(RuntimeError):
 
 def _is_transient(exc: BaseException) -> bool:
     if isinstance(exc, requests.exceptions.SSLError):
-        return False  # certificate problems do not fix themselves
+        # certificate problems do not fix themselves; dropped TLS connections (EOF) do
+        return "certificate" not in str(exc).lower()
     return isinstance(exc, (TransientHTTPError, requests.ConnectionError, requests.Timeout))
 
 

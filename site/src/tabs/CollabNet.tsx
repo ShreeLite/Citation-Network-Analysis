@@ -45,12 +45,12 @@ export default function CollabNet() {
     <div className="flex flex-col gap-5">
       <Section title="Faculty co-authorship network" intro="One node per core faculty member; an edge means at least one co-authored paper in the selected years. Node size = degree. Use click-to-remove to see how the largest connected group shrinks when a person leaves (Finding 1).">
         <div className="card p-4 flex flex-col gap-3">
-          <div className="flex flex-wrap items-center gap-2 text-[13px] no-print">
+          <div className="flex flex-wrap items-center gap-2 text-[13px] no-print min-w-0">
             Colour by
             {(["institution", "unit", "community"] as const).map((c) => (
               <button key={c} className={`btn ${colorBy === c ? "btn-primary" : ""}`} onClick={() => setColorBy(c)}>{c === "unit" ? "official unit" : c === "community" ? "detected community" : "institute"}</button>))}
             <span className="flex-1" />
-            <input type="search" list="fac-names" placeholder="Focus on a person…" onChange={(e) => {
+            <input type="search" list="fac-names" className="w-full sm:w-auto" placeholder="Focus on a person…" onChange={(e) => {
               const n = g.nodes.find((x) => x.label.toLowerCase() === e.target.value.toLowerCase()); if (n) setFocus(n.id); }} aria-label="Focus on a person" />
             <datalist id="fac-names">{g.nodes.map((n) => <option key={n.id} value={n.label} />)}</datalist>
           </div>
@@ -61,18 +61,18 @@ export default function CollabNet() {
         </div>
       </Section>
       <div className="grid lg:grid-cols-2 gap-4">
-        <section className="card p-5">
+        <section className="card p-5 min-w-0">
           <h3 className="font-semibold text-[15px]">IIIT-H ↔ IIIT-D</h3>
           <p className="text-[13px] ink-2 mt-1">{fmt(collaboration.cross_institution_edges)} co-authored paper links between the two institutes, across {fmt(collaboration.cross_institution_pairs)} distinct faculty pairs.</p>
-          <table className="data tabnum mt-3"><thead><tr><th>Hub bridging the institutes</th><th>Unit</th><th>Cross-institute papers</th></tr></thead>
+          <div className="overflow-x-auto"><table className="data tabnum mt-3"><thead><tr><th>Hub bridging the institutes</th><th>Unit</th><th>Cross-institute papers</th></tr></thead>
             <tbody>{(collaboration.hub_bridgers as { faculty_id: string; cross_institution_papers: number }[]).map((h) => (
-              <tr key={h.faculty_id}><td className="flex items-center gap-2"><InstDot inst={facultyById[h.faculty_id]?.institution || ""} />{facultyById[h.faculty_id]?.name || h.faculty_id}</td><td>{facultyById[h.faculty_id]?.unit}</td><td>{h.cross_institution_papers}</td></tr>))}</tbody></table>
+              <tr key={h.faculty_id}><td className="flex items-center gap-2"><InstDot inst={facultyById[h.faculty_id]?.institution || ""} />{facultyById[h.faculty_id]?.name || h.faculty_id}</td><td>{facultyById[h.faculty_id]?.unit}</td><td>{h.cross_institution_papers}</td></tr>))}</tbody></table></div>
         </section>
-        <section className="card p-5">
+        <section className="card p-5 min-w-0">
           <h3 className="font-semibold text-[15px]">Most central faculty</h3>
-          <table className="data tabnum mt-2"><thead><tr><th>Name</th><th>Degree</th><th>Betweenness</th></tr></thead>
+          <div className="overflow-x-auto"><table className="data tabnum mt-2"><thead><tr><th>Name</th><th>Degree</th><th>Betweenness</th></tr></thead>
             <tbody>{Object.values(facultyById).filter((x) => facIds.has(x.faculty_id)).sort((a, b) => (b.betweenness || 0) - (a.betweenness || 0)).slice(0, 10).map((x) => (
-              <tr key={x.faculty_id}><td className="flex items-center gap-2"><InstDot inst={x.institution} />{x.name}</td><td>{fmt(x.degree)}</td><td>{(x.betweenness || 0).toFixed(3)}</td></tr>))}</tbody></table>
+              <tr key={x.faculty_id}><td className="flex items-center gap-2"><InstDot inst={x.institution} />{x.name}</td><td>{fmt(x.degree)}</td><td>{(x.betweenness || 0).toFixed(3)}</td></tr>))}</tbody></table></div>
           <p className="text-[12px] muted mt-2">Betweenness: normalised, on the unweighted faculty graph of both institutes. Communities: Louvain (seed 42) within each institute.</p>
         </section>
       </div>

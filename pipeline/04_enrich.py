@@ -27,7 +27,7 @@ from common.config import DATA, EXTERNAL, PROCESSED, REVIEW, cfg, setup_logging
 from common.http import BudgetExhausted
 from common.partners import classify
 from common.quartile_proxy import proxy_quartiles
-from common.sources import OA_MAX_OR, chunks, crossref, oa_get, oa_lookup, oa_paginate, s2, short_id
+from common.sources import OA_MAX_OR, chunks, crossref, oa_get, oa_lookup, oa_lookup_iter, oa_paginate, s2, short_id, slim_work
 from common.titles import is_arxiv_doi
 from common.venues import dblp_acronym, extract_acronym, venue_key
 
@@ -37,13 +37,17 @@ Y0, Y1 = cfg()["years"]["start"], cfg()["years"]["end"]
 
 def load():
     papers = pd.read_parquet(PROCESSED / "papers.parquet")
+    # missing text from parquet arrives as NaN, which is truthy: normalise to ""
+    for c in papers.columns:
+        if papers[c].dtype == object or str(papers[c].dtype).startswith(("str", "string")):
+            papers[c] = papers[c].fillna("")
     links = pd.read_parquet(PROCESSED / "faculty_paper_links.parquet")
     roster = pd.read_csv(DATA / "faculty_roster.csv", dtype=str).fillna("")
     insts = json.loads((PROCESSED / "institutions.json").read_text())
     works = {}
     with gzip.open(PROCESSED / "works_openalex.jsonl.gz", "rt") as fh:
         for line in fh:
-            w = json.loads(line)
+            w = slim_work(json.loads(line))
             works[short_id(w["id"])] = w
     return papers, links, roster, insts, works
 
@@ -375,8 +379,8 @@ def main() -> None:
     refs = sorted(short_id(x) for x in refs)
     ref_insts: dict[str, list[dict]] = {}
     ref_rows = []
-    for w in tqdm(oa_lookup("works", "openalex_id", refs, select="id,doi,authorships,publication_year"), desc="referenced works"):
-        il = inst_list(w)
+    for w in tqdm(oa_lookup_iter("works", "openalex_id", refs, select="id,doi,authorships,publication_year"), total=len(refs), desc="referenced works"):
+        il = inst_list(w)  # compact: only institution fields are kept per referenced work
         ref_insts[short_id(w["id"])] = il
         ref_rows.append({"ref_id": short_id(w["id"]), "doi": (w.get("doi") or "").replace("https://doi.org/", "").lower() or None,
                          "year": w.get("publication_year"), "inst_names": "; ".join(i["name"] for i in il),

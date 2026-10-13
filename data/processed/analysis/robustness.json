@@ -1,0 +1,114 @@
+[
+ {
+  "metric": "papers",
+  "baseline": 8985,
+  "no >25-author papers": 8943,
+  "with preprints": 10255,
+  "robustness": ""
+ },
+ {
+  "metric": "IIIT-H NMI",
+  "baseline": 0.538607,
+  "no >25-author papers": 0.538607,
+  "with preprints": 0.514775,
+  "robustness": ""
+ },
+ {
+  "metric": "IIIT-H cross-unit share",
+  "baseline": 0.703704,
+  "no >25-author papers": 0.703704,
+  "with preprints": 0.697436,
+  "robustness": ""
+ },
+ {
+  "metric": "IIIT-H cross-unit z",
+  "baseline": -13.111781,
+  "no >25-author papers": -13.111781,
+  "with preprints": -14.342905,
+  "robustness": ""
+ },
+ {
+  "metric": "IIIT-H hidden-glue flagged",
+  "baseline": 6,
+  "no >25-author papers": 6,
+  "with preprints": 5,
+  "robustness": ""
+ },
+ {
+  "metric": "IIIT-H share at 0 after 3y",
+  "baseline": 0.438596,
+  "no >25-author papers": 0.438596,
+  "with preprints": 0.421053,
+  "robustness": ""
+ },
+ {
+  "metric": "IIIT-H top10 citation share",
+  "baseline": 0.684862,
+  "no >25-author papers": 0.682032,
+  "with preprints": 0.684798,
+  "robustness": ""
+ },
+ {
+  "metric": "IIIT-H cites-us-not-collab",
+  "baseline": 45,
+  "no >25-author papers": 45,
+  "with preprints": 45,
+  "robustness": ""
+ },
+ {
+  "metric": "IIIT-D NMI",
+  "baseline": 0.345133,
+  "no >25-author papers": 0.345133,
+  "with preprints": 0.333872,
+  "robustness": ""
+ },
+ {
+  "metric": "IIIT-D cross-unit share",
+  "baseline": 0.377907,
+  "no >25-author papers": 0.380117,
+  "with preprints": 0.38674,
+  "robustness": ""
+ },
+ {
+  "metric": "IIIT-D cross-unit z",
+  "baseline": -11.597724,
+  "no >25-author papers": -10.649775,
+  "with preprints": -10.400055,
+  "robustness": ""
+ },
+ {
+  "metric": "IIIT-D hidden-glue flagged",
+  "baseline": 1,
+  "no >25-author papers": 1,
+  "with preprints": 1,
+  "robustness": ""
+ },
+ {
+  "metric": "IIIT-D share at 0 after 3y",
+  "baseline": 0.645833,
+  "no >25-author papers": 0.645833,
+  "with preprints": 0.635417,
+  "robustness": ""
+ },
+ {
+  "metric": "IIIT-D top10 citation share",
+  "baseline": 0.661955,
+  "no >25-author papers": 0.671554,
+  "with preprints": 0.661512,
+  "robustness": ""
+ },
+ {
+  "metric": "IIIT-D cites-us-not-collab",
+  "baseline": 57,
+  "no >25-author papers": 57,
+  "with preprints": 57,
+  "robustness": ""
+ },
+ {
+  "metric": "F5 cross/within ratio",
+  "baseline": 0.8,
+  "no >25-author papers": 0.8,
+  "with preprints": 0.727273,
+  "robustness": ""
+ }
+]

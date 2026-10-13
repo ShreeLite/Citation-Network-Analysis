@@ -1,0 +1,501 @@
+{
+ "central": {
+  "IIIT-H": {
+   "n_faculty": 111,
+   "n_active": 80,
+   "n_edges": 189,
+   "n_excluded_no_unit": 33,
+   "n_units": 19,
+   "n_communities": 9,
+   "nmi_units_vs_communities": 0.542355,
+   "modularity_communities": 0.577908,
+   "modularity_units": 0.285436,
+   "avg_clustering": 0.263037,
+   "cross_unit_share_links": 0.703704,
+   "cross_unit_share_weighted": 0.619681,
+   "null_model": {
+    "observed": {
+     "clustering": 0.263037,
+     "modularity": 0.474679,
+     "cross_unit_share": 0.703704
+    },
+    "null_mean": {
+     "clustering": 0.088423,
+     "modularity": 0.391297,
+     "cross_unit_share": 0.931481
+    },
+    "null_sd": {
+     "clustering": 0.018942,
+     "modularity": 0.012507,
+     "cross_unit_share": 0.015786
+    },
+    "z": {
+     "clustering": 9.218153,
+     "modularity": 6.666852,
+     "cross_unit_share": -14.428764
+    },
+    "ratio": {
+     "clustering": 2.974749,
+     "modularity": 1.213092,
+     "cross_unit_share": 0.755467
+    },
+    "samples": 200
+   },
+   "unit_labels": [
+    "BMRC",
+    "CCNSB",
+    "CMC",
+    "CQST",
+    "CSG",
+    "CSL",
+    "CSTAR",
+    "CVEST",
+    "CVIT",
+    "DSAC",
+    "EERC",
+    "HSRC",
+    "LSI",
+    "LTRC",
+    "MLL",
+    "RRC",
+    "SERC",
+    "SPCRC"
+   ],
+   "community_labels": [
+    "C0",
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "C8"
+   ],
+   "matrix": [
+    [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     1,
+     4,
+     3,
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     4,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     1,
+     1,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    [
+     1,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     1,
+     0,
+     4,
+     2,
+     1,
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     3,
+     0
+    ],
+    [
+     0,
+     2,
+     2,
+     3,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     1,
+     2,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     2,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     2
+    ],
+    [
+     0,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     7,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     1,
+     0,
+     2,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     4,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     3,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     3,
+     0,
+     0,
+     0,
+     0,
+     4,
+     0,
+     0
+    ]
+   ],
+   "unit_sizes": {
+    "HSRC": 12,
+    "Unassigned": 33,
+    "CCNSB": 11,
+    "SERC": 6,
+    "CVEST": 6,
+    "LTRC": 11,
+    "CSTAR": 11,
+    "CVIT": 8,
+    "RRC": 5,
+    "SPCRC": 9,
+    "CQST": 4,
+    "CSL": 5,
+    "MLL": 3,
+    "CSG": 3,
+    "EERC": 5,
+    "LSI": 5,
+    "DSAC": 4,
+    "BMRC": 1,
+    "KCIS": 1,
+    "CMC": 1
+   }
+  },
+  "IIIT-D": {
+   "n_faculty": 140,
+   "n_active": 92,
+   "n_edges": 172,
+   "n_excluded_no_unit": 11,
+   "n_units": 6,
+   "n_communities": 10,
+   "nmi_units_vs_communities": 0.345133,
+   "modularity_communities": 0.668923,
+   "modularity_units": 0.401321,
+   "avg_clustering": 0.256751,
+   "cross_unit_share_links": 0.377907,
+   "cross_unit_share_weighted": 0.193864,
+   "null_model": {
+    "observed": {
+     "clustering": 0.256751,
+     "modularity": 0.57984,
+     "cross_unit_share": 0.377907
+    },
+    "null_mean": {
+     "clustering": 0.057509,
+     "modularity": 0.473949,
+     "cross_unit_share": 0.713692
+    },
+    "null_sd": {
+     "clustering": 0.017803,
+     "modularity": 0.012152,
+     "cross_unit_share": 0.028953
+    },
+    "z": {
+     "clustering": 11.191748,
+     "modularity": 8.714238,
+     "cross_unit_share": -11.597724
+    },
+    "ratio": {
+     "clustering": 4.464517,
+     "modularity": 1.223425,
+     "cross_unit_share": 0.52951
+    },
+    "samples": 200
+   },
+   "unit_labels": [
+    "CB",
+    "CSE",
+    "ECE",
+    "HCD",
+    "MATH",
+    "SSH"
+   ],
+   "community_labels": [
+    "C0",
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "C8",
+    "C9"
+   ],
+   "matrix": [
+    [
+     1,
+     0,
+     0,
+     9,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     7,
+     7,
+     9,
+     2,
+     1,
+     2,
+     5,
+     2,
+     0,
+     1
+    ],
+    [
+     2,
+     6,
+     0,
+     0,
+     5,
+     5,
+     0,
+     1,
+     3,
+     1
+    ],
+    [
+     3,
+     1,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     4,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     8,
+     3,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "unit_sizes": {
+    "ECE": 33,
+    "SSH": 20,
+    "Unassigned": 11,
+    "HCD": 8,
+    "CSE": 52,
+    "MATH": 15,
+    "CB": 12
+   }
+  }
+ },
+ "findings_headlines": {
+  "f1": {
+   "thresholds": {
+    "IIIT-H": {
+     "betweenness_threshold": 0.022749,
+     "betweenness_percentile": 0.85,
+     "degree_median": 4.0,
+     "degree_threshold": 7.0,
+     "degree_percentile": 0.75,
+     "n_flagged_strict_median_rule": 0,
+     "n_connected": 98
+    },
+    "IIIT-D": {
+     "betweenness_threshold": 0.027663,
+     "betweenness_percentile": 0.85,
+     "degree_median": 3.0,
+     "degree_threshold": 5.0,
+     "degree_percentile": 0.75,
+     "n_flagged_strict_median_rule": 0,
+     "n_connected": 95
+    }
+   },
+   "n_flagged": {
+    "IIIT-H": 6,
+    "IIIT-D": 1
+   }
+  },
+  "f2": {},
+  "f3": {},
+  "f4": {
+   "counts": {
+    "cross-institute": 34,
+    "within IIIT-D": 9,
+    "within IIIT-H": 4
+   }
+  },
+  "f5": {
+   "pooled_year_normalised": {
+    "cross-unit": {
+     "median_norm_citations": 1.0,
+     "n": 353
+    },
+    "single faculty": {
+     "median_norm_citations": 1.0,
+     "n": 6775
+    },
+    "within-unit": {
+     "median_norm_citations": 1.25,
+     "n": 582
+    }
+   },
+   "years_cross_higher": 1,
+   "years_compared": 10
+  },
+  "f6": {},
+  "f7": {}
+ }
+}

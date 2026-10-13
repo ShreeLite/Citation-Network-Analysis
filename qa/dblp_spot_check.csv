@@ -1,0 +1,233 @@
+faculty_id,name,institution,dblp_pid,dblp_count,our_count,dblp_found_in_ours,dblp_recall,count_ratio_ours_over_dblp
+IIIT-D:a_v_subramanyam,A V Subramanyam,IIIT-D,232/6141,48,52,47,0.979,1.083
+IIIT-D:aasim_khan,Aasim Khan,IIIT-D,260/9912,3,14,3,1.0,4.667
+IIIT-D:abhijit_mitra,Abhijit Mitra,IIIT-D,48/4376,50,54,48,0.96,1.08
+IIIT-D:alexander_fell,Alexander Fell,IIIT-D,07/2195,14,8,6,0.429,0.571
+IIIT-D:aman_parnami,Aman Parnami,IIIT-D,46/5850,25,22,22,0.88,0.88
+IIIT-D:amarjeet_singh,Amarjeet Singh,IIIT-D,65/5352,10,32,10,1.0,3.2
+IIIT-D:anand_srivastava,Anand Srivastava,IIIT-D,153/0327,143,171,142,0.993,1.196
+IIIT-D:angshul_majumdar,Angshul Majumdar,IIIT-D,69/4115,181,218,179,0.989,1.204
+IIIT-D:anmol_srivastava,Anmol Srivastava,IIIT-D,188/6525,17,15,10,0.588,0.882
+IIIT-D:anubha_gupta,Anubha Gupta,IIIT-D,95/491,100,171,100,1.0,1.71
+IIIT-D:anuj_grover,Anuj Grover,IIIT-D,156/4054,40,52,29,0.725,1.3
+IIIT-D:anuj_kumar,Anuj Kumar,IIIT-D,78/4454,102,42,42,0.412,0.412
+IIIT-D:anuradha_sharma,Anuradha Sharma,IIIT-D,89/6860,45,54,43,0.956,1.2
+IIIT-D:apala_guha,Apala Guha,IIIT-D,42/1625,9,7,6,0.667,0.778
+IIIT-D:arani_bhattacharya,Arani Bhattacharya,IIIT-D,139/0489,54,44,41,0.759,0.815
+IIIT-D:arjun_ray,Arjun Ray,IIIT-D,37/8887,6,35,6,1.0,5.833
+IIIT-D:arun_balaji_buduru,Arun Balaji Buduru,IIIT-D,128/4273,50,54,50,1.0,1.08
+IIIT-D:ashish_kumar_pandey,Ashish Kumar Pandey,IIIT-D,234/3896,12,23,12,1.0,1.917
+IIIT-D:ashok_k_mittal,Ashok K. Mittal,IIIT-D,194/4147,0,0,0,,
+IIIT-D:astrid_kiehn,Astrid Kiehn,IIIT-D,60/2512,2,0,0,0.0,0.0
+IIIT-D:bapi_chatterjee,Bapi Chatterjee,IIIT-D,117/6988,22,16,14,0.636,0.727
+IIIT-D:chetan_arora,Chetan Arora,IIIT-D,19/1006-1,105,31,27,0.257,0.295
+IIIT-D:debajyoti_bera,Debajyoti Bera,IIIT-D,46/6276,24,26,24,1.0,1.083
+IIIT-D:debarka_sengupta,Debarka Sengupta,IIIT-D,14/11132,23,64,22,0.957,2.783
+IIIT-D:debidas_kundu,Debidas Kundu,IIIT-D,313/5265,7,28,6,0.857,4.0
+IIIT-D:debika_banerjee,Debika Banerjee,IIIT-D,363/0980,1,14,1,1.0,14.0
+IIIT-D:dhruv_kumar,Dhruv Kumar,IIIT-D,159/9419-1,33,51,22,0.667,1.545
+IIIT-D:diptapriyo_majumdar,Diptapriyo Majumdar,IIIT-D,171/3758,43,28,29,0.674,0.651
+IIIT-D:donghoon_chang,Donghoon Chang,IIIT-D,50/4733,36,39,35,0.972,1.083
+IIIT-D:g_p_s_raghava,G.P.S. Raghava,IIIT-D,43/5459,44,128,41,0.932,2.909
+IIIT-D:g_s_visweswaran,G.S. Visweswaran,IIIT-D,18/684,10,8,7,0.7,0.8
+IIIT-D:ganesh_bagler,Ganesh Bagler,IIIT-D,86/5221,17,40,17,1.0,2.353
+IIIT-D:gaurav_ahuja,Gaurav Ahuja,IIIT-D,141/0641,9,38,9,1.0,4.222
+IIIT-D:gaurav_arora,Gaurav Arora,IIIT-D,29/254,11,64,11,1.0,5.818
+IIIT-D:gautam_shroff,Gautam Shroff,IIIT-D,54/3265,72,22,19,0.264,0.306
+IIIT-D:gourab_ghatak,Gourab Ghatak,IIIT-D,141/7694,65,36,28,0.431,0.554
+IIIT-D:grace_eden,Grace Eden,IIIT-D,45/11058,23,18,16,0.696,0.783
+IIIT-D:hrishikesh_b_acharya,Hrishikesh B. Acharya,IIIT-D,90/7209,21,5,5,0.238,0.238
+IIIT-D:jainendra_shukla,Jainendra Shukla,IIIT-D,117/9926,47,45,42,0.894,0.957
+IIIT-D:jaspreet_kaur_dhanjal,Jaspreet Kaur Dhanjal,IIIT-D,143/7862,1,29,1,1.0,29.0
+IIIT-D:jatin_batra,Jatin Batra,IIIT-D,157/6041,8,3,3,0.375,0.375
+IIIT-D:juhi_ranjan,Juhi Ranjan,IIIT-D,119/8596,4,4,4,1.0,1.0
+IIIT-D:k_k_biswas,K.K. Biswas,IIIT-D,91/887,18,0,0,0.0,0.0
+IIIT-D:kalpana_shankhwar,Kalpana Shankhwar,IIIT-D,273/5010,3,4,1,0.333,1.333
+IIIT-D:kaushik_kalyanaraman,Kaushik Kalyanaraman,IIIT-D,19/8773,5,7,5,1.0,1.4
+IIIT-D:koteswar_rao_jerripothula,Koteswar Rao Jerripothula,IIIT-D,158/9790,24,21,19,0.792,0.875
+IIIT-D:manohar_kumar,Manohar Kumar,IIIT-D,364/2532,5,12,5,1.0,2.4
+IIIT-D:manuj_mukherjee,Manuj Mukherjee,IIIT-D,140/7562,16,6,6,0.375,0.375
+IIIT-D:mayank_vatsa,Mayank Vatsa,IIIT-D,58/323,255,131,123,0.482,0.514
+IIIT-D:md_shad_akhtar,Md. Shad Akhtar,IIIT-D,184/8579,91,80,69,0.758,0.879
+IIIT-D:mohammad_s_hashmi,Mohammad S. Hashmi,IIIT-D,43/10455,93,211,79,0.849,2.269
+IIIT-D:monika_arora,Monika Arora,IIIT-D,11/8302,10,38,10,1.0,3.8
+IIIT-D:mrinmoy_chakrabarty,Mrinmoy Chakrabarty,IIIT-D,349/7665,3,13,3,1.0,4.333
+IIIT-D:mukesh_mohania,Mukesh Mohania,IIIT-D,85/6670,39,30,28,0.718,0.769
+IIIT-D:mukulika_maity,Mukulika Maity,IIIT-D,157/1298,37,40,37,1.0,1.081
+IIIT-D:n_arul_murugan,N. Arul Murugan,IIIT-D,281/4674,2,47,0,0.0,23.5
+IIIT-D:ojaswa_sharma,Ojaswa Sharma,IIIT-D,08/4556,26,29,26,1.0,1.115
+IIIT-D:p_b_sujit,P B Sujit,IIIT-D,93/878,54,43,20,0.37,0.796
+IIIT-D:pankaj_jalote,Pankaj Jalote,IIIT-D,j/PankajJalote,12,18,12,1.0,1.5
+IIIT-D:payel_c_mukherjee,Payel C Mukherjee,IIIT-D,308/4403,1,4,1,1.0,4.0
+IIIT-D:piyus_kedia,Piyus Kedia,IIIT-D,201/4871,8,9,8,1.0,1.125
+IIIT-D:ponnurangam_kumaraguru,Ponnurangam Kumaraguru,IIIT-D,97/5147,172,73,63,0.366,0.424
+IIIT-D:pragma_kar,Pragma Kar,IIIT-D,191/4760,11,2,0,0.0,0.182
+IIIT-D:pragya_kosta,Pragya Kosta,IIIT-D,309/1767,6,6,2,0.333,1.0
+IIIT-D:praveen_priyadarshi,Praveen Priyadarshi,IIIT-D,389/7321,1,4,1,1.0,4.0
+IIIT-D:pravesh_biyani,Pravesh Biyani,IIIT-D,65/3005,17,19,16,0.941,1.118
+IIIT-D:puneet_goyal,Puneet Goyal,IIIT-D,51/10700,47,1,1,0.021,0.021
+IIIT-D:pushpendra_singh,Pushpendra Singh,IIIT-D,55/1719-1,67,206,67,1.0,3.075
+IIIT-D:rahul_mohanani,Rahul Mohanani,IIIT-D,145/4101,25,23,21,0.84,0.92
+IIIT-D:rahul_purandare,Rahul Purandare,IIIT-D,65/5006,29,26,25,0.862,0.897
+IIIT-D:rajiv_raman,Rajiv Raman,IIIT-D,42/6468,17,17,17,1.0,1.0
+IIIT-D:rajiv_ratn_shah,Rajiv Ratn Shah,IIIT-D,134/3502,233,247,233,1.0,1.06
+IIIT-D:rakesh_chaturvedi,Rakesh Chaturvedi,IIIT-D,191/7140,8,12,7,0.875,1.5
+IIIT-D:ram_krishna_ghosh,Ram Krishna Ghosh,IIIT-D,207/1216,4,23,3,0.75,5.75
+IIIT-D:ranjan_bose,Ranjan Bose,IIIT-D,83/4862,48,41,33,0.688,0.854
+IIIT-D:ranjitha_prasad,Ranjitha Prasad,IIIT-D,17/6671,28,26,25,0.893,0.929
+IIIT-D:ravi_anand,Ravi Anand,IIIT-D,203/4259,27,9,8,0.296,0.333
+IIIT-D:richa_gupta,Richa Gupta,IIIT-D,45/5942,47,35,33,0.702,0.745
+IIIT-D:richa_singh,Richa Singh,IIIT-D,75/3512,258,131,124,0.481,0.508
+IIIT-D:rinku_shah,Rinku Shah,IIIT-D,146/0131,19,15,15,0.789,0.789
+IIIT-D:sachit_butail,Sachit Butail,IIIT-D,13/7744,14,4,0,0.0,0.286
+IIIT-D:saket_anand,Saket Anand,IIIT-D,11/4747,44,46,44,1.0,1.045
+IIIT-D:sambuddho_chakravarty,Sambuddho Chakravarty,IIIT-D,95/1983,18,19,18,1.0,1.056
+IIIT-D:samrith_ram,Samrith Ram,IIIT-D,35/6630,6,10,6,1.0,1.667
+IIIT-D:sanat_k_biswas,Sanat K Biswas,IIIT-D,190/7570,10,40,9,0.9,4.0
+IIIT-D:sandeep_sen,Sandeep Sen,IIIT-D,s/SandeepSen,8,0,0,0.0,0.0
+IIIT-D:sandip_aine,Sandip Aine,IIIT-D,94/5256,12,8,5,0.417,0.667
+IIIT-D:sanjit_krishnan_kaul,Sanjit Krishnan Kaul,IIIT-D,75/6840,35,34,34,0.971,0.971
+IIIT-D:sankha_s_basu,Sankha S Basu,IIIT-D,177/0553,6,5,5,0.833,0.833
+IIIT-D:sarthok_sircar,Sarthok Sircar,IIIT-D,92/9707,1,11,1,1.0,11.0
+IIIT-D:satish_kumar_pandey,Satish Kumar Pandey,IIIT-D,124/3766,0,5,0,,
+IIIT-D:sayak_bhattacharya,Sayak Bhattacharya,IIIT-D,199/8924,5,15,2,0.4,3.0
+IIIT-D:sayan_basu_roy,Sayan Basu Roy,IIIT-D,126/2255,45,63,35,0.778,1.4
+IIIT-D:shamik_sarkar,Shamik Sarkar,IIIT-D,207/1794,29,13,12,0.414,0.448
+IIIT-D:shilpak_banerjee,Shilpak Banerjee,IIIT-D,274/2014,5,10,5,1.0,2.0
+IIIT-D:shobha_sundar_ram,Shobha Sundar Ram,IIIT-D,52/9865,25,78,25,1.0,3.12
+IIIT-D:shreemoy_mishra,Shreemoy Mishra,IIIT-D,219/4240,2,1,1,0.5,0.5
+IIIT-D:shriram_venkatraman,Shriram Venkatraman,IIIT-D,244/0372,1,7,1,1.0,7.0
+IIIT-D:smriti_singh,Smriti Singh,IIIT-D,31/4180,6,26,5,0.833,4.333
+IIIT-D:sneh_saurabh,Sneh Saurabh,IIIT-D,217/0933,26,43,26,1.0,1.654
+IIIT-D:sonal_keshwani,Sonal Keshwani,IIIT-D,403/1128,2,7,2,1.0,3.5
+IIIT-D:sonia_baloni_ray,Sonia Baloni Ray,IIIT-D,311/9685,5,7,5,1.0,1.4
+IIIT-D:souvik_dutta,Souvik Dutta,IIIT-D,213/2455,4,7,2,0.5,1.75
+IIIT-D:sriram_k,Sriram K,IIIT-D,162/2328,0,15,0,,
+IIIT-D:subhabrata_samajder,Subhabrata Samajder,IIIT-D,143/4473,15,5,5,0.333,0.333
+IIIT-D:subhashree_mohapatra,Subhashree Mohapatra,IIIT-D,219/7720,14,19,9,0.643,1.357
+IIIT-D:sujay_deb,Sujay Deb,IIIT-D,61/8572,87,93,87,1.0,1.069
+IIIT-D:supratim_shit,Supratim Shit,IIIT-D,185/5317,9,3,3,0.333,0.333
+IIIT-D:syamantak_das,Syamantak Das,IIIT-D,135/6297,22,18,18,0.818,0.818
+IIIT-D:tammam_tillo,Tammam Tillo,IIIT-D,56/3550,30,15,10,0.333,0.5
+IIIT-D:tanmoy_chakraborty,Tanmoy Chakraborty,IIIT-D,65/2136-2,268,199,189,0.705,0.743
+IIIT-D:tanmoy_kundu,Tanmoy Kundu,IIIT-D,226/6193-1,5,1,1,0.2,0.2
+IIIT-D:tarini_shankar_ghosh,Tarini Shankar Ghosh,IIIT-D,49/7252,1,34,0,0.0,34.0
+IIIT-D:tavpritesh_sethi,Tavpritesh Sethi,IIIT-D,205/6969,6,58,6,1.0,9.667
+IIIT-D:venkata_m_viswanath_gunturi,Venkata M. Viswanath Gunturi,IIIT-D,52/9991,25,9,9,0.36,0.36
+IIIT-D:venkata_ratnadeep_suri,Venkata Ratnadeep Suri,IIIT-D,73/7535,7,13,5,0.714,1.857
+IIIT-D:vibhor_kumar,Vibhor Kumar,IIIT-D,71/7330,8,26,8,1.0,3.25
+IIIT-D:vikram_goyal,Vikram Goyal,IIIT-D,70/6404,40,47,40,1.0,1.175
+IIIT-D:vinayak_abrol,Vinayak Abrol,IIIT-D,136/4698,49,36,27,0.551,0.735
+IIIT-D:vinayak_naik,Vinayak Naik,IIIT-D,29/3269,49,20,19,0.388,0.408
+IIIT-D:vivek_kumar,Vivek Kumar,IIIT-D,82/2381-1,10,53,10,1.0,5.3
+IIIT-H:abhishek_deshpande,Abhishek Deshpande,IIIT-H,135/6100,10,15,6,0.6,1.5
+IIIT-H:aftab_m_hussain,Aftab M Hussain,IIIT-H,238/9167,21,76,21,1.0,3.619
+IIIT-H:aniket_alam,Aniket Alam,IIIT-H,205/5361,3,7,3,1.0,2.333
+IIIT-H:anil_kumar_nelakanti,Anil Kumar Nelakanti,IIIT-H,157/8426,5,3,3,0.6,0.6
+IIIT-H:anil_kumar_vuppala,Anil Kumar Vuppala,IIIT-H,15/8468,96,115,95,0.99,1.198
+IIIT-H:ankit_gangwal,Ankit Gangwal,IIIT-H,185/7073,31,19,18,0.581,0.613
+IIIT-H:anoop_m_namboodiri,Anoop M Namboodiri,IIIT-H,16/143,46,51,46,1.0,1.109
+IIIT-H:anshu_sarje,Anshu Sarje,IIIT-H,91/786,8,14,8,1.0,1.75
+IIIT-H:antony_thomas,Antony Thomas,IIIT-H,182/2463,19,7,3,0.158,0.368
+IIIT-H:arti_yardi,Arti Yardi,IIIT-H,120/7661,13,7,3,0.231,0.538
+IIIT-H:arun_kumar_pati,Arun Kumar Pati,IIIT-H,31/10167,8,64,6,0.75,8.0
+IIIT-H:ashok_kumar_das,Ashok Kumar Das,IIIT-H,39/871,451,499,444,0.984,1.106
+IIIT-H:atul_singh_arora,Atul Singh Arora,IIIT-H,230/4360,5,4,3,0.6,0.8
+IIIT-H:avinash_sharma,Avinash Sharma,IIIT-H,08/4811-1,40,89,37,0.925,2.225
+IIIT-H:bapi_raju_s,Bapi Raju S,IIIT-H,50/1424,62,101,60,0.968,1.629
+IIIT-H:bhaktee_dongaonkar,Bhaktee Dongaonkar,IIIT-H,345/8652,0,2,0,,
+IIIT-H:charu_sharma,Charu Sharma,IIIT-H,202/8640,31,23,21,0.677,0.742
+IIIT-H:chiranjeevi_yarra,Chiranjeevi Yarra,IIIT-H,158/4179,49,38,30,0.612,0.776
+IIIT-H:chittaranjan_hens,Chittaranjan Hens,IIIT-H,267/8501,5,53,4,0.8,10.6
+IIIT-H:deepak_gangadharan,Deepak Gangadharan,IIIT-H,98/7452,39,39,37,0.949,1.0
+IIIT-H:diganta_das,Diganta Das,IIIT-H,77/6199,14,25,6,0.429,1.786
+IIIT-H:dipanjan_roy,Dipanjan Roy,IIIT-H,155/5935,42,22,15,0.357,0.524
+IIIT-H:g_s_raghavendra,G S Raghavendra,IIIT-H,211/5877,7,3,4,0.571,0.429
+IIIT-H:girish_varma,Girish Varma,IIIT-H,00/8171,22,35,22,1.0,1.591
+IIIT-H:gowtham_raghunath_kurri,Gowtham Raghunath Kurri,IIIT-H,220/3310,25,10,10,0.4,0.4
+IIIT-H:harikumar_kandath,Harikumar Kandath,IIIT-H,218/1858-1,40,55,27,0.675,1.375
+IIIT-H:hrishikesh_rajesh_terdalkar,Hrishikesh Rajesh Terdalkar,IIIT-H,296/3811,5,5,3,0.6,1.0
+IIIT-H:indranil_chakrabarty,Indranil Chakrabarty,IIIT-H,33/9710,9,40,9,1.0,4.444
+IIIT-H:isha_dubey,Isha Dubey,IIIT-H,439/3756,1,1,1,1.0,1.0
+IIIT-H:jawahar_c_v,Jawahar C V,IIIT-H,j/CVJawahar,268,295,267,0.996,1.101
+IIIT-H:k_madhava_krishna,K Madhava Krishna,IIIT-H,90/4844,158,183,153,0.968,1.158
+IIIT-H:k_s_rajan,K S Rajan,IIIT-H,04/8409,2,63,2,1.0,31.5
+IIIT-H:kamalakar_karlapalem,Kamalakar Karlapalem,IIIT-H,k/KKarlapalem,47,51,47,1.0,1.085
+IIIT-H:kannan_srinathan,Kannan Srinathan,IIIT-H,s/KSrinathan,18,22,18,1.0,1.222
+IIIT-H:karthik_vaidhyanathan,Karthik Vaidhyanathan,IIIT-H,241/0360,59,61,48,0.814,1.034
+IIIT-H:kavita_vemuri,Kavita Vemuri,IIIT-H,165/3944,24,44,24,1.0,1.833
+IIIT-H:kishore_kothapalli,Kishore Kothapalli,IIIT-H,84/2688,46,53,46,1.0,1.152
+IIIT-H:krishna_reddy_p,Krishna Reddy P,IIIT-H,78/2714,81,87,80,0.988,1.074
+IIIT-H:kshitij_gajjar,Kshitij Gajjar,IIIT-H,205/2712,16,7,6,0.375,0.438
+IIIT-H:kuldeep_ramchandra_kurte,Kuldeep Ramchandra Kurte,IIIT-H,142/5943,26,1,0,0.0,0.038
+IIIT-H:lalitha_vadlamani,Lalitha Vadlamani,IIIT-H,230/9305,38,42,38,1.0,1.105
+IIIT-H:lavanya_ramapantulu,Lavanya Ramapantulu,IIIT-H,154/3330,12,12,12,1.0,1.0
+IIIT-H:makarand_tapaswi,Makarand Tapaswi,IIIT-H,69/1484,44,30,30,0.682,0.682
+IIIT-H:manish_shrivastava,Manish Shrivastava,IIIT-H,65/3881,160,198,160,1.0,1.238
+IIIT-H:marimuthu_krishnan,Marimuthu Krishnan,IIIT-H,281/4544,6,20,6,1.0,3.333
+IIIT-H:moumita_patra,Moumita Patra,IIIT-H,38/10604,32,4,4,0.125,0.125
+IIIT-H:nagamanikandan_govindan,Nagamanikandan Govindan,IIIT-H,210/7421,14,15,11,0.786,1.071
+IIIT-H:narayanan_p_j,Narayanan P J,IIIT-H,n/PJNarayanan,48,48,48,1.0,1.0
+IIIT-H:naresh_manwani,Naresh Manwani,IIIT-H,17/2536,35,36,35,1.0,1.029
+IIIT-H:navjyoti_singh,Navjyoti Singh,IIIT-H,40/8816,19,20,19,1.0,1.053
+IIIT-H:nimmi_rangaswamy,Nimmi Rangaswamy,IIIT-H,99/594,21,27,19,0.905,1.286
+IIIT-H:nita_parekh,Nita Parekh,IIIT-H,22/2557,9,28,9,1.0,3.111
+IIIT-H:parameswari_krishnamurthy,Parameswari Krishnamurthy,IIIT-H,231/4833,27,35,23,0.852,1.296
+IIIT-H:ponnurangam_kumaraguru,Ponnurangam Kumaraguru,IIIT-H,97/5147,172,124,109,0.634,0.721
+IIIT-H:prabhakar_bhimalapuram,Prabhakar Bhimalapuram,IIIT-H,160/0454,10,27,10,1.0,2.7
+IIIT-H:pradeep_kumar_ramancharla,Pradeep Kumar Ramancharla,IIIT-H,330/2215,2,55,2,1.0,27.5
+IIIT-H:praful_mankar,Praful Mankar,IIIT-H,423/7943,2,23,2,1.0,11.5
+IIIT-H:prasad_krishnan,Prasad Krishnan,IIIT-H,175/1464,43,45,43,1.0,1.047
+IIIT-H:praveen_paruchuri,Praveen Paruchuri,IIIT-H,22/1006,41,45,41,1.0,1.098
+IIIT-H:priyanka_srivastava,Priyanka Srivastava,IIIT-H,122/1984,20,34,20,1.0,1.7
+IIIT-H:priyesh_shukla,Priyesh Shukla,IIIT-H,260/0640,13,3,2,0.154,0.231
+IIIT-H:radhika_krishnan,Radhika Krishnan,IIIT-H,250/9759,2,11,2,1.0,5.5
+IIIT-H:radhika_mamidi,Radhika Mamidi,IIIT-H,134/6779,116,134,116,1.0,1.155
+IIIT-H:raghubabu_reddy_y,Raghubabu Reddy Y,IIIT-H,r/RaghuReddy,66,74,66,1.0,1.121
+IIIT-H:rahul_mishra,Rahul Mishra,IIIT-H,66/9553-4,10,9,1,0.1,0.9
+IIIT-H:rahul_shrestha,Rahul Shrestha,IIIT-H,116/4710,55,15,12,0.218,0.273
+IIIT-H:rajakrishnan_p_rajkumar,Rajakrishnan P Rajkumar,IIIT-H,437/7980,1,3,1,1.0,3.0
+IIIT-H:rajeev_gangula,Rajeev Gangula,IIIT-H,118/0583,23,8,8,0.348,0.348
+IIIT-H:raman_saxena,Raman Saxena,IIIT-H,374/2277,2,3,2,1.0,1.5
+IIIT-H:rambabu_kalla,Rambabu Kalla,IIIT-H,164/3332,0,0,0,,
+IIIT-H:ravi_kiran_sarvadevabhatla,Ravi Kiran Sarvadevabhatla,IIIT-H,62/150,61,64,53,0.869,1.049
+IIIT-H:sachin_chaudhari,Sachin Chaudhari,IIIT-H,16/6527,65,83,64,0.985,1.277
+IIIT-H:saikiran_bulusu,Saikiran Bulusu,IIIT-H,214/2066,14,4,4,0.286,0.286
+IIIT-H:samyadeb_bhattacharya,Samyadeb Bhattacharya,IIIT-H,200/2773,4,24,3,0.75,6.0
+IIIT-H:sandeep_kumar_shukla,Sandeep Kumar Shukla,IIIT-H,s/SKShukla,129,42,18,0.14,0.326
+IIIT-H:sanjay_rawat,Sanjay Rawat,IIIT-H,27/443-1,12,10,10,0.833,0.833
+IIIT-H:santosh_nannuru,Santosh Nannuru,IIIT-H,129/8530,28,35,23,0.821,1.25
+IIIT-H:saswata_shannigrahi,Saswata Shannigrahi,IIIT-H,12/5416,6,2,2,0.333,0.333
+IIIT-H:shantanav_chakraborty,Shantanav Chakraborty,IIIT-H,126/5066,4,9,3,0.75,2.25
+IIIT-H:shatrunjay_rawat,Shatrunjay Rawat,IIIT-H,144/5319,5,7,5,1.0,1.4
+IIIT-H:shubhajit_roy_chowdhury,Shubhajit Roy Chowdhury,IIIT-H,15/3177,36,8,2,0.056,0.222
+IIIT-H:shubham_singhal,Shubham Singhal,IIIT-H,69/10030,4,8,1,0.25,2.0
+IIIT-H:siddhartha_das,Siddhartha Das,IIIT-H,190/7344,6,13,2,0.333,2.167
+IIIT-H:soma_paul,Soma Paul,IIIT-H,91/9570,3,7,3,1.0,2.333
+IIIT-H:sourav_garg,Sourav Garg,IIIT-H,142/0073,40,15,13,0.325,0.375
+IIIT-H:spandan_roy,Spandan Roy,IIIT-H,136/9869,44,64,35,0.795,1.455
+IIIT-H:srivatsava_jandhyala,Srivatsava Jandhyala,IIIT-H,148/5089,8,13,5,0.625,1.625
+IIIT-H:subhadip_mitra,Subhadip Mitra,IIIT-H,164/4583,0,47,0,,
+IIIT-H:subramanian_ramanathan,Subramanian Ramanathan,IIIT-H,10/6265,57,24,24,0.421,0.421
+IIIT-H:sudipta_banerjee,Sudipta Banerjee,IIIT-H,152/7639,26,8,6,0.231,0.308
+IIIT-H:sujit_prakash_gujar,Sujit Prakash Gujar,IIIT-H,08/776,87,86,87,1.0,0.989
+IIIT-H:suresh_purini,Suresh Purini,IIIT-H,81/4357,28,32,28,1.0,1.143
+IIIT-H:suryajith_chillara,Suryajith Chillara,IIIT-H,133/8651,14,5,5,0.357,0.357
+IIIT-H:suryakanth_v_gangashetty,Suryakanth V. Gangashetty,IIIT-H,92/4419,69,68,55,0.797,0.986
+IIIT-H:syed_azeemuddin,Syed Azeemuddin,IIIT-H,139/0506,30,100,29,0.967,3.333
+IIIT-H:tanmay_bhowmik,Tanmay Bhowmik,IIIT-H,68/8855,43,17,5,0.116,0.395
+IIIT-H:tapan_kumar_sau,Tapan Kumar Sau,IIIT-H,279/9381,4,21,4,1.0,5.25
+IIIT-H:tejas_bodas,Tejas Bodas,IIIT-H,73/11046,19,8,6,0.316,0.421
+IIIT-H:ubaidulla_p,Ubaidulla P,IIIT-H,89/5028,24,26,24,1.0,1.083
+IIIT-H:uttam_singh,Uttam Singh,IIIT-H,310/1778,2,6,1,0.5,3.0
+IIIT-H:vasudeva_varma,Vasudeva Varma,IIIT-H,03/4045,141,157,141,1.0,1.113
+IIIT-H:venkatesh_choppella,Venkatesh Choppella,IIIT-H,44/7025,47,51,47,1.0,1.085
+IIIT-H:vignesh_sivaraman,Vignesh Sivaraman,IIIT-H,213/0981,7,6,6,0.857,0.857
+IIIT-H:vikram_pudi,Vikram Pudi,IIIT-H,80/594,38,45,38,1.0,1.184
+IIIT-H:vineet_gandhi,Vineet Gandhi,IIIT-H,117/2021,62,64,61,0.984,1.032
+IIIT-H:vinod_p_k,Vinod P K,IIIT-H,433/8847,1,2,1,1.0,2.0
+IIIT-H:vinoo_alluri,Vinoo Alluri,IIIT-H,49/10744,22,38,21,0.955,1.727
+IIIT-H:vishal_garg,Vishal Garg,IIIT-H,38/8383,24,65,23,0.958,2.708
+IIIT-H:vishnu_sreekumar,Vishnu Sreekumar,IIIT-H,202/9845,9,20,6,0.667,2.222
+IIIT-H:viswanath_k,Viswanath K,IIIT-H,401/2805,1,1,1,1.0,1.0
+IIIT-H:zia_abbas,Zia Abbas,IIIT-H,121/4444,77,90,76,0.987,1.169

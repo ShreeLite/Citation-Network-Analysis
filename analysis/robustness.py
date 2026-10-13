@@ -63,7 +63,7 @@ def main() -> None:
     small = mp[mp.n_authors.fillna(0) <= BIG]
     va = headline(core, small, ml[ml.paper_id.isin(small.paper_id)], an[~an.big_paper.astype(bool)], ic, edges, insts)
     # (b) with preprints
-    pre = R.effective_quartile(allp[allp.type.eq("preprint") & allp.paper_id.isin(links[links.in_main_set].paper_id)].copy())
+    pre = R.effective_quartile(R.unpublished_preprints(allp, mp, links).copy())
     pre["our_institutions"] = pre.paper_id.map(links[links.in_main_set].groupby("paper_id").institution.apply(lambda s: ";".join(sorted(set(s)))))
     mp_b = pd.concat([mp, pre], ignore_index=True)
     ml_b = pd.concat([ml, links[links.in_main_set & links.paper_id.isin(pre.paper_id) & links.faculty_id.isin(core.faculty_id)]])

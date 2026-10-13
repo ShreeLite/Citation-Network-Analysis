@@ -2,7 +2,7 @@
 PY := .venv/bin/python
 export PYTHONPATH := $(CURDIR)
 
-.PHONY: core scimago setup roster identity reingest pubs enrich networks qa analysis deliverables site all test clean-processed
+.PHONY: checks core scimago setup roster identity reingest pubs enrich networks qa analysis deliverables site all test clean-processed
 
 setup:
 	python3 -m venv .venv
@@ -21,7 +21,7 @@ analysis:      ; $(PY) -m analysis.run_all && $(PY) -m analysis.figures
 deliverables:  ; $(PY) -m analysis.deliverables
 site:          ; cp deliverables/group9_deliverables.zip site/public/ && cd site && npm run build && cp public/group9_deliverables.zip dist/
 
-all: roster identity pubs enrich networks qa analysis deliverables site
+all: roster identity pubs enrich networks qa analysis deliverables site checks
 
 test:
 	$(PY) -m pytest -q tests
@@ -32,3 +32,12 @@ clean-processed:   # keeps the download cache
 core:          # run this yourself: CORE's robots.txt disallows AI agents
 	$(PY) scripts/download_core.py
 scimago:       ; $(PY) -m pipeline.00_scimago
+
+checks:        # every sanity check in qa/sanity_checklist.md
+	$(PY) qa/checkpoint1.py
+	$(PY) qa/checkpoint2.py
+	$(PY) -m pipeline.06_qa
+	$(PY) -m analysis.robustness
+	$(PY) qa/findings_handcheck.py
+	$(PY) qa/site_check.py
+	$(PY) -m analysis.report_results

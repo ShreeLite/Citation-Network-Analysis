@@ -107,8 +107,10 @@ def removal_impact(G: nx.Graph, node) -> dict:
             "lcc_drop_pct": (before - 1 - after) / before if before else 0.0}
 
 
-def hidden_glue(G: nx.Graph, bet_pct: float = 0.85) -> tuple[list[dict], dict]:
-    """Nodes with betweenness in the top (1-bet_pct) and degree below the median."""
+def hidden_glue(G: nx.Graph, bet_pct: float = 0.85, deg_pct: float = 0.75) -> tuple[list[dict], dict]:
+    """Nodes with betweenness in the top (1 − bet_pct) whose degree is ordinary, i.e. not in
+    the top quarter (≤ the deg_pct quantile). Also reports how many pass the stricter
+    'degree below the median' rule."""
     bet = nx.betweenness_centrality(G, normalized=True)
     deg = dict(G.degree())
     connected = [n for n in G if deg[n] > 0]
@@ -116,12 +118,15 @@ def hidden_glue(G: nx.Graph, bet_pct: float = 0.85) -> tuple[list[dict], dict]:
         return [], {}
     b_thr = float(np.quantile([bet[n] for n in connected], bet_pct))
     d_med = float(np.median([deg[n] for n in connected]))
-    flagged = []
+    d_thr = float(np.quantile([deg[n] for n in connected], deg_pct))
+    flagged, strict = [], 0
     for n in connected:
-        if bet[n] >= b_thr and bet[n] > 0 and deg[n] < d_med:
+        if bet[n] >= b_thr and bet[n] > 0 and deg[n] <= d_thr:
             flagged.append({"node": n, "betweenness": bet[n], "degree": deg[n], **removal_impact(G, n)})
+            strict += deg[n] < d_med
     flagged.sort(key=lambda r: -r["betweenness"])
     return flagged, {"betweenness_threshold": b_thr, "betweenness_percentile": bet_pct, "degree_median": d_med,
+                     "degree_threshold": d_thr, "degree_percentile": deg_pct, "n_flagged_strict_median_rule": strict,
                      "n_connected": len(connected)}
 
 

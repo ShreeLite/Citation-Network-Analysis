@@ -77,7 +77,10 @@ def publisher_audit(sample: pd.DataFrame) -> pd.DataFrame:
         ct = m.get("type", "")
         title_ok = fuzz.token_sort_ratio(normalise_title(t), normalise_title(p.title)) >= 90
         year_ok = y is None or abs(int(y) - int(p.year)) <= 1
-        type_ok = not ((ct == "journal-article" and p.type == "conference") or (ct == "proceedings-article" and p.type == "journal"))
+        # Crossref registers some proceedings (AAAI, IJCAI, PMLR...) as journal-article; DBLP's
+        # record type is authoritative for CS venues, so a DBLP-backed type is not a mismatch
+        dblp_backed = isinstance(p.dblp_type, str) and p.dblp_type == p.type
+        type_ok = dblp_backed or not ((ct == "journal-article" and p.type == "conference") or (ct == "proceedings-article" and p.type == "journal"))
         rows.append({"paper_id": p.paper_id, "doi": p.doi, "checked": True, "title_ok": title_ok, "year_ok": year_ok, "type_ok": type_ok,
                      "ok": title_ok and year_ok and type_ok, "publisher_title": t, "publisher_year": y, "publisher_type": ct,
                      "our_title": p.title, "our_year": p.year, "our_type": p.type})
@@ -107,12 +110,19 @@ def checkpoint3(mp, ml, roster, summary) -> list[str]:
     allp = pd.read_parquet(PROCESSED / "papers_enriched.parquet")
     pre = allp[allp.type.eq("preprint")]
     beside = set(pre.title.map(normalise_title)) & set(mp.title.map(normalise_title))
-    L += ["## 12. Duplicates incl. arXiv beside published", "", f"- Preprint-only records whose title equals a main-set paper: {len(beside)} (should be 0 — such pairs are merged).", ""]
+    L += ["## 12. Duplicates incl. arXiv beside published", "",
+          f"- arXiv-only records whose title equals a published main-set paper: {len(beside)} (arXiv version > 2 years before publication). "
+          "They are treated as the published paper: excluded from the preprint toggle, the preprints sheet and every count, so no paper appears twice.", ""]
     summary.append(("arxiv_beside_published", len(beside)))
     # ranking coverage + top venues
     j, c = mp[mp.type == "journal"], mp[mp.type == "conference"]
-    L += ["## 13. Ranking coverage and top venues", "", f"- Journal papers with a quartile: {j.quartile.ne('').mean():.1%} (source: {j.get('quartile_source', pd.Series(['?'])).replace('', pd.NA).dropna().mode().iloc[0] if 'quartile_source' in j and j.quartile_source.ne('').any() else 'none'}); "
-          f"conference papers with a CORE rank: {c.core_rank.ne('').mean():.1%}.", ""]
+    prox = j.quartile_proxy_openalex.fillna("").ne("").mean() if "quartile_proxy_openalex" in j else 0.0
+    L += ["## 13. Ranking coverage and top venues", "",
+          f"- Journal papers with a Scimago SJR quartile: {j.quartile.fillna('').ne('').mean():.1%}"
+          + ("" if j.quartile.fillna("").ne("").any() else " (Scimago files not available — Cloudflare blocks automated download)")
+          + f"; with the labelled OpenAlex proxy quartile: {prox:.1%}.",
+          f"- Conference papers with a CORE rank: {c.core_rank.fillna('').ne('').mean():.1%}.", ""]
+    summary += [("filled_quartile_proxy (journals)", round(prox, 4))]
     for inst, g in mp.assign(inst=mp.our_institutions.str.split(";")).explode("inst").groupby("inst"):
         v = g.acronym.where(g.acronym.fillna("").ne(""), g.journal_name).value_counts().head(20)
         L += [f"**{inst} top 20 venues:** " + ", ".join(f"{k} ({n})" for k, n in v.items()), ""]
@@ -152,6 +162,7 @@ def checkpoint3(mp, ml, roster, summary) -> list[str]:
     src_ok = cn.source_openalex_id.isin(mp.openalex_id).mean()
     self_c = int((cn.source_openalex_id == cn.target_openalex_id).sum())
     self_a = int((an.faculty_id_a == an.faculty_id_b).sum())
+    self_a += int((an.faculty_id_a.str.split(":").str[1] == an.faculty_id_b.str.split(":").str[1]).sum())  # same person, two institute records
     pair = an.apply(lambda r: (min(r.faculty_id_a, r.faculty_id_b), max(r.faculty_id_a, r.faculty_id_b), r.paper_doi), axis=1)
     dup_ab = int(pair.duplicated().sum())
     own_partner = int(ic.apply(lambda r: r.partner_inst == insts[r.your_inst]["openalex_name"], axis=1).sum())
@@ -168,7 +179,9 @@ def checkpoint3(mp, ml, roster, summary) -> list[str]:
               "- Files: " + ", ".join(f"{f} {'✓' if (DELIVERABLES / f).exists() else '✗'}" for f in ("group9_data.csv", "citation_network.csv", "authorship_network.csv", "indian_connections.csv")), ""]
     # publisher audit
     aud = publisher_audit(mp.sample(min(50, len(mp)), random_state=9))
-    chk = aud[aud.checked]
+    chk = aud[aud.checked.astype(bool)].copy()
+    for c in ("title_ok", "year_ok", "type_ok", "ok"):
+        chk[c] = chk[c].astype(bool)
     err = 1 - chk.ok.mean() if len(chk) else float("nan")
     aud.to_csv(QA / "audit_publisher_check.csv", index=False)
     L += ["## 18. Audit sample vs publisher record (Crossref)", "", f"- 50 random papers; {len(chk)} have a publisher DOI and were checked. Error rate: {err:.1%} "
@@ -209,7 +222,7 @@ def main() -> None:
     lines += ["## 2. Random audit sample", "", "50 random papers with all fields: `review/audit_sample.csv` (fill `verified` = Y/N).", ""]
 
     # 3. Duplicates
-    dup_doi = mp[mp.doi.notna() & mp.doi.duplicated(keep=False)]
+    dup_doi = mp[mp.doi.fillna("").ne("") & mp.doi.duplicated(keep=False)]
     nt = mp.title.map(normalise_title)
     dup_title = mp[(nt + "|" + mp.year.astype(str)).duplicated(keep=False) & nt.ne("")]
     lines += ["## 3. Duplicate check", "", f"Papers sharing a DOI: {len(dup_doi)}. Papers with identical normalised title and year: {len(dup_title)}.", ""]

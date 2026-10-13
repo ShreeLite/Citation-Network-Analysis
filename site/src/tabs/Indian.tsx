@@ -39,8 +39,8 @@ export default function Indian() {
           const years = [...new Set(flow.map((r) => r.year))].sort();
           return { xAxis: { type: "category", data: years.map(String) }, yAxis: { type: "value" },
             series: insts.flatMap((i) => [
-              { name: `${i} in`, type: "line", symbolSize: 7, lineStyle: { width: 2, color: instColor(i) }, itemStyle: { color: instColor(i) }, data: years.map((y) => flow.find((r) => r.your_inst === i && r.year === y)?.citations_in_from_indian ?? 0) },
-              { name: `${i} out`, type: "line", symbolSize: 7, symbol: "emptyCircle", lineStyle: { width: 2, color: instColor(i), type: "solid", opacity: 0.5 }, itemStyle: { color: instColor(i) }, data: years.map((y) => flow.find((r) => r.your_inst === i && r.year === y)?.citations_out_to_indian ?? 0) }]) };
+              { name: `${i} in`, type: "line", symbolSize: 7, symbol: "circle", legendIcon: "circle", lineStyle: { width: 2, color: instColor(i) }, itemStyle: { color: instColor(i) }, data: years.map((y) => flow.find((r) => r.your_inst === i && r.year === y)?.citations_in_from_indian ?? 0) },
+              { name: `${i} out`, type: "line", symbolSize: 7, symbol: "emptyCircle", legendIcon: "emptyCircle", lineStyle: { width: 2, color: instColor(i), type: "solid", opacity: 0.45 }, itemStyle: { color: instColor(i), opacity: 0.6 }, data: years.map((y) => flow.find((r) => r.your_inst === i && r.year === y)?.citations_out_to_indian ?? 0) }]) };
         }}
         table={() => ({ columns: ["institute", "year", "in", "out", "in/out"], rows: flow.map((r) => [r.your_inst, r.year, r.citations_in_from_indian, r.citations_out_to_indian, r.impact_ratio_in_out]) })} />
       <div className="grid lg:grid-cols-2 gap-4">

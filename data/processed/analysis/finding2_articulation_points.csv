@@ -1,0 +1,33 @@
+institution,unit,faculty_id,name,component_size,cut_off,pieces
+IIIT-H,CCNSB,IIIT-H:prabhakar_bhimalapuram,Prabhakar Bhimalapuram,4,2,3
+IIIT-H,CCNSB,IIIT-H:chittaranjan_hens,Chittaranjan Hens,5,2,3
+IIIT-H,CCNSB,IIIT-H:subhadip_mitra,Subhadip Mitra,5,1,2
+IIIT-H,CQST,IIIT-H:uttam_singh,Uttam Singh,3,1,2
+IIIT-H,CSTAR,IIIT-H:kishore_kothapalli,Kishore Kothapalli,5,2,2
+IIIT-H,CSTAR,IIIT-H:kannan_srinathan,Kannan Srinathan,5,1,2
+IIIT-H,CSTAR,IIIT-H:girish_varma,Girish Varma,5,1,2
+IIIT-H,CVEST,IIIT-H:abhishek_srivastava,Abhishek Srivastava,4,1,2
+IIIT-H,CVEST,IIIT-H:anshu_sarje,Anshu Sarje,4,1,2
+IIIT-H,MLL,IIIT-H:naresh_manwani,Naresh Manwani,3,1,2
+IIIT-H,RRC,IIIT-H:k_madhava_krishna,K Madhava Krishna,4,2,3
+IIIT-H,SPCRC,IIIT-H:prasad_krishnan,Prasad Krishnan,4,1,2
+IIIT-H,SPCRC,IIIT-H:praful_mankar,Praful Mankar,3,1,2
+IIIT-D,CB,IIIT-D:vibhor_kumar,Vibhor Kumar,11,1,2
+IIIT-D,CSE,IIIT-D:v_raghava_mutharaju,V. Raghava Mutharaju,32,2,2
+IIIT-D,CSE,IIIT-D:mukulika_maity,Mukulika Maity,32,1,2
+IIIT-D,CSE,IIIT-D:sambuddho_chakravarty,Sambuddho Chakravarty,32,1,2
+IIIT-D,CSE,IIIT-D:rahul_purandare,Rahul Purandare,32,1,2
+IIIT-D,CSE,IIIT-D:ponnurangam_kumaraguru,Ponnurangam Kumaraguru,32,1,2
+IIIT-D,CSE,IIIT-D:jainendra_shukla,Jainendra Shukla,32,1,2
+IIIT-D,CSE,IIIT-D:supratim_shit,Supratim Shit,32,1,2
+IIIT-D,CSE,IIIT-D:pushpendra_singh,Pushpendra Singh,32,1,2
+IIIT-D,CSE,IIIT-D:tanmoy_chakraborty,Tanmoy Chakraborty,32,1,2
+IIIT-D,ECE,IIIT-D:sumit_j_darak,Sumit J Darak,16,3,2
+IIIT-D,ECE,IIIT-D:sneh_saurabh,Sneh Saurabh,16,2,3
+IIIT-D,ECE,IIIT-D:vivek_bohara,Vivek Bohara,16,2,3
+IIIT-D,ECE,IIIT-D:sayan_basu_roy,Sayan Basu Roy,4,1,2
+IIIT-D,ECE,IIIT-D:p_b_sujit,P B Sujit,4,1,2
+IIIT-D,MATH,IIIT-D:sneha_chaubey,Sneha Chaubey,4,1,2
+IIIT-D,MATH,IIIT-D:ashish_kumar_pandey,Ashish Kumar Pandey,4,1,2
+IIIT-D,SSH,IIIT-D:aasim_khan,Aasim Khan,5,2,3
+IIIT-D,SSH,IIIT-D:praveen_priyadarshi,Praveen Priyadarshi,5,1,2
