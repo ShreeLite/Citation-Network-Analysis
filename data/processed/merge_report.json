@@ -1,77 +1,77 @@
 {
   "collected_at": "2026-10-12",
   "records_by_source": {
-    "openalex": 20533,
+    "openalex": 20530,
     "dblp": 12401,
     "iiith_portal": 4440
   },
-  "papers": 20889,
+  "papers": 20508,
   "papers_by_type_hint": {
-    "false": 18920,
-    "true": 1969
+    "false": 18668,
+    "true": 1840
   },
-  "links": 23564,
-  "links_main": 15137,
-  "links_pre_joining": 4493,
-  "links_after_leaving": 1834,
-  "overmerge_filtered": 2100,
+  "links": 23129,
+  "links_main": 14887,
+  "links_pre_joining": 4360,
+  "links_after_leaving": 1828,
+  "overmerge_filtered": 2054,
   "fuzzy_threshold_used": 93,
   "fuzzy_tuning": [
     {
       "threshold": 85,
-      "tp": 14950,
-      "fp": 631,
-      "fn": 361,
-      "precision": 0.9595,
-      "recall": 0.9764
-    },
-    {
-      "threshold": 88,
-      "tp": 14948,
-      "fp": 553,
+      "tp": 14872,
+      "fp": 509,
       "fn": 363,
-      "precision": 0.9643,
-      "recall": 0.9763
-    },
-    {
-      "threshold": 90,
-      "tp": 14946,
-      "fp": 515,
-      "fn": 365,
-      "precision": 0.9667,
+      "precision": 0.9669,
       "recall": 0.9762
     },
     {
-      "threshold": 92,
-      "tp": 14945,
-      "fp": 484,
-      "fn": 366,
-      "precision": 0.9686,
-      "recall": 0.9761
+      "threshold": 88,
+      "tp": 14870,
+      "fp": 431,
+      "fn": 365,
+      "precision": 0.9718,
+      "recall": 0.976
     },
     {
-      "threshold": 93,
-      "tp": 14940,
-      "fp": 477,
-      "fn": 371,
-      "precision": 0.9691,
+      "threshold": 90,
+      "tp": 14868,
+      "fp": 396,
+      "fn": 367,
+      "precision": 0.9741,
+      "recall": 0.9759
+    },
+    {
+      "threshold": 92,
+      "tp": 14867,
+      "fp": 368,
+      "fn": 368,
+      "precision": 0.9758,
       "recall": 0.9758
     },
     {
+      "threshold": 93,
+      "tp": 14862,
+      "fp": 361,
+      "fn": 373,
+      "precision": 0.9763,
+      "recall": 0.9755
+    },
+    {
       "threshold": 95,
-      "tp": 14933,
-      "fp": 447,
-      "fn": 378,
-      "precision": 0.9709,
-      "recall": 0.9753
+      "tp": 14855,
+      "fp": 335,
+      "fn": 380,
+      "precision": 0.9779,
+      "recall": 0.9751
     },
     {
       "threshold": 97,
-      "tp": 14898,
-      "fp": 422,
-      "fn": 413,
-      "precision": 0.9725,
-      "recall": 0.973
+      "tp": 14820,
+      "fp": 313,
+      "fn": 415,
+      "precision": 0.9793,
+      "recall": 0.9728
     }
   ],
   "possibly_missed_author_ids": 77

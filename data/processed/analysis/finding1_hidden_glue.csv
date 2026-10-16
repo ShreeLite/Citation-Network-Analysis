@@ -1,7 +1,7 @@
 institution,faculty_id,name,unit,node,betweenness,degree,lcc_before,lcc_after,lcc_drop,lcc_drop_pct
-IIIT-H,IIIT-H:prasad_krishnan,Prasad Krishnan,SPCRC,IIIT-H:prasad_krishnan,0.05009658291520796,5,99,93,5,0.050505050505050504
-IIIT-H,IIIT-H:kannan_srinathan,Kannan Srinathan,CSTAR,IIIT-H:kannan_srinathan,0.03948351930652149,7,99,97,1,0.010101010101010102
-IIIT-H,IIIT-H:chittaranjan_hens,Chittaranjan Hens,CCNSB,IIIT-H:chittaranjan_hens,0.029278651161592156,6,99,98,0,0.0
-IIIT-H,IIIT-H:indranil_chakrabarty,Indranil Chakrabarty,CQST,IIIT-H:indranil_chakrabarty,0.028344333335584844,7,99,98,0,0.0
-IIIT-H,IIIT-H:subhadip_mitra,Subhadip Mitra,CCNSB,IIIT-H:subhadip_mitra,0.02483306725069519,5,99,98,0,0.0
+IIIT-H,IIIT-H:prasad_krishnan,Prasad Krishnan,SPCRC,IIIT-H:prasad_krishnan,0.050096582915207945,5,99,93,5,0.050505050505050504
+IIIT-H,IIIT-H:kannan_srinathan,Kannan Srinathan,CSTAR,IIIT-H:kannan_srinathan,0.03948351930652151,7,99,97,1,0.010101010101010102
+IIIT-H,IIIT-H:chittaranjan_hens,Chittaranjan Hens,CCNSB,IIIT-H:chittaranjan_hens,0.029278651161592163,6,99,98,0,0.0
+IIIT-H,IIIT-H:indranil_chakrabarty,Indranil Chakrabarty,CQST,IIIT-H:indranil_chakrabarty,0.028344333335584837,7,99,98,0,0.0
+IIIT-H,IIIT-H:subhadip_mitra,Subhadip Mitra,CCNSB,IIIT-H:subhadip_mitra,0.024833067250695184,5,99,98,0,0.0
 IIIT-D,IIIT-D:ashish_kumar_pandey,Ashish Kumar Pandey,MATH,IIIT-D:ashish_kumar_pandey,0.029894827767311,4,95,91,3,0.031578947368421054

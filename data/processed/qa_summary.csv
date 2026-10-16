@@ -1,22 +1,22 @@
 metric,value
-dblp_pooled_recall,0.7621
+dblp_pooled_recall,0.7623
 dup_doi_rows,0.0
-dup_title_rows,98.0
-filled_doi,0.9559
-filled_issn (journals),0.9666
+dup_title_rows,12.0
+filled_doi,0.9557
+filled_issn (journals),0.971
 filled_quartile (journals),0.0
-filled_CORE rank (conferences),0.498
-filled_journal_name,0.9997
-filled_citations,0.9952
-filled_coauthor_institutes,0.9119
-filled_field,0.9689
-filled_citations_s2,0.9241
+filled_CORE rank (conferences),0.4991
+filled_journal_name,0.9998
+filled_citations,0.9973
+filled_coauthor_institutes,0.9144
+filled_field,0.9716
+filled_citations_s2,0.9266
 faculty_zero_papers,30.0
-core_agreement_with_portal,0.7957
-arxiv_beside_published,48.0
-filled_quartile_proxy (journals),0.9606
+core_agreement_with_portal,0.7965
+arxiv_beside_published,22.0
+filled_quartile_proxy (journals),0.9658
 citation_sources_in_papers,1.0
 self_loops,0.0
 ab_ba_duplicates,0.0
 own_partner_rows,0.0
-audit_error_rate,0.0217
+audit_error_rate,0.0213

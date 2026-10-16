@@ -1,7 +1,7 @@
 # QA report — Group 9 (IIIT-H + IIIT-D)
 
 Collection date: 2026-10-12  
-Main set: 8,985 papers, 10,249 faculty–paper links, 265 of 295 core faculty with ≥1 paper.
+Main set: 8,934 papers, 10,187 faculty–paper links, 265 of 295 core faculty with ≥1 paper.
 
 ## 1. DBLP spot check
 
@@ -17,8 +17,8 @@ Worst 20 by recall:
 | Pragma Kar               | IIIT-D        |           11 |           2 |                    0 |         0     |
 | Sandeep Sen              | IIIT-D        |            8 |           0 |                    0 |         0     |
 | Astrid Kiehn             | IIIT-D        |            2 |           0 |                    0 |         0     |
-| N. Arul Murugan          | IIIT-D        |            2 |          47 |                    0 |         0     |
-| Tarini Shankar Ghosh     | IIIT-D        |            1 |          34 |                    0 |         0     |
+| N. Arul Murugan          | IIIT-D        |            2 |          46 |                    0 |         0     |
+| Tarini Shankar Ghosh     | IIIT-D        |            1 |          33 |                    0 |         0     |
 | Puneet Goyal             | IIIT-D        |           47 |           1 |                    1 |         0.021 |
 | Shubhajit Roy Chowdhury  | IIIT-H        |           36 |           8 |                    2 |         0.056 |
 | Rahul Mishra             | IIIT-H        |           10 |           9 |                    1 |         0.1   |
@@ -26,11 +26,11 @@ Worst 20 by recall:
 | Moumita Patra            | IIIT-H        |           32 |           4 |                    4 |         0.125 |
 | Sandeep Kumar Shukla     | IIIT-H        |          129 |          42 |                   18 |         0.14  |
 | Priyesh Shukla           | IIIT-H        |           13 |           3 |                    2 |         0.154 |
-| Antony Thomas            | IIIT-H        |           19 |           7 |                    3 |         0.158 |
+| Antony Thomas            | IIIT-H        |           19 |           6 |                    3 |         0.158 |
 | Tanmoy Kundu             | IIIT-D        |            5 |           1 |                    1 |         0.2   |
 | Rahul Shrestha           | IIIT-H        |           55 |          15 |                   12 |         0.218 |
 | Sudipta Banerjee         | IIIT-H        |           26 |           8 |                    6 |         0.231 |
-| Arti Yardi               | IIIT-H        |           13 |           7 |                    3 |         0.231 |
+| Hrishikesh B. Acharya    | IIIT-D        |           21 |           5 |                    5 |         0.238 |
 
 ## 2. Random audit sample
 
@@ -38,7 +38,7 @@ Worst 20 by recall:
 
 ## 3. Duplicate check
 
-Papers sharing a DOI: 0. Papers with identical normalised title and year: 98.
+Papers sharing a DOI: 0. Papers with identical normalised title and year: 12.
 
 Listed in `qa/possible_duplicates.csv` (many are legitimate conference + journal versions with different DOIs).
 
@@ -46,80 +46,80 @@ Listed in `qa/possible_duplicates.csv` (many are legitimate conference + journal
 
 | field                   | filled   | missing   |    n |
 |:------------------------|:---------|:----------|-----:|
-| doi                     | 95.6%    | 4.4%      | 8985 |
-| issn (journals)         | 96.7%    | 3.3%      | 3832 |
-| quartile (journals)     | 0.0%     | 100.0%    | 3832 |
-| CORE rank (conferences) | 49.8%    | 50.2%     | 5153 |
-| journal_name            | 100.0%   | 0.0%      | 8985 |
-| citations               | 99.5%    | 0.5%      | 8985 |
-| coauthor_institutes     | 91.2%    | 8.8%      | 8985 |
-| field                   | 96.9%    | 3.1%      | 8985 |
-| citations_s2            | 92.4%    | 7.6%      | 8985 |
+| doi                     | 95.6%    | 4.4%      | 8934 |
+| issn (journals)         | 97.1%    | 2.9%      | 3799 |
+| quartile (journals)     | 0.0%     | 100.0%    | 3799 |
+| CORE rank (conferences) | 49.9%    | 50.1%     | 5135 |
+| journal_name            | 100.0%   | 0.0%      | 8934 |
+| citations               | 99.7%    | 0.3%      | 8934 |
+| coauthor_institutes     | 91.4%    | 8.6%      | 8934 |
+| field                   | 97.2%    | 2.8%      | 8934 |
+| citations_s2            | 92.7%    | 7.3%      | 8934 |
 
 ## 5. Faculty with zero or suspiciously many papers
 
 Core faculty with zero main-set papers: 30: Acushla Saraswat (IIIT-D, no unit), Ashok K. Mittal (IIIT-D, no unit), Ashwin Srinivasan (IIIT-D, CSE), Astrid Kiehn (IIIT-D, CSE), Deepak Prince (IIIT-D, SSH), K.K. Biswas (IIIT-D, no unit), Nikhil Gupta (IIIT-D, CSE), Prahllad Deb (IIIT-D, MATH), Pydi Ganga Mamba Bahubalindruni (IIIT-D, ECE), Raj Ayyar (IIIT-D, no unit), Sandeep Sen (IIIT-D, CSE), Shireen Mirza (IIIT-D, SSH), Somitra Kr. Sanadhya (IIIT-D, CSE), Timothy Scott Moyers Jr (IIIT-D, HCD), Abdul Rehaman Moughal Shahi (IIIT-H, no unit), Acharya Nand Kishore (IIIT-H, no unit), Angarika Rakshit (IIIT-H, HSRC), Ashwin Jayanti (IIIT-H, HSRC), Don Wallace Freeman Dcruz (IIIT-H, no unit), Kaul C. N. (IIIT-H, no unit), Khaliq Parkar (IIIT-H, HSRC), Kishore S Prahallad (IIIT-H, LTRC), Rakesh Kiran Chand Thumaty (IIIT-H, LSI), Rambabu Kalla (IIIT-H, no unit), Rao P. R. K (IIIT-H, no unit), Semparithi Aravindan (IIIT-H, CCNSB), Vijaya Sankara Rao P. (IIIT-H, no unit), Indrani De Parker (IIIT-D, no unit), Manohar Khushalani (IIIT-D, no unit), Samaresh Chatterji (IIIT-D, no unit)
 
-Top 1% by paper count (check for over-merged profiles): Rajiv Ratn Shah (247), Ashok Kumar Das (499), Jawahar C V (295)
+Top 1% by paper count (check for over-merged profiles): Rajiv Ratn Shah (247), Ashok Kumar Das (496), Jawahar C V (295)
 
 ## 6. Year distribution (2026 is partial)
 
 |   year |   conference |   journal |
 |-------:|-------------:|----------:|
-|   2016 |          392 |       218 |
-|   2017 |          380 |       223 |
-|   2018 |          478 |       272 |
-|   2019 |          448 |       307 |
-|   2020 |          459 |       352 |
-|   2021 |          504 |       405 |
-|   2022 |          493 |       454 |
-|   2023 |          549 |       401 |
-|   2024 |          554 |       433 |
-|   2025 |          554 |       421 |
-|   2026 |          342 |       346 |
+|   2016 |          387 |       217 |
+|   2017 |          379 |       218 |
+|   2018 |          475 |       270 |
+|   2019 |          446 |       305 |
+|   2020 |          458 |       349 |
+|   2021 |          501 |       404 |
+|   2022 |          492 |       452 |
+|   2023 |          548 |       397 |
+|   2024 |          554 |       428 |
+|   2025 |          553 |       418 |
+|   2026 |          342 |       341 |
 
 ## 7. Merge diagnostics
 
-Source records: {'openalex': 20533, 'dblp': 12401, 'iiith_portal': 4440}. Fuzzy title threshold used: 93.
+Source records: {'openalex': 20530, 'dblp': 12401, 'iiith_portal': 4440}. Fuzzy title threshold used: 93.
 
 |   threshold |    tp |   fp |   fn |   precision |   recall |
 |------------:|------:|-----:|-----:|------------:|---------:|
-|          85 | 14950 |  631 |  361 |      0.9595 |   0.9764 |
-|          88 | 14948 |  553 |  363 |      0.9643 |   0.9763 |
-|          90 | 14946 |  515 |  365 |      0.9667 |   0.9762 |
-|          92 | 14945 |  484 |  366 |      0.9686 |   0.9761 |
-|          93 | 14940 |  477 |  371 |      0.9691 |   0.9758 |
-|          95 | 14933 |  447 |  378 |      0.9709 |   0.9753 |
-|          97 | 14898 |  422 |  413 |      0.9725 |   0.973  |
+|          85 | 14872 |  509 |  363 |      0.9669 |   0.9762 |
+|          88 | 14870 |  431 |  365 |      0.9718 |   0.976  |
+|          90 | 14868 |  396 |  367 |      0.9741 |   0.9759 |
+|          92 | 14867 |  368 |  368 |      0.9758 |   0.9758 |
+|          93 | 14862 |  361 |  373 |      0.9763 |   0.9755 |
+|          95 | 14855 |  335 |  380 |      0.9779 |   0.9751 |
+|          97 | 14820 |  313 |  415 |      0.9793 |   0.9728 |
 
-Links filtered as over-merged OpenAlex profiles: 2100 (`review/overmerge_filtered.csv`). Pre-joining links: 4493. After-leaving links: 1834.
+Links filtered as over-merged OpenAlex profiles: 2054 (`review/overmerge_filtered.csv`). Pre-joining links: 4360. After-leaving links: 1828.
 
-CORE rank agreement with the IIIT-H portal's own labels: 79.6% of 798 papers where both exist.
+CORE rank agreement with the IIIT-H portal's own labels: 79.7% of 801 papers where both exist.
 
 ## 8. cited_by_indian_inst spot check (per-paper group_by vs batched pipeline)
 
 | paper_id    |   pipeline_n_institutions |   group_by_n_institutions_incl_non_IN | pipeline_flag   |
 |:------------|--------------------------:|--------------------------------------:|:----------------|
-| W4396840805 |                         1 |                                     2 | True            |
-| W2917201317 |                         1 |                                     1 | True            |
-| W4312897680 |                         1 |                                     1 | True            |
-| W4210953093 |                         3 |                                     5 | True            |
-| W4388776132 |                         1 |                                     1 | True            |
-| W4213372913 |                         1 |                                     1 | True            |
-| W4312056336 |                         4 |                                     4 | True            |
-| W4388291711 |                         6 |                                    10 | True            |
-| W4404137175 |                         3 |                                     4 | True            |
-| W4296184108 |                        13 |                                    20 | True            |
-| W2772394551 |                         1 |                                     2 | True            |
-| W2477348760 |                         6 |                                    17 | True            |
-| W4308303341 |                         1 |                                     1 | True            |
-| W2895547158 |                         9 |                                    14 | True            |
-| W2894278110 |                         7 |                                    11 | True            |
-| W4237467126 |                         3 |                                     8 | True            |
-| W2982594830 |                         5 |                                    13 | True            |
-| W4403688595 |                         9 |                                   199 | True            |
-| W4388748466 |                         4 |                                     6 | True            |
-| W2403443505 |                         7 |                                    19 | True            |
+| W3206172186 |                         1 |                                     1 | True            |
+| W2805485249 |                         3 |                                     4 | True            |
+| W2988256164 |                         1 |                                     4 | True            |
+| W3128918010 |                         7 |                                     7 | True            |
+| W4392745439 |                         2 |                                     2 | True            |
+| W2994071599 |                        81 |                                    98 | True            |
+| W2938241428 |                        17 |                                    20 | True            |
+| W3164128501 |                         3 |                                     4 | True            |
+| W4283026634 |                         7 |                                    10 | True            |
+| W3170818115 |                        14 |                                    16 | True            |
+| W2513440619 |                        23 |                                    38 | True            |
+| W2587018232 |                         1 |                                     1 | True            |
+| W3215062209 |                         1 |                                     3 | True            |
+| W3011712033 |                         1 |                                     1 | True            |
+| W2782804866 |                         2 |                                     2 | True            |
+| W4403758994 |                         3 |                                     6 | True            |
+| W2761942122 |                         8 |                                    19 | True            |
+| W2508499722 |                         2 |                                     2 | True            |
+| W4414110805 |                         2 |                                     4 | True            |
+| W2775741307 |                         1 |                                     1 | True            |
 
 ## 9. Papers per year (smoothness)
 
@@ -129,29 +129,29 @@ CORE rank agreement with the IIIT-H portal's own labels: 79.6% of 798 papers whe
 
 | Faculty | Year | Papers that year | Total 2016–26 |
 |---|---|---|---|
-| Ashok Kumar Das | 2024 | 70 ⚠ > 40 | 499 |
+| Ashok Kumar Das | 2024 | 70 ⚠ > 40 | 496 |
 | Rajiv Ratn Shah | 2020 | 46 ⚠ > 40 | 247 |
-| Tanmoy Chakraborty | 2021 | 36 | 199 |
-| Jawahar C V | 2022 | 35 | 295 |
-| Richa Singh | 2019 | 33 | 131 |
+| Tanmoy Chakraborty | 2021 | 36 | 198 |
+| Jawahar C V | 2025 | 35 | 295 |
+| Angshul Majumdar | 2016 | 33 | 218 |
 
 ## 11. Journal vs conference
 
-- conference 57.4%, journal 42.6% (OK: conference-heavy as expected for CS institutes).
+- conference 57.5%, journal 42.5% (OK: conference-heavy as expected for CS institutes).
 - Per institute: IIIT-D: conf 54%; IIIT-H: conf 61%
 
 ## 12. Duplicates incl. arXiv beside published
 
-- arXiv-only records whose title equals a published main-set paper: 48 (arXiv version > 2 years before publication). They are treated as the published paper: excluded from the preprint toggle, the preprints sheet and every count, so no paper appears twice.
+- arXiv-only records whose title equals a published main-set paper: 22 (arXiv version > 2 years before publication). They are treated as the published paper: excluded from the preprint toggle, the preprints sheet and every count, so no paper appears twice.
 
 ## 13. Ranking coverage and top venues
 
-- Journal papers with a Scimago SJR quartile: 0.0% (Scimago files not available — Cloudflare blocks automated download); with the labelled OpenAlex proxy quartile: 96.1%.
-- Conference papers with a CORE rank: 49.8%.
+- Journal papers with a Scimago SJR quartile: 0.0% (Scimago files not available — Cloudflare blocks automated download); with the labelled OpenAlex proxy quartile: 96.6%.
+- Conference papers with a CORE rank: 49.9%.
 
-**IIIT-D top 20 venues:** AAAI (66), COMSNETS (61), ACCESS (57), ICASSP (51), ACL (42), IEEEANTS (41), SR (37), INTERSPEECH (37), WACV (33), BIGMM (33), CHI (32), IJCNN (31), VLSID (31), CVPR (28), ICPR (27), Plos One (27), ICIP (27), EMNLP (27), MWSCAS (23), APMC (23)
+**IIIT-D top 20 venues:** AAAI (66), COMSNETS (59), ACCESS (57), ICASSP (51), ACL (42), IEEEANTS (41), SR (37), INTERSPEECH (37), WACV (33), BIGMM (33), CHI (32), IJCNN (31), VLSID (31), CVPR (28), ICPR (27), Plos One (27), ICIP (27), EMNLP (27), MWSCAS (23), APMC (23)
 
-**IIIT-H top 20 venues:** ACL (89), ACCESS (73), WACV (70), IOT (69), ICPR (64), ICVGIP (56), PRA (49), SEMEVAL (47), IROS (47), INTERSPEECH (41), CVPR (39), ISCAS (39), ATAL (39), ICDAR (39), ICRA (37), AAAI (37), ISIT (36), MWSCAS (36), ICON-NLP (36), IJCNN (34)
+**IIIT-H top 20 venues:** ACL (89), ACCESS (73), WACV (70), IOT (69), ICPR (63), ICVGIP (56), PRA (49), SEMEVAL (47), IROS (47), INTERSPEECH (41), CVPR (39), ISCAS (39), ATAL (39), ICDAR (39), ICRA (37), AAAI (37), ISIT (36), MWSCAS (36), ICON-NLP (36), IJCNN (34)
 
 ## 14. Ten most-cited papers
 
@@ -172,16 +172,16 @@ OpenAlex counts run below Google Scholar's; that is expected.
 
 ## 15. Indian-citation flags
 
-- cites_indian_inst TRUE: 55.9%; cited_by_indian_inst TRUE: 48.7% (OK: strictly between 0% and 100%).
+- cites_indian_inst TRUE: 56.1%; cited_by_indian_inst TRUE: 48.9% (OK: strictly between 0% and 100%).
 
 Hand-check (direct per-paper OpenAlex query):
 
 | paper       | title                                                        | flag   | own_only_case   |   citing_groups_excl_own |
 |:------------|:-------------------------------------------------------------|:-------|:----------------|-------------------------:|
-| W3103227824 | Modelling hydrological responses under climate change using  | True   | False           |                        7 |
-| W4317789861 | DeConDFFuse : Predicting drug–drug interaction using joint d | True   | False           |                        1 |
-| W4396840805 | Coprime networks of the composite numbers: Pseudo-randomness | True   | False           |                        2 |
-| W2898274421 | Biometrics-Based Privacy-Preserving User Authentication Sche | True   | False           |                      139 |
+| W4290794768 | Dynamic matching in campus placements: The benefits and affo | True   | False           |                        1 |
+| W2469171359 | Limits imposed by nonlinear coupling on rotation sensitivity | True   | False           |                        1 |
+| W4408352334 | Psycholinguistic Features Predict Word Duration in Hindi Rea | True   | False           |                        1 |
+| W4401413973 | Anticipate & Act: Integrating LLMs and Classical Planning fo | True   | False           |                        2 |
 | W2512816756 | Evaluation of “Autotune” calibration against manual calibrat | False  | True            |                        0 |
 
 A paper cited by Indian works only from its own institute must be FALSE — the own-only case above is FALSE when its row shows flag = False.
@@ -197,10 +197,10 @@ A paper cited by Indian works only from its own institute must be FALSE — the 
 
 - Columns exactly as spec, in order: True
 - group = 9 on every row: True
-- Rows: 10,249; written as UTF-8 with BOM so Excel shows accented/Indic characters correctly (621 cells contain non-ASCII text).
+- Rows: 10,187; written as UTF-8 with BOM so Excel shows accented/Indic characters correctly (621 cells contain non-ASCII text).
 - Files: group9_data.csv ✓, citation_network.csv ✓, authorship_network.csv ✓, indian_connections.csv ✓
 
 ## 18. Audit sample vs publisher record (Crossref)
 
-- 50 random papers; 46 have a publisher DOI and were checked. Error rate: 2.2% (solid (< 5%)).
-- Title mismatches 0, year mismatches 1, type mismatches 0 — details in `qa/audit_publisher_check.csv`.
+- 50 random papers; 47 have a publisher DOI and were checked. Error rate: 2.1% (solid (< 5%)).
+- Title mismatches 0, year mismatches 0, type mismatches 1 — details in `qa/audit_publisher_check.csv`.

@@ -3,149 +3,149 @@ arxiv,arXiv (Cornell University),arXiv,1283,preprint,23318422,arXiv (Cornell Uni
 corr,CoRR,ACL,396,preprint,00189545;03029743;10504729;10975659;15206149;16113349;1860949X;18609503;18650929;18650937;18761100;18761119;18770509;19399359;21618070;21623449;23315911;23315954;23340770;23673370;23673389;23674512;23674520;23755318;2379190X;25222686;2577087X;30658365,CoRR,False,,,
 ebooks,Elsevier eBooks,PSPS,302,other,30049563;30049571;30593743;30593751,Elsevier eBooks | Springer eBooks | ACM eBooks,False,,,
 access,IEEE Access,ACCESS,205,journal,21693536,IEEE Access,False,,,
-zenodo,Zenodo (CERN European Organization for Nuclear Research),JICS,195,other,,Zenodo (CERN European Organization for Nuclear Research),False,,,
-biorxiv,bioRxiv (Cold Spring Harbor Laboratory),ISMB/ECCB,177,preprint,,bioRxiv (Cold Spring Harbor Laboratory),False,,,
-crc press ebooks,CRC Press eBooks,IDM,166,other,,CRC Press eBooks,False,,,
-ssrn electronic journal,SSRN Electronic Journal,JSA,146,preprint,15565068,SSRN Electronic Journal,False,,,
+zenodo,Zenodo (CERN European Organization for Nuclear Research),JICS,184,other,,Zenodo (CERN European Organization for Nuclear Research),False,,,
+crc press ebooks,CRC Press eBooks,IDM,165,other,,CRC Press eBooks,False,,,
+biorxiv,bioRxiv (Cold Spring Harbor Laboratory),NNS,145,preprint,,bioRxiv (Cold Spring Harbor Laboratory),False,,,
 scientific reports,Scientific Reports,SR,133,journal,20452322,Scientific Reports,False,,,
 wacv,WACV,WACV,129,conference,24726737,WACV | WACV (Workshops),False,A,acronym,IEEE Workshop on Applications of Computer Vision
+ssrn electronic journal,SSRN Electronic Journal,,120,preprint,15565068,SSRN Electronic Journal,False,,,
 ants,ANTS,IEEEANTS,109,conference,03029743;16113349,ANTS | IEEE ANTS,False,,,
-figshare,Figshare,,107,other,,Figshare,False,,,
 interspeech,INTERSPEECH,INTERSPEECH,102,conference,2308457X;23318422,INTERSPEECH | Interspeech | Interspeech (USB),False,A,acronym,Interspeech (combined EuroSpeech and ICSLP in 2000)
+figshare,Figshare,,100,other,,Figshare,False,,,
 icassp,ICASSP,ICASSP,97,conference,15206149;2379190X,ICASSP,False,B,acronym,"IEEE International Conference on Acoustics, Speech and Signal Processing"
-comsnets,COMSNETS,COMSNETS,92,conference,03029743;16113349,COMSNETS | COMSNETS (Extended Selected Papers),False,,,
 harvard dataverse,Harvard Dataverse,,92,other,,Harvard Dataverse,False,,,
-lecture notes networks systems,Lecture notes in networks and systems,,91,conference,23673370;23673389,Lecture notes in networks and systems,False,,,
 acl,ACL (1),ACL,91,conference,,ACL | ACL (1) | ACL (2) | ACL (3) | ACL (student),False,A*,acronym,Association for Computational Linguistics
+lecture notes networks systems,Lecture notes in networks and systems,,91,conference,23673370;23673389,Lecture notes in networks and systems,False,,,
 emnlp,EMNLP,EMNLP,90,conference,,EMNLP | EMNLP (Findings) | EMNLP (Industry Track) | EMNLP (1) | EMNLP (Demonstration),False,A*,acronym,Empirical Methods in Natural Language Processing
+comsnets,COMSNETS,COMSNETS,90,conference,03029743;16113349,COMSNETS,False,,,
 icvgip,ICVGIP,ICVGIP,85,conference,,ICVGIP,False,,,
-transactions vehicular technology,IEEE Transactions on Vehicular Technology,TVT,82,journal,00189545;19399359,IEEE Transactions on Vehicular Technology,False,,,
-ijcnn,IJCNN,IJCNN,82,conference,21614407,IJCNN,False,B,acronym,IEEE International Joint Conference on Neural Networks
 internet things journal,IEEE Internet of Things Journal,IOT,82,journal,23274662;23722541,IEEE Internet of Things Journal,False,,,
+ijcnn,IJCNN,IJCNN,82,conference,21614407,IJCNN,False,B,acronym,IEEE International Joint Conference on Neural Networks
+transactions vehicular technology,IEEE Transactions on Vehicular Technology,TVT,82,journal,00189545;19399359,IEEE Transactions on Vehicular Technology,False,,,
 physical review a,Physical Review A,PRA,72,journal,05562791;10502947;10941622;15384446;24699926;24699934;24699942,Physical Review A,False,,,
 lecture notes civil engineering,Lecture notes in civil engineering,RDSE,71,conference,23662557;23662565,Lecture notes in civil engineering,False,,,
-lecture notes computer science,Lecture notes in computer science,ICPR,69,conference,03029743;16113349,Lecture notes in computer science | Lecture Notes in Computer Science,False,B,acronym,International Conference on Pattern Recognition
+lecture notes computer science,Lecture notes in computer science,ICPR,67,conference,03029743;16113349,Lecture notes in computer science,False,B,acronym,International Conference on Pattern Recognition
 cvpr,CVPR,CVPR,64,conference,10636919;23318422;2332564X;25757075,CVPR,False,A*,acronym,IEEE Conference on Computer Vision and Pattern Recognition
 isit,ISIT,ISIT,61,conference,00189448;00906778;05562791;10502947;10941622;15384446;15579654;15580857;24699926;24699934;24699942,ISIT,False,B,acronym,IEEE International Symposium on Information Theory
 iros,IROS,IROS,58,conference,,IROS,False,A,acronym,IEEE/RSJ International Conference on Intelligent Robots and Systems
 vlsid,VLSID,VLSID,58,conference,,VLSID,False,C,acronym,International Conference on VLSI Design
 icpr,ICPR,ICPR,58,conference,03029743;10413278;10514651;16113349,ICPR | ICPR (30) | ICPR (22) | ICPR (16) | ICPR (5),False,B,acronym,International Conference on Pattern Recognition
 conference proceedings,IEEE Conference Proceedings,MWSCAS,57,conference,15483746;15583899,IEEE Conference Proceedings | Conference proceedings,False,,,
-plos one,PLoS ONE,Plos One,56,journal,19326203,PLoS ONE | Plos One,False,,,
+plos one,PLoS ONE,Plos One,55,journal,19326203,PLoS ONE,False,,,
 www,WWW (Companion Volume),WWW,54,conference,23318422,WWW (Companion Volume) | WWW,False,A*,acronym,International World Wide Web Conference
 icon,ICON,ICON-NLP,54,conference,23318422,ICON,False,,,
 iscas,ISCAS,ISCAS,53,conference,02714302,ISCAS,False,C,acronym,IEEE International Symposium on Circuits and Systems
-research square,Research Square,,53,preprint,,Research Square,False,,,
-lecture notes electrical engineering,Lecture notes in electrical engineering,AMISP,51,conference,18761100;18761119,Lecture notes in electrical engineering,False,,,
 icra,ICRA,ICRA,51,conference,10504729;2577087X,ICRA,False,A*,acronym,IEEE International Conference on Robotics and Automation
-multimedia,ACM Multimedia,ACM MM,50,conference,1070986X;19410166,ACM Multimedia | IEEE Multimedia,False,A*,fuzzy_title(100),ACM Multimedia
+lecture notes electrical engineering,Lecture notes in electrical engineering,AMISP,51,conference,18761100;18761119,Lecture notes in electrical engineering,False,,,
 advances intelligent systems computing,Advances in intelligent systems and computing,,50,other,21945357;21945365,Advances in intelligent systems and computing,False,,,
+multimedia,ACM Multimedia,ACM MM,50,conference,1070986X;19410166,ACM Multimedia | IEEE Multimedia,False,A*,fuzzy_title(100),ACM Multimedia
 icip,ICIP,ICIP,47,conference,15224880;23818549,ICIP,False,B,acronym,IEEE International Conference on Image Processing
+ecir,ECIR (2),ECIR,46,conference,03029743;16113349,ECIR (2) | ECIR (3) | ECIR (5) | ECIR | ECIR (1),False,A,acronym,European Conference on Information Retrieval
 comad cods,COMAD/CODS,CODS-COMAD,46,conference,,COMAD/CODS | COMAD/CODS (December),False,,,
 pakdd,PAKDD (1),PAKDD,46,conference,03029743;16113349,PAKDD (1) | PAKDD (2) | PAKDD (Workshops) | PAKDD (3) | PAKDD (4),False,B,acronym,Pacific-Asia Conference on Knowledge Discovery and Data Mining
 united states patent,United States Patent,Us patent,46,other,,United States Patent,False,,,
-ecir,ECIR (2),ECIR,46,conference,03029743;16113349,ECIR (2) | ECIR (3) | ECIR (5) | ECIR | ECIR (1),False,A,acronym,European Conference on Information Retrieval
 wireless communications letters,IEEE Wireless Communications Letters,WCL,45,journal,21622337;21622345,IEEE Wireless Communications Letters,False,,,
 aamas,AAMAS,ATAL,45,conference,00043702;09226389;15488403;15582914;18727921;18798314,AAMAS,False,,,
-vtc spring,VTC Spring,VTC,41,conference,10903038;25772465,VTC Spring | VTC2023-Spring | VTC2025-Spring,False,B,acronym,IEEE Vehicular Technology Conference
 eccv,ECCV (13),ECCV,41,conference,03029743;16113349,ECCV (69) | ECCV (13) | ECCV (39) | ECCV (21) | ECCV (88),False,A*,acronym,European Conference on Computer Vision
+vtc spring,VTC Spring,VTC,41,conference,10903038;25772465,VTC Spring | VTC2023-Spring | VTC2025-Spring,False,B,acronym,IEEE Vehicular Technology Conference
 vdat,VDAT,VDAT,41,conference,18650929;18650937,VDAT,False,,,
 cvpr workshops,CVPR Workshops,CVPR,41,conference,,CVPR Workshops,False,A*,acronym,IEEE Conference on Computer Vision and Pattern Recognition
+research square,Research Square,,40,preprint,,Research Square,False,,,
 lrec,LREC,LREC,40,conference,1574020X;15740218;23318422;25222686,LREC,False,B,acronym,Language Resources and Evaluation Conference
-communications computer information science,Communications in computer and information science,Pattern Recognition,39,conference,18650929;18650937,Communications in computer and information science,False,,,
 routledge ebooks,Routledge eBooks,IU,39,other,,Routledge eBooks,False,,,
+communications computer information science,Communications in computer and information science,Pattern Recognition,39,conference,18650929;18650937,Communications in computer and information science,False,,,
 communications letters,IEEE Communications Letters,CL,38,journal,10897798;15582558;23737891,IEEE Communications Letters,False,,,
-acc,ACC,AMCC,37,conference,07431619;23785861,ACC,False,,,
-ncc,NCC,NCC,37,conference,,NCC,False,,,
 india council international conference,IEEE India Council International Conference (INDICON),INDICON,37,conference,,IEEE India Council International Conference (INDICON),False,,,
 icc,ICC,ICC,37,conference,15503607,ICC,False,B,acronym,IEEE International Conference on Communications
+ncc,NCC,NCC,37,conference,,NCC,False,,,
+acc,ACC,AMCC,37,conference,07431619;23785861;24751456,ACC,False,,,
 globecom,GLOBECOM,GLOBECOM,37,conference,1930529X;2576764X,GLOBECOM | Globecom | GLOBECOM (Workshops),False,B,acronym,IEEE Global Telecommunications Conference 
-medrxiv,medRxiv,,36,preprint,,medRxiv,False,,,
 cambridge structural database,The Cambridge Structural Database,,36,other,,The Cambridge Structural Database,False,,,
 cogsci,CogSci,COGSCI,35,conference,03640213;15516709;15565068;23318422;23732822,CogSci,False,B,acronym,Annual Meeting of the Cognitive Science Society
-eacl,EACL (Findings),EACL,35,conference,,EACL (Findings) | EACL (2) | EACL (System Demonstrations) | EACL | EACL (1),False,A,acronym,European Association for Computational Linguistics
-wireless personal communications,Wireless Personal Communications,WPC,35,journal,09296212;1572834X,Wireless Personal Communications,False,,,
 ijcb,IJCB,ICB,35,conference,21916586;21916594,IJCB,False,,,
-sensors,Sensors,IEEESENSORS,34,journal,14248220;19300395;21689229;21689237,Sensors | IEEE SENSORS | SENSORS,False,,,
+wireless personal communications,Wireless Personal Communications,WPC,35,journal,09296212;1572834X,Wireless Personal Communications,False,,,
+eacl,EACL (Findings),EACL,35,conference,,EACL (Findings) | EACL (2) | EACL (System Demonstrations) | EACL | EACL (1),False,A,acronym,European Association for Computational Linguistics
 bigmm,BigMM,BIGMM,34,conference,,BigMM,False,,,
 computers biology medicine,Computers in Biology and Medicine,,34,journal,00104825;18790534,Computers in Biology and Medicine,False,,,
 lancet,The Lancet,,34,journal,00995355;01406736;1474547X,The Lancet,False,,,
-asia pacific microwave conference,IEEE Asia-Pacific Microwave Conference (APMC),APMC,33,conference,,Asia-Pacific Microwave Conference (APMC) | IEEE Asia-Pacific Microwave Conference (APMC),False,,,
+sensors,Sensors,IEEESENSORS,34,journal,14248220;19300395;21689229;21689237,Sensors | IEEE SENSORS | SENSORS,False,,,
 icdar,ICDAR,ICDAR,33,conference,03029743;15205363;16113349;23792140,ICDAR | ICDAR (4) | ICDAR (2) | ICDAR (6) | ICDAR (1),False,A,acronym,IEEE International Conference on Document Analysis and Recognition
+asia pacific microwave conference,IEEE Asia-Pacific Microwave Conference (APMC),APMC,33,conference,,Asia-Pacific Microwave Conference (APMC) | IEEE Asia-Pacific Microwave Conference (APMC),False,,,
+medrxiv,medRxiv,,33,preprint,,medRxiv,False,,,
 naacl hlt,NAACL-HLT,NAACL,32,conference,,NAACL-HLT | NAACL-HLT (Student Research Workshop) | NAACL-HLT (Findings) | NAACL-HLT (1) | NAACL-HLT (2),False,A,acronym,North American Association for Computational Linguistics
+neurips,NeurIPS,NeurIPS,30,conference,10495258;23318422,NeurIPS,False,A*,acronym,Advances in Neural Information Processing Systems (was NIPS)
+eusipco,EUSIPCO,EUSIPCO,30,conference,,EUSIPCO,False,B,acronym,European Signal Processing Conference
 transactions intelligent transportation systems,IEEE Transactions on Intelligent Transportation Systems,ITS,30,journal,15249050;15580016,IEEE Transactions on Intelligent Transportation Systems,False,,,
 fire,FIRE (Working Notes),FIRE,30,conference,23318422,FIRE (Working Notes) | FIRE,False,,,
-eusipco,EUSIPCO,EUSIPCO,30,conference,,EUSIPCO,False,B,acronym,European Signal Processing Conference
-neurips,NeurIPS,NeurIPS,30,conference,10495258;23318422,NeurIPS,False,A*,acronym,Advances in Neural Information Processing Systems (was NIPS)
-sensors journal,IEEE Sensors Journal,SJ,29,journal,1530437X;15581748;23799153,IEEE Sensors Journal,False,,,
-nature communications,Nature Communications,,29,journal,20411723,Nature Communications,False,,,
-coling,COLING,COLING,29,conference,15252477;23318422,COLING | COLING (Industry) | COLING (Demonstrations),False,B,acronym,International Conference on Computational Linguistics
-bda,BDA,BIGDA,29,conference,03029743;15516393;16113349,"BDA | BDA (Astronomy, Science, and Engineering)",False,,,
 iconip,ICONIP (3),ICONIP,29,conference,03029743;16113349;18650929;18650937,ICONIP (4) | ICONIP (2) | ICONIP (3) | ICONIP (5) | ICONIP (1),False,B,acronym,International Conference on Neural Information Processing
-cdc,CDC,CDC,29,conference,01912216,CDC,False,A,acronym,IEEE Conference on Decision and Control
-mwscas,MWSCAS,MWSCAS,29,conference,15483746;15583899,MWSCAS,False,,,
-open journal communications society,IEEE Open Journal of the Communications Society,OJ-COMS,29,journal,2644125X,IEEE Open Journal of the Communications Society,False,,,
 isbi,ISBI,ISBI,29,conference,,ISBI,False,,,
+sensors journal,IEEE Sensors Journal,SJ,29,journal,1530437X;15581748;23799153,IEEE Sensors Journal,False,,,
+bda,BDA,BIGDA,29,conference,03029743;15516393;16113349,"BDA | BDA (Astronomy, Science, and Engineering)",False,,,
+mwscas,MWSCAS,MWSCAS,29,conference,15483746;15583899,MWSCAS,False,,,
 multimedia tools applications,Multimedia Tools and Applications,MT&A,29,journal,13807501;15737721,Multimedia Tools and Applications,False,,,
-asonam,ASONAM,ASUNAM,28,conference,03029743;16113349,ASONAM | ASONAM (4) | ASONAM (2),False,,,
+coling,COLING,COLING,29,conference,15252477;23318422,COLING | COLING (Industry) | COLING (Demonstrations),False,B,acronym,International Conference on Computational Linguistics
+open journal communications society,IEEE Open Journal of the Communications Society,OJ-COMS,29,journal,2644125X,IEEE Open Journal of the Communications Society,False,,,
+cdc,CDC,CDC,29,conference,01912216,CDC,False,A,acronym,IEEE Conference on Decision and Control
 transactions biometrics behavior identity science,IEEE Transactions on Biometrics Behavior and Identity Science,Behavior,28,journal,26376407,IEEE Transactions on Biometrics Behavior and Identity Science,False,,,
-ijcai,IJCAI,IJCAI,27,conference,03029743;16113349,IJCAI,False,A*,acronym,International Joint Conference on Artificial Intelligence
+asonam,ASONAM,ASUNAM,28,conference,03029743;16113349,ASONAM | ASONAM (4) | ASONAM (2),False,,,
+nature communications,Nature Communications,,27,journal,20411723,Nature Communications,False,,,
 sensors letters,IEEE Sensors Letters,IEEE-SL,27,journal,24751472,IEEE Sensors Letters,False,,,
-chi,CHI,CHI,26,conference,,CHI,False,A*,acronym,International Conference on Human Factors in Computing Systems
-iccv,ICCV,ICCV,26,conference,,ICCV | ICCV (Workshops),False,A*,acronym,IEEE International Conference on Computer Vision
-semeval acl,SemEval@ACL,SEMEVAL,26,conference,07841272;14597780,SemEval@ACL,False,,,
+ijcai,IJCAI,IJCAI,27,conference,03029743;16113349,IJCAI,False,A*,acronym,International Joint Conference on Artificial Intelligence
 isec,ISEC,INDIASE,26,conference,,ISEC,False,,,
-introduction to vlsi design flow,Introduction to VLSI Design Flow,,26,other,,Introduction to VLSI Design Flow,False,,,
+semeval acl,SemEval@ACL,SEMEVAL,26,conference,07841272;14597780,SemEval@ACL,False,,,
 cikm,CIKM,CIKM,26,conference,21550751,CIKM,False,A,acronym,ACM International Conference on Information and Knowledge Management
-pimrc,PIMRC,PIMRC,25,conference,,PIMRC,False,B,acronym,IEEE International Symposium on Personal and Indoor Mobile Radio Conference
-ises,iSES,ISES,25,conference,,iSES,False,,,
-world conference earthquake,World Conference on Earthquake,WCEE,25,other,,World Conference on Earthquake,False,,,
-physical review e,Physical review. E,PRE,25,journal,24700045;24700053;24700061,Physical review. E,False,,,
+iccv,ICCV,ICCV,26,conference,,ICCV | ICCV (Workshops),False,A*,acronym,IEEE International Conference on Computer Vision
+chi,CHI,CHI,26,conference,,CHI,False,A*,acronym,International Conference on Human Factors in Computing Systems
+introduction to vlsi design flow,Introduction to VLSI Design Flow,,26,other,,Introduction to VLSI Design Flow,False,,,
 fg,FG,FGR,25,conference,15415058;23265396,FG,False,,,
+pimrc,PIMRC,PIMRC,25,conference,,PIMRC,False,B,acronym,IEEE International Symposium on Personal and Indoor Mobile Radio Conference
+physical review e,Physical review. E,PRE,25,journal,24700045;24700053;24700061,Physical review. E,False,,,
+ises,iSES,ISES,25,conference,,iSES,False,,,
 physical review d physical review d,Physical review. D/Physical review. D.,PRD,25,journal,24700010;24700029;24700037,Physical review. D/Physical review. D.,False,,,
+world conference earthquake,World Conference on Earthquake,WCEE,25,other,,World Conference on Earthquake,False,,,
 icton,ICTON,ICTON,24,conference,,ICTON,False,,,
 icmi,ICMI,ICMI,24,conference,,ICMI (adjunct) | ICMI,False,B,acronym,International Conference on Multimodal Interaction (was International Conference on Multimodal Interfaces)
-computers & electrical engineering,Computers & Electrical Engineering,CEEng,24,journal,00457906;18790755,Computers & Electrical Engineering,False,,,
+iclr,ICLR,ICLR,24,conference,23318422,ICLR (Poster) | ICLR,False,A*,acronym,International Conference on Learning Representations
 journal acoustical society america,The Journal of the Acoustical Society of America,JASA,24,journal,00014966;15208524;15209024,The Journal of the Acoustical Society of America,False,,,
 icc workshops,ICC Workshops,ICC,24,conference,21647038,ICC Workshops,False,B,acronym,IEEE International Conference on Communications
-iclr,ICLR,ICLR,24,conference,23318422,ICLR (Poster) | ICLR,False,A*,acronym,International Conference on Learning Representations
-journal family medicine primary care,Journal of Family Medicine and Primary Care,,23,journal,22494863;22787135,Journal of Family Medicine and Primary Care,False,,,
 indian geotechnical journal,Indian geotechnical journal,IGJ,23,journal,00468983;09719555;22773347,Indian geotechnical journal,False,,,
+computers & electrical engineering,Computers & Electrical Engineering,CEEng,23,journal,00457906;18790755,Computers & Electrical Engineering,False,,,
+journal family medicine primary care,Journal of Family Medicine and Primary Care,,23,journal,22494863;22787135,Journal of Family Medicine and Primary Care,False,,,
 human computer interaction,Proceedings of the ACM on Human-Computer Interaction,PACMHCI,23,journal,25730142,Proceedings of the ACM on Human-Computer Interaction,False,,,
-transactions information theory,IEEE Transactions on Information Theory,T-IT,22,journal,00189448;15579654,IEEE Transactions on Information Theory,False,,,
 systems journal,IEEE Systems Journal,SYSJ,22,journal,19328184;19379234;23737816,IEEE Systems Journal,False,,,
-international conference unmanned aircraft systems,International Conference on Unmanned Aircraft Systems (ICUAS),ICUAS,22,conference,,International Conference on Unmanned Aircraft Systems (ICUAS) | International conference on Unmanned Aircraft Systems,False,,,
+quantum information processing,Quantum Information Processing,QIP,22,journal,15700755;15731332,Quantum Information Processing,False,,,
+icwsm,ICWSM,ICWSM,22,conference,21623449;23340770,ICWSM,False,A,acronym,International Conference on Web and Social Media
+wcnc,WCNC,WCNC,22,conference,15253511;15582612,WCNC | WCNC (Workshops),False,B,acronym,IEEE Wireless Communications and Networking Conference
 pattern recognition,Pattern Recognition,PR,22,journal,00313203;18735142,Pattern Recognition,False,,,
 transactions circuits & systems ii express briefs,IEEE Transactions on Circuits & Systems II Express Briefs,IEEE-TCS,22,journal,15497747;15583791,IEEE Transactions on Circuits & Systems II Express Briefs,False,,,
-cvip,CVIP (2),CVIP,22,conference,18650929;18650937;21945357;21945365,CVIP (1) | CVIP (2) | CVIP (3) | CVIP (6) | CVIP (5),False,,,
-wcnc,WCNC,WCNC,22,conference,15253511;15582612,WCNC | WCNC (Workshops),False,B,acronym,IEEE Wireless Communications and Networking Conference
-icwsm,ICWSM,ICWSM,22,conference,21623449;23340770,ICWSM,False,A,acronym,International Conference on Web and Social Media
 robotics automation letters,IEEE Robotics and Automation Letters,RAL,22,journal,23773766;23773774,IEEE Robotics and Automation Letters,False,,,
 ifac papersonline,IFAC-PapersOnLine,IFAC-POL,22,journal,24058963;24058971,IFAC-PapersOnLine,False,,,
-underline science inc,Underline Science Inc.,,22,other,,Underline Science Inc.,False,,,
+cvip,CVIP (2),CVIP,22,conference,18650929;18650937;21945357;21945365,CVIP (1) | CVIP (2) | CVIP (3) | CVIP (6) | CVIP (5),False,,,
 lecture notes mechanical engineering,Lecture notes in mechanical engineering,,22,conference,21954356;21954364,Lecture notes in mechanical engineering,False,,,
-quantum information processing,Quantum Information Processing,QIP,22,journal,15700755;15731332,Quantum Information Processing,False,,,
-case,CASE,CASE,21,conference,21618070,CASE,False,TBR,acronym,IEEE International Conference on Automation Science and Engineering
-national conference communications,National Conference on Communications,NCC,21,conference,,National Conference on Communications,False,B,fuzzy_title(93),IEEE International Conference on Communications
-transactions embedded computing systems,ACM Transactions on Embedded Computing Systems,TECS,21,journal,15399087;15583465,ACM Transactions on Embedded Computing Systems,False,,,
-expert systems with applications,Expert Systems with Applications,ESWA,21,journal,09574174;18736793,Expert Systems with Applications,False,,,
 itw,ITW,ITW,21,conference,,ITW,False,B,acronym,Information Theory Workshop
+transactions embedded computing systems,ACM Transactions on Embedded Computing Systems,TECS,21,journal,15399087;15583465,ACM Transactions on Embedded Computing Systems,False,,,
+international conference unmanned aircraft systems,International Conference on Unmanned Aircraft Systems (ICUAS),ICUAS,21,conference,,International Conference on Unmanned Aircraft Systems (ICUAS) | International conference on Unmanned Aircraft Systems,False,,,
+national conference communications,National Conference on Communications,NCC,21,conference,,National Conference on Communications,False,B,fuzzy_title(93),IEEE International Conference on Communications
+expert systems with applications,Expert Systems with Applications,ESWA,21,journal,09574174;18736793,Expert Systems with Applications,False,,,
+case,CASE,CASE,21,conference,21618070,CASE,False,TBR,acronym,IEEE International Conference on Automation Science and Engineering
+transactions information theory,IEEE Transactions on Information Theory,T-IT,21,journal,00189448;15579654,IEEE Transactions on Information Theory,False,,,
 briefings bioinformatics,Briefings in Bioinformatics,,20,journal,14675463;14774054,Briefings in Bioinformatics,False,,,
 semeval naacl,SemEval@NAACL,SEMEVAL,20,conference,,SemEval@NAACL,False,,,
 isvlsi,ISVLSI,ISVLSI,20,conference,,ISVLSI,False,,,
+security privacy,Security and Privacy,S&P,20,journal,24756725,Security and Privacy,False,,,
 journal chemical information modeling,Journal of Chemical Information and Modeling,JCIM,20,journal,15499596;1549960X,Journal of Chemical Information and Modeling,False,,,
 transactions network service management,IEEE Transactions on Network and Service Management,TNSM,20,journal,19324537;23737379,IEEE Transactions on Network and Service Management,False,,,
-preprints org,Preprints.org,arXiv,20,preprint,,Preprints.org,False,,,
 proceedings physics,Springer proceedings in physics,HEPS,20,conference,09308989;18674941,Springer proceedings in physics,False,,,
-kdd,KDD,KDD,20,conference,,KDD | KDD (2),False,A*,acronym,ACM International Conference on Knowledge Discovery and Data Mining
-security privacy,Security and Privacy,S&P,20,journal,24756725,Security and Privacy,False,,,
-physical chemistry chemical physics,Physical Chemistry Chemical Physics,PCCP,20,journal,14639076;14639084,Physical Chemistry Chemical Physics,False,,,
 embc,EMBC,EMBC,20,conference,23757477,EMBC,False,C,acronym,The Annual International Conference of the IEEE Engineering in Medicine and Biology Society
 transactions consumer electronics,IEEE Transactions on Consumer Electronics,TCE,20,journal,00983063;15584127,IEEE Transactions on Consumer Electronics,False,,,
-inflibnet,INFLIBNET,,19,other,,INFLIBNET,False,,,
+kdd,KDD,KDD,20,conference,,KDD | KDD (2),False,A*,acronym,ACM International Conference on Knowledge Discovery and Data Mining
 transactions aerospace electronic systems,IEEE Transactions on Aerospace and Electronic Systems,TAES,19,journal,00189251;15579603;23719877,IEEE Transactions on Aerospace and Electronic Systems,False,,,
+inflibnet,INFLIBNET,,19,other,,INFLIBNET,False,,,
 naacl,NAACL (Long Papers),NAACL,19,conference,,NAACL (Findings) | NAACL (Student Research Workshop) | NAACL (Industry Track) | NAACL (Long Papers) | NAACL (Short Papers),False,A,acronym,North American Association for Computational Linguistics
-physical review letters,Physical Review Letters,PRL,19,journal,00319007;10797114;10920145,Physical Review Letters,False,,,
 btas,BTAS,BTAS,19,conference,,BTAS,False,,,
-internet things magazine,IEEE Internet of Things Magazine,ITM,18,journal,25763180;25763199,IEEE Internet of Things Magazine,False,,,
+physical review letters,Physical Review Letters,PRL,19,journal,00319007;10797114;10920145,Physical Review Letters,False,,,
 cicling,CICLing (2),CICLING,18,conference,03029743;16113349,CICLing (2) | CICLing (1),False,C,acronym,International Conference on Intelligent Text Processing and Computational Linguistics
+hci,HCI (37),HCI,18,conference,03029743;16113349;18650929;18650937,HCI (11) | HCI (9) | HCI (37) | HCI (29) | HCI (38),False,National,acronym,British Computer Society Conference on Human-Computer Interaction
+transactions information forensics security,IEEE Transactions on Information Forensics and Security,TIFS,18,journal,15566013;15566021,IEEE Transactions on Information Forensics and Security,False,,,
+pattern recognition letters,Pattern Recognition Letters,PRLJ,18,journal,01678655;18727344,Pattern Recognition Letters,False,,,
+internet things magazine,IEEE Internet of Things Magazine,ITM,18,journal,25763180;25763199,IEEE Internet of Things Magazine,False,,,

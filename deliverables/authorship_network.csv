@@ -233,7 +233,6 @@ Mayank Vatsa,Richa Singh,10.1109/icip.2016.7532933,IIIT-D,IIIT-D,2016,IIIT-D:may
 Jawahar C V,Suresh Purini,10.1145/3021460.3021473,IIIT-H,IIIT-H,2017,IIIT-H:jawahar_c_v,IIIT-H:suresh_purini,False,5,0.25,False
 Anil Kumar Vuppala,Suryakanth V. Gangashetty,10.21437/interspeech.2017-256,IIIT-H,IIIT-H,2017,IIIT-H:anil_kumar_vuppala,IIIT-H:suryakanth_v_gangashetty,False,5,0.25,False
 Jawahar C V,Suresh Purini,10.1109/acpr.2017.146,IIIT-H,IIIT-H,2017,IIIT-H:jawahar_c_v,IIIT-H:suresh_purini,False,3,0.5,False
-Debarka Sengupta,Vibhor Kumar,10.1093/nar/gkaa1138,IIIT-D,IIIT-D,2020,IIIT-D:debarka_sengupta,IIIT-D:vibhor_kumar,False,8,0.1428571428571428,False
 Mayank Vatsa,Richa Singh,10.1109/icb45273.2019.8987293,IIIT-D,IIIT-D,2019,IIIT-D:mayank_vatsa,IIIT-D:richa_singh,False,4,0.3333333333333333,False
 Naresh Manwani,Vineet Gandhi,10.1007/978-3-030-86486-6_45,IIIT-H,IIIT-H,2021,IIIT-H:naresh_manwani,IIIT-H:vineet_gandhi,False,4,0.3333333333333333,False
 Mayank Vatsa,Richa Singh,10.1145/3430984.3431966,IIIT-D,IIIT-D,2020,IIIT-D:mayank_vatsa,IIIT-D:richa_singh,False,3,0.5,False
@@ -445,7 +444,6 @@ Angshul Majumdar,Richa Singh,10.1109/icip.2016.7532907,IIIT-D,IIIT-D,2016,IIIT-D
 Mayank Vatsa,Richa Singh,10.1109/icip.2016.7532907,IIIT-D,IIIT-D,2016,IIIT-D:mayank_vatsa,IIIT-D:richa_singh,False,5,0.25,False
 Anil Kumar Vuppala,Suryakanth V. Gangashetty,10.1007/978-3-319-58130-9_8,IIIT-H,IIIT-H,2017,IIIT-H:anil_kumar_vuppala,IIIT-H:suryakanth_v_gangashetty,False,4,0.3333333333333333,False
 Angshul Majumdar,Shobha Sundar Ram,10.1145/3041823.3041825,IIIT-D,IIIT-D,2017,IIIT-D:angshul_majumdar,IIIT-D:shobha_sundar_ram,False,5,0.25,False
-Debajyoti Bera,Kishore Kothapalli,10.15803/ijnc.8.1_73,IIIT-D,IIIT-H,2018,IIIT-D:debajyoti_bera,IIIT-H:kishore_kothapalli,True,4,0.3333333333333333,False
 A V Subramanyam,Angshul Majumdar,10.1117/1.jei.28.1.013004,IIIT-D,IIIT-D,2019,IIIT-D:a_v_subramanyam,IIIT-D:angshul_majumdar,False,3,0.5,False
 Manish Shrivastava,Ponnurangam Kumaraguru,10.18653/v1/2022.findings-acl.40,IIIT-H,IIIT-H,2022,IIIT-H:manish_shrivastava,IIIT-H:ponnurangam_kumaraguru,False,5,0.25,False
 Anil Kumar Nelakanti,Vineet Gandhi,10.18653/v1/2022.naacl-main.26,IIIT-H,IIIT-H,2022,IIIT-H:anil_kumar_nelakanti,IIIT-H:vineet_gandhi,False,5,0.25,False
@@ -844,6 +842,10 @@ Anand Srivastava,Vivek Bohara,10.1109/jlt.2025.3541831,IIIT-D,IIIT-D,2025,IIIT-D
 Pankaj Jalote,Pushpendra Singh,10.1145/3711093,IIIT-D,IIIT-D,2025,IIIT-D:pankaj_jalote,IIIT-D:pushpendra_singh,False,5,0.25,False
 Anand Srivastava,Vivek Bohara,10.1109/vtcspring.2019.8746392,IIIT-D,IIIT-D,2019,IIIT-D:anand_srivastava,IIIT-D:vivek_bohara,False,4,0.3333333333333333,False
 Anand Srivastava,Vivek Bohara,10.1109/wfpst58552.2024.00027,IIIT-D,IIIT-D,2024,IIIT-D:anand_srivastava,IIIT-D:vivek_bohara,False,5,0.25,False
+Pawan Kumar,Prabhakar Bhimalapuram,10.1088/2631-8695/ad6ad5,IIIT-H,IIIT-H,2024,IIIT-H:pawan_kumar,IIIT-H:prabhakar_bhimalapuram,False,9,0.125,False
+Pawan Kumar,Syed Azeemuddin,10.1088/2631-8695/ad6ad5,IIIT-H,IIIT-H,2024,IIIT-H:pawan_kumar,IIIT-H:syed_azeemuddin,False,9,0.125,False
+Pawan Kumar,Tapan Kumar Sau,10.1088/2631-8695/ad6ad5,IIIT-H,IIIT-H,2024,IIIT-H:pawan_kumar,IIIT-H:tapan_kumar_sau,False,9,0.125,False
+Pawan Kumar,Zia Abbas,10.1088/2631-8695/ad6ad5,IIIT-H,IIIT-H,2024,IIIT-H:pawan_kumar,IIIT-H:zia_abbas,False,9,0.125,False
 Prabhakar Bhimalapuram,Syed Azeemuddin,10.1088/2631-8695/ad6ad5,IIIT-H,IIIT-H,2024,IIIT-H:prabhakar_bhimalapuram,IIIT-H:syed_azeemuddin,False,9,0.125,False
 Prabhakar Bhimalapuram,Tapan Kumar Sau,10.1088/2631-8695/ad6ad5,IIIT-H,IIIT-H,2024,IIIT-H:prabhakar_bhimalapuram,IIIT-H:tapan_kumar_sau,False,9,0.125,False
 Prabhakar Bhimalapuram,Zia Abbas,10.1088/2631-8695/ad6ad5,IIIT-H,IIIT-H,2024,IIIT-H:prabhakar_bhimalapuram,IIIT-H:zia_abbas,False,9,0.125,False
@@ -971,6 +973,8 @@ Prabhakar Bhimalapuram,Syed Azeemuddin,10.3389/fsens.2025.1511104,IIIT-H,IIIT-H,
 Prabhakar Bhimalapuram,Tapan Kumar Sau,10.3389/fsens.2025.1511104,IIIT-H,IIIT-H,2025,IIIT-H:prabhakar_bhimalapuram,IIIT-H:tapan_kumar_sau,False,5,0.25,False
 Syed Azeemuddin,Tapan Kumar Sau,10.3389/fsens.2025.1511104,IIIT-H,IIIT-H,2025,IIIT-H:syed_azeemuddin,IIIT-H:tapan_kumar_sau,False,5,0.25,False
 Deva Priyakumar U,Girish Varma,10.1039/d5cp02155c,IIIT-H,IIIT-H,2025,IIIT-H:deva_priyakumar_u,IIIT-H:girish_varma,False,5,0.25,False
+Deva Priyakumar U,Sandeep Kumar Shukla,10.1039/d5cp02155c,IIIT-H,IIIT-H,2025,IIIT-H:deva_priyakumar_u,IIIT-H:sandeep_kumar_shukla,False,5,0.25,False
+Girish Varma,Sandeep Kumar Shukla,10.1039/d5cp02155c,IIIT-H,IIIT-H,2025,IIIT-H:girish_varma,IIIT-H:sandeep_kumar_shukla,False,5,0.25,False
 Mukesh Mohania,Vikram Goyal,10.1145/3746252.3761256,IIIT-D,IIIT-D,2025,IIIT-D:mukesh_mohania,IIIT-D:vikram_goyal,False,4,0.3333333333333333,False
 Bapi Raju S,Radhika Mamidi,10.18653/v1/2025.emnlp-main.1748,IIIT-H,IIIT-H,2025,IIIT-H:bapi_raju_s,IIIT-H:radhika_mamidi,False,6,0.2,False
 K Madhava Krishna,Nagamanikandan Govindan,10.1109/iros60139.2025.11246970,IIIT-H,IIIT-H,2025,IIIT-H:k_madhava_krishna,IIIT-H:nagamanikandan_govindan,False,7,0.1666666666666666,False
@@ -1113,6 +1117,7 @@ Syed Azeemuddin,Zia Abbas,10.1109/icst59744.2023.10460786,IIIT-H,IIIT-H,2023,III
 Girish Varma,Jawahar C V,10.1007/978-3-031-58535-7_5,IIIT-H,IIIT-H,2024,IIIT-H:girish_varma,IIIT-H:jawahar_c_v,False,4,0.3333333333333333,False
 Debidas Kundu,Vivek Bohara,10.1145/3674829.3675084,IIIT-D,IIIT-D,2024,IIIT-D:debidas_kundu,IIIT-D:vivek_bohara,False,5,0.25,False
 Anand Srivastava,Vivek Bohara,10.1109/blackseacom61746.2024.10646266,IIIT-D,IIIT-D,2024,IIIT-D:anand_srivastava,IIIT-D:vivek_bohara,False,5,0.25,False
+Avinash Sharma,Bapi Raju S,10.1101/2024.09.07.611772,IIIT-H,IIIT-H,2024,IIIT-H:avinash_sharma,IIIT-H:bapi_raju_s,False,4,0.3333333333333333,False
 Anand Srivastava,Vivek Bohara,10.1109/vtc2024-spring62846.2024.10683128,IIIT-D,IIIT-D,2024,IIIT-D:anand_srivastava,IIIT-D:vivek_bohara,False,4,0.3333333333333333,False
 Tanmoy Chakraborty,Vivek Kumar,10.1002/cpe.8297,IIIT-D,IIIT-D,2024,IIIT-D:tanmoy_chakraborty,IIIT-D:vivek_kumar,False,3,0.5,False
 Aasim Khan,Praveen Priyadarshi,10.1007/978-3-031-75872-0_18,IIIT-D,IIIT-D,2024,IIIT-D:aasim_khan,IIIT-D:praveen_priyadarshi,False,7,0.1666666666666666,False
@@ -1169,9 +1174,6 @@ Deepak Gangadharan,Sachin Chaudhari,10.1109/ficloud70576.2026.00011,IIIT-H,IIIT-
 Karthik Vaidhyanathan,Sachin Chaudhari,10.1109/ficloud70576.2026.00011,IIIT-H,IIIT-H,2026,IIIT-H:karthik_vaidhyanathan,IIIT-H:sachin_chaudhari,False,6,0.2,False
 Debarka Sengupta,Gaurav Ahuja,10.1177/15578666261486475,IIIT-D,IIIT-D,2026,IIIT-D:debarka_sengupta,IIIT-D:gaurav_ahuja,False,9,0.125,False
 Mukulika Maity,Pragma Kar,10.1145/3848502,IIIT-D,IIIT-D,2026,IIIT-D:mukulika_maity,IIIT-D:pragma_kar,False,6,0.2,False
-Debarka Sengupta,Gaurav Ahuja,10.1038/s41467-026-77700-z,IIIT-D,IIIT-D,2026,IIIT-D:debarka_sengupta,IIIT-D:gaurav_ahuja,False,19,0.0555555555555555,False
-Debarka Sengupta,N. Arul Murugan,10.1038/s41467-026-77700-z,IIIT-D,IIIT-D,2026,IIIT-D:debarka_sengupta,IIIT-D:n_arul_murugan,False,19,0.0555555555555555,False
-Gaurav Ahuja,N. Arul Murugan,10.1038/s41467-026-77700-z,IIIT-D,IIIT-D,2026,IIIT-D:gaurav_ahuja,IIIT-D:n_arul_murugan,False,19,0.0555555555555555,False
 K Madhava Krishna,Sourav Garg,10.1109/lra.2023.3343602,IIIT-H,IIIT-H,2023,IIIT-H:k_madhava_krishna,IIIT-H:sourav_garg,False,7,0.1666666666666666,False
 Subramanian Ramanathan,Vineet Gandhi,10.1109/iros51168.2021.9635989,IIIT-H,IIIT-H,2021,IIIT-H:subramanian_ramanathan,IIIT-H:vineet_gandhi,False,6,0.2,False
 K Madhava Krishna,Sourav Garg,10.1109/icra48891.2023.10160356,IIIT-H,IIIT-H,2023,IIIT-H:k_madhava_krishna,IIIT-H:sourav_garg,False,6,0.2,False
@@ -1316,7 +1318,6 @@ Diganta Das,Subhadip Mitra,10.22323/1.398.0678,IIIT-H,IIIT-H,2022,IIIT-H:diganta
 K S Rajan,Kavita Vemuri,10.1109/conecct52877.2021.9622549,IIIT-H,IIIT-H,2021,IIIT-H:k_s_rajan,IIIT-H:kavita_vemuri,False,5,0.25,False
 K S Rajan,Sachin Chaudhari,10.1109/conecct52877.2021.9622549,IIIT-H,IIIT-H,2021,IIIT-H:k_s_rajan,IIIT-H:sachin_chaudhari,False,5,0.25,False
 Kavita Vemuri,Sachin Chaudhari,10.1109/conecct52877.2021.9622549,IIIT-H,IIIT-H,2021,IIIT-H:kavita_vemuri,IIIT-H:sachin_chaudhari,False,5,0.25,False
-A V Subramanyam,Vinayak Naik,10.1109/comsnets.2018.8328214,IIIT-D,IIIT-D,2018,IIIT-D:a_v_subramanyam,IIIT-D:vinayak_naik,False,5,0.25,False
 Rajiv Ratn Shah,Ponnurangam Kumaraguru,10.1609/aaai.v36i11.21617,IIIT-D,IIIT-H,2022,IIIT-D:rajiv_ratn_shah,IIIT-H:ponnurangam_kumaraguru,True,6,0.2,False
 Ponnurangam Kumaraguru,Vinoo Alluri,10.1007/978-3-031-19097-1_6,IIIT-H,IIIT-H,2022,IIIT-H:ponnurangam_kumaraguru,IIIT-H:vinoo_alluri,False,5,0.25,False
 A V Subramanyam,Rajiv Ratn Shah,10.1109/icme55011.2023.00442,IIIT-D,IIIT-D,2023,IIIT-D:a_v_subramanyam,IIIT-D:rajiv_ratn_shah,False,5,0.25,False
@@ -1387,25 +1388,9 @@ Priyanka Srivastava,Raman Saxena,dblp:conf/cogsci/kancharlaPSS23,IIIT-H,IIIT-H,2
 Parameswari Krishnamurthy,Sandeep Kumar Shukla,10.48550/arxiv.2603.21551,IIIT-H,IIIT-H,2026,IIIT-H:parameswari_krishnamurthy,IIIT-H:sandeep_kumar_shukla,False,2,1.0,False
 Vasudeva Varma,Vikram Pudi,dblp:conf/icon-nlp/DawSAPV21,IIIT-H,IIIT-H,2021,IIIT-H:vasudeva_varma,IIIT-H:vikram_pudi,False,2,1.0,False
 Diganta Das,Sourav Garg,portal:278,IIIT-H,IIIT-H,2026,IIIT-H:diganta_das,IIIT-H:sourav_garg,False,2,1.0,False
-Deva Priyakumar U,Girish Varma,10.26434/chemrxiv-2025-t7h5p,IIIT-H,IIIT-H,2025,IIIT-H:deva_priyakumar_u,IIIT-H:girish_varma,False,3,0.5,False
-Deva Priyakumar U,Sandeep Kumar Shukla,10.26434/chemrxiv-2025-t7h5p,IIIT-H,IIIT-H,2025,IIIT-H:deva_priyakumar_u,IIIT-H:sandeep_kumar_shukla,False,3,0.5,False
-Girish Varma,Sandeep Kumar Shukla,10.26434/chemrxiv-2025-t7h5p,IIIT-H,IIIT-H,2025,IIIT-H:girish_varma,IIIT-H:sandeep_kumar_shukla,False,3,0.5,False
-Avinash Sharma,Bapi Raju S,10.1101/2024.09.07.611772v1.article-info,IIIT-H,IIIT-H,2024,IIIT-H:avinash_sharma,IIIT-H:bapi_raju_s,False,2,1.0,False
-Pawan Kumar,Prabhakar Bhimalapuram,10.1088/2631-8695/ad6ad5/meta,IIIT-H,IIIT-H,2024,IIIT-H:pawan_kumar,IIIT-H:prabhakar_bhimalapuram,False,5,0.25,False
-Pawan Kumar,Syed Azeemuddin,10.1088/2631-8695/ad6ad5/meta,IIIT-H,IIIT-H,2024,IIIT-H:pawan_kumar,IIIT-H:syed_azeemuddin,False,5,0.25,False
-Pawan Kumar,Tapan Kumar Sau,10.1088/2631-8695/ad6ad5/meta,IIIT-H,IIIT-H,2024,IIIT-H:pawan_kumar,IIIT-H:tapan_kumar_sau,False,5,0.25,False
-Pawan Kumar,Zia Abbas,10.1088/2631-8695/ad6ad5/meta,IIIT-H,IIIT-H,2024,IIIT-H:pawan_kumar,IIIT-H:zia_abbas,False,5,0.25,False
-Prabhakar Bhimalapuram,Syed Azeemuddin,10.1088/2631-8695/ad6ad5/meta,IIIT-H,IIIT-H,2024,IIIT-H:prabhakar_bhimalapuram,IIIT-H:syed_azeemuddin,False,5,0.25,False
-Prabhakar Bhimalapuram,Tapan Kumar Sau,10.1088/2631-8695/ad6ad5/meta,IIIT-H,IIIT-H,2024,IIIT-H:prabhakar_bhimalapuram,IIIT-H:tapan_kumar_sau,False,5,0.25,False
-Prabhakar Bhimalapuram,Zia Abbas,10.1088/2631-8695/ad6ad5/meta,IIIT-H,IIIT-H,2024,IIIT-H:prabhakar_bhimalapuram,IIIT-H:zia_abbas,False,5,0.25,False
-Syed Azeemuddin,Tapan Kumar Sau,10.1088/2631-8695/ad6ad5/meta,IIIT-H,IIIT-H,2024,IIIT-H:syed_azeemuddin,IIIT-H:tapan_kumar_sau,False,5,0.25,False
-Syed Azeemuddin,Zia Abbas,10.1088/2631-8695/ad6ad5/meta,IIIT-H,IIIT-H,2024,IIIT-H:syed_azeemuddin,IIIT-H:zia_abbas,False,5,0.25,False
-Tapan Kumar Sau,Zia Abbas,10.1088/2631-8695/ad6ad5/meta,IIIT-H,IIIT-H,2024,IIIT-H:tapan_kumar_sau,IIIT-H:zia_abbas,False,5,0.25,False
-Deva Priyakumar U,Girish Varma,10.26434/chemrxiv-2023-drhmj-v2,IIIT-H,IIIT-H,2024,IIIT-H:deva_priyakumar_u,IIIT-H:girish_varma,False,2,1.0,False
 Samyadeb Bhattacharya,Subhadip Mitra,portal:1717,IIIT-H,IIIT-H,2023,IIIT-H:samyadeb_bhattacharya,IIIT-H:subhadip_mitra,False,2,1.0,False
 Shaik Rehana,Supriya Mohanty,portal:3385,IIIT-H,IIIT-H,2020,IIIT-H:shaik_rehana,IIIT-H:supriya_mohanty,False,2,1.0,False
 Arun Kumar Pati,Shaik Rehana,portal:3573,IIIT-H,IIIT-H,2020,IIIT-H:arun_kumar_pati,IIIT-H:shaik_rehana,False,2,1.0,False
-Deva Priyakumar U,Girish Varma,10.26434/chemrxiv.12312260.v1,IIIT-H,IIIT-H,2020,IIIT-H:deva_priyakumar_u,IIIT-H:girish_varma,False,2,1.0,False
 Aftab M Hussain,Vishal Garg,portal:3741,IIIT-H,IIIT-H,2019,IIIT-H:aftab_m_hussain,IIIT-H:vishal_garg,False,2,1.0,False
 Krishna Reddy P,Shaik Rehana,portal:3824,IIIT-H,IIIT-H,2019,IIIT-H:krishna_reddy_p,IIIT-H:shaik_rehana,False,2,1.0,False
 Arun Kumar Pati,Indranil Chakrabarty,portal:4308,IIIT-H,IIIT-H,2018,IIIT-H:arun_kumar_pati,IIIT-H:indranil_chakrabarty,False,2,1.0,False

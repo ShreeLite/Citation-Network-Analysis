@@ -1,16 +1,16 @@
 [
  {
   "metric": "papers",
-  "baseline": 8985,
-  "no >25-author papers": 8943,
-  "with preprints": 10255,
+  "baseline": 8934,
+  "no >25-author papers": 8892,
+  "with preprints": 10150,
   "robustness": ""
  },
  {
   "metric": "IIIT-H NMI",
-  "baseline": 0.538607,
-  "no >25-author papers": 0.538607,
-  "with preprints": 0.514775,
+  "baseline": 0.568701,
+  "no >25-author papers": 0.568701,
+  "with preprints": 0.535557,
   "robustness": ""
  },
  {
@@ -22,9 +22,9 @@
  },
  {
   "metric": "IIIT-H cross-unit z",
-  "baseline": -13.111781,
-  "no >25-author papers": -13.111781,
-  "with preprints": -14.342905,
+  "baseline": -13.610915,
+  "no >25-author papers": -13.610915,
+  "with preprints": -15.688923,
   "robustness": ""
  },
  {
@@ -43,9 +43,9 @@
  },
  {
   "metric": "IIIT-H top10 citation share",
-  "baseline": 0.684862,
-  "no >25-author papers": 0.682032,
-  "with preprints": 0.684798,
+  "baseline": 0.684986,
+  "no >25-author papers": 0.682155,
+  "with preprints": 0.684914,
   "robustness": ""
  },
  {
@@ -57,8 +57,8 @@
  },
  {
   "metric": "IIIT-D NMI",
-  "baseline": 0.345133,
-  "no >25-author papers": 0.345133,
+  "baseline": 0.370676,
+  "no >25-author papers": 0.370676,
   "with preprints": 0.333872,
   "robustness": ""
  },
@@ -92,23 +92,23 @@
  },
  {
   "metric": "IIIT-D top10 citation share",
-  "baseline": 0.661955,
-  "no >25-author papers": 0.671554,
-  "with preprints": 0.661512,
+  "baseline": 0.662401,
+  "no >25-author papers": 0.672027,
+  "with preprints": 0.661813,
   "robustness": ""
  },
  {
   "metric": "IIIT-D cites-us-not-collab",
-  "baseline": 57,
-  "no >25-author papers": 57,
-  "with preprints": 57,
+  "baseline": 54,
+  "no >25-author papers": 54,
+  "with preprints": 54,
   "robustness": ""
  },
  {
   "metric": "F5 cross/within ratio",
-  "baseline": 0.8,
-  "no >25-author papers": 0.8,
-  "with preprints": 0.727273,
+  "baseline": 0.818182,
+  "no >25-author papers": 0.818182,
+  "with preprints": 0.75,
   "robustness": ""
  }
 ]
