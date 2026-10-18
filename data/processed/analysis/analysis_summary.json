@@ -16,28 +16,28 @@
    "null_model": {
     "observed": {
      "clustering": 0.263037,
-     "modularity": 0.455936,
+     "modularity": 0.470871,
      "cross_unit_share": 0.703704
     },
     "null_mean": {
-     "clustering": 0.087783,
-     "modularity": 0.391019,
-     "cross_unit_share": 0.930397
+     "clustering": 0.088377,
+     "modularity": 0.391373,
+     "cross_unit_share": 0.932751
     },
     "null_sd": {
-     "clustering": 0.018733,
-     "modularity": 0.012488,
-     "cross_unit_share": 0.017335
+     "clustering": 0.019364,
+     "modularity": 0.012002,
+     "cross_unit_share": 0.017176
     },
     "z": {
-     "clustering": 9.355154,
-     "modularity": 5.198427,
-     "cross_unit_share": -13.076943
+     "clustering": 9.019945,
+     "modularity": 6.623945,
+     "cross_unit_share": -13.3351
     },
     "ratio": {
-     "clustering": 2.996424,
-     "modularity": 1.166021,
-     "cross_unit_share": 0.756348
+     "clustering": 2.976295,
+     "modularity": 1.203127,
+     "cross_unit_share": 0.754439
     },
     "samples": 200
    },
@@ -316,22 +316,22 @@
     },
     "null_mean": {
      "clustering": 0.057509,
-     "modularity": 0.473949,
+     "modularity": 0.474013,
      "cross_unit_share": 0.713692
     },
     "null_sd": {
      "clustering": 0.017803,
-     "modularity": 0.012152,
+     "modularity": 0.012437,
      "cross_unit_share": 0.028953
     },
     "z": {
      "clustering": 11.191748,
-     "modularity": 8.714238,
+     "modularity": 8.509156,
      "cross_unit_share": -11.597724
     },
     "ratio": {
      "clustering": 4.464517,
-     "modularity": 1.223425,
+     "modularity": 1.223259,
      "cross_unit_share": 0.52951
     },
     "samples": 200

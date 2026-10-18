@@ -3,6 +3,16 @@ import { INSTS, required } from "../data";
 import { useFilters } from "../filters";
 import { ChartCard, cssVar, instColor } from "../components/ui";
 
+function hexToRgb(hex: string): [number, number, number] {
+  const m = hex.match(/^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
+  return m ? [parseInt(m[1], 16), parseInt(m[2], 16), parseInt(m[3], 16)] : [100, 100, 100];
+}
+
+function shade(rgb: [number, number, number], t: number): string {
+  const mix = (c: number) => Math.round(255 - (255 - c) * (0.3 + 0.7 * t));
+  return `rgb(${mix(rgb[0])}, ${mix(rgb[1])}, ${mix(rgb[2])})`;
+}
+
 export default function Areas() {
   const { f, pap } = useFilters();
   const insts = f.inst === "both" ? INSTS : [f.inst];
@@ -28,7 +38,26 @@ export default function Areas() {
       m[fl] = m[fl] || {};
       m[fl][sf] = (m[fl][sf] || 0) + 1;
     }
-    return Object.entries(m).map(([fl, subs]) => ({ name: fl, children: Object.entries(subs).map(([s, n]) => ({ name: s, value: n })) }));
+    const entries = Object.entries(m).map(([fl, subs]) => {
+      const total = Object.values(subs).reduce((a, b) => a + b, 0);
+      return { name: fl, total, subs };
+    }).sort((a, b) => b.total - a.total);
+    const maxVal = entries[0]?.total || 1;
+    const rgb = hexToRgb(instColor(inst));
+    return entries.map((e) => {
+      const fieldT = 0.3 + 0.7 * (e.total / maxVal);
+      const fieldColor = shade(rgb, fieldT);
+      const subEntries = Object.entries(e.subs).sort((a, b) => b[1] - a[1]);
+      const subMax = subEntries[0]?.[1] || 1;
+      return {
+        name: e.name,
+        itemStyle: { color: fieldColor },
+        children: subEntries.map(([s, n]) => ({
+          name: s, value: n,
+          itemStyle: { color: shade(rgb, 0.2 + 0.6 * (n / subMax) * (e.total / maxVal)) },
+        })),
+      };
+    });
   }, [pap, inst]);
 
   const unitMix = useMemo(() => {
@@ -58,8 +87,8 @@ export default function Areas() {
         option={() => ({ legend: { show: false }, tooltip: { trigger: "item" },
           series: [{ type: "treemap", data: tree, roam: false, nodeClick: "zoomToNode", breadcrumb: { show: true, bottom: 0 },
             label: { show: true, color: cssVar("--surface") }, upperLabel: { show: true, height: 22, color: cssVar("--surface") },
-            levels: [{ itemStyle: { borderColor: cssVar("--surface"), borderWidth: 2, gapWidth: 2 }, color: [instColor(inst)], colorSaturation: [0.35, 0.65] },
-                     { itemStyle: { borderColor: cssVar("--surface"), borderWidth: 1, gapWidth: 1 }, colorSaturation: [0.35, 0.65] }] }] })}
+            levels: [{ itemStyle: { borderColor: cssVar("--surface"), borderWidth: 2, gapWidth: 2 } },
+                     { itemStyle: { borderColor: cssVar("--surface"), borderWidth: 1, gapWidth: 1 } }] }] })}
         table={() => ({ columns: ["field", "subfield", "papers"], rows: tree.flatMap((t) => t.children.map((c) => [t.name, c.name, c.value])) })} />
 
       <ChartCard title={`${inst}: topic mix per ${inst === "IIIT-H" ? "centre" : "department"}`} caption="Share of each unit's papers in the institute's six largest fields (a paper counts once per unit)." deps={[unitMix]} height={Math.max(260, 40 * unitMix.units.length)}
@@ -68,7 +97,7 @@ export default function Areas() {
           tooltip: { trigger: "item", formatter: (p: any) => `${unitMix.units[p.value[1]]} · ${unitMix.topFields[p.value[0]]}: ${(p.value[2] * 100).toFixed(1)}%` }, // eslint-disable-line @typescript-eslint/no-explicit-any
           xAxis: { type: "category", data: unitMix.topFields, axisLabel: { interval: 0, rotate: 20, width: 120, overflow: "truncate" } },
           yAxis: { type: "category", data: unitMix.units },
-          visualMap: { min: 0, max: 1, calculable: false, orient: "vertical", right: 0, top: "middle", inRange: { color: [cssVar("--seq-1"), cssVar("--seq-9")] }, formatter: (v: number) => `${Math.round(v * 100)}%`, textStyle: { color: cssVar("--muted") } },
+          visualMap: { min: 0, max: 1, calculable: false, orient: "vertical", right: 0, top: "middle", inRange: { color: inst === "IIIT-D" ? ["#fde4d6", "#eb6834", "#8a3510"] : ["#d6e8fb", "#2a78d6", "#0d366b"] }, formatter: (v: number) => `${Math.round(v * 100)}%`, textStyle: { color: cssVar("--muted") } },
           series: [{ type: "heatmap", data: unitMix.units.flatMap((u, y) => unitMix.topFields.map((fl, x) => [x, y, unitMix.share(u, fl)])), itemStyle: { borderColor: cssVar("--surface"), borderWidth: 2 } }] })}
         table={() => ({ columns: ["unit", "papers", ...unitMix.topFields], rows: unitMix.units.map((u) => [u, unitMix.tot[u], ...unitMix.topFields.map((fl) => `${(unitMix.share(u, fl) * 100).toFixed(1)}%`)]) })} />
     </div>

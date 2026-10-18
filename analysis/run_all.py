@@ -497,9 +497,12 @@ def finding7(ic, edges, mp, insts):
         # domestic share: distinct (cited paper, citing work) pairs with an Indian non-own institution
         own = set(insts[i]["openalex_ids_all"])
         ours = set(mp[mp.our_institutions.str.contains(i)].openalex_id.dropna())
-        e = edges[edges.cited_paper.isin(ours)]
-        e = e[~e.apply(lambda r: bool(({r.partner_id} | set(str(r.partner_lineage).split(";"))) & own), axis=1)]
-        dom = e[["cited_paper", "citing_work"]].drop_duplicates().shape[0]
+        if edges.empty or "cited_paper" not in edges.columns:
+            dom = 0
+        else:
+            e = edges[edges.cited_paper.isin(ours)]
+            e = e[~e.apply(lambda r: bool(({r.partner_id} | set(str(r.partner_lineage).split(";"))) & own), axis=1)]
+            dom = e[["cited_paper", "citing_work"]].drop_duplicates().shape[0]
         total = mp[mp.openalex_id.isin(ours)].citations_openalex.fillna(0).sum()
         out[i] = {"partners": sub.sort_values("total_citations", ascending=False).head(60).to_dict("records"),
                   "flagged": sub[sub.cites_us_not_collab].sort_values("total_citations", ascending=False).to_dict("records"),

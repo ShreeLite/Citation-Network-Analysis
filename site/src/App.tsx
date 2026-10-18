@@ -13,6 +13,7 @@ const CollabNet = lazy(() => import("./tabs/CollabNet"));
 const Central = lazy(() => import("./tabs/Central"));
 const Findings = lazy(() => import("./tabs/Findings"));
 const Indian = lazy(() => import("./tabs/Indian"));
+const IndianF2F = lazy(() => import("./tabs/IndianF2F"));
 const Methods = lazy(() => import("./tabs/Methods"));
 
 export const TABS = [
@@ -26,6 +27,7 @@ export const TABS = [
   { path: "central", label: "Centres vs Departments", el: <Central /> },
   { path: "findings", label: "Findings", el: <Findings /> },
   { path: "india", label: "Indian Connections", el: <Indian /> },
+  { path: "india-f2f", label: "India Faculty↔Faculty", el: <IndianF2F /> },
   { path: "methods", label: "Data & Methods", el: <Methods /> },
 ];
 

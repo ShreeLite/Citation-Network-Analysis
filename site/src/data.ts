@@ -9,6 +9,7 @@ import collaborationJson from "./data/collaboration.json";
 import centralJson from "./data/central.json";
 import findingsJson from "./data/findings.json";
 import indianJson from "./data/indian.json";
+import indianF2fJson from "./data/indian_f2f.json";
 import metaJson from "./data/meta.json";
 
 export type Inst = "IIIT-H" | "IIIT-D";
@@ -17,7 +18,7 @@ export const INSTS: Inst[] = ["IIIT-H", "IIIT-D"];
 export interface Paper {
   paper_id: string; title: string; year: number; type: "journal" | "conference" | "preprint";
   journal_name?: string; acronym?: string; doi?: string | null; citations?: number | null;
-  quartile?: string; core_rank?: string; field?: string; subfield?: string;
+  quartile?: string; core_rank?: string; field?: string; subfield?: string; impact_factor?: number | null;
   our_institutions: string; faculty?: string[]; cites_indian_inst?: boolean; cited_by_indian_inst?: boolean;
 }
 export interface Faculty {
@@ -39,6 +40,7 @@ export const collaboration = collaborationJson as any;
 export const central = centralJson as any;
 export const findings = findingsJson as any;
 export const indian = indianJson as any;
+export const indianF2f = indianF2fJson as any;
 export const meta = metaJson as any;
 
 export const facultyById: Record<string, Faculty> = Object.fromEntries(faculty.map((f) => [f.faculty_id, f]));

@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { collaboration, coauthor, facultyById } from "../data";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { collaboration, coauthor, facultyById, YEAR_MIN, YEAR_MAX } from "../data";
 import { useFilters } from "../filters";
 import { cssVar, fmt, instColor, InstDot, Section } from "../components/ui";
 import { Network, type NetEdge, type NetNode } from "../components/Network";
@@ -13,6 +13,26 @@ export default function CollabNet() {
   const [colorBy, setColorBy] = useState<"unit" | "community" | "institution">("institution");
   const [focus, setFocus] = useState<string>("");
   const [sel, setSel] = useState<string | null>(null);
+  const [animYear, setAnimYear] = useState<number | null>(null);
+  const [playing, setPlaying] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const stopAnim = useCallback(() => { setPlaying(false); if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; } }, []);
+  const startAnim = useCallback(() => {
+    setAnimYear(YEAR_MIN);
+    setPlaying(true);
+  }, []);
+  useEffect(() => {
+    if (!playing) return;
+    timerRef.current = setInterval(() => {
+      setAnimYear((y) => { if (y === null || y >= YEAR_MAX) { stopAnim(); return null; } return y + 1; });
+    }, 1200);
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [playing, stopAnim]);
+
+  const effectiveY1 = animYear ?? f.y1;
+  const effectiveY0 = animYear !== null ? YEAR_MIN : f.y0;
+
   const g = useMemo(() => {
     const yrs = new Map<string, number[]>((coauthor.edge_years as [string, string, number[]][]).map(([a, b, y]) => [`${a}|${b}`, y]));
     const nodes: NetNode[] = (coauthor.nodes as { id: string; name: string; institution: string; unit: string; community: string; degree: number }[])
@@ -21,10 +41,10 @@ export default function CollabNet() {
     const ids = new Set(nodes.map((n) => n.id));
     const edges: NetEdge[] = (coauthor.edges as { source: string; target: string; weight: number }[])
       .filter((e) => ids.has(e.source) && ids.has(e.target))
-      .filter((e) => { const y = yrs.get(`${e.source}|${e.target}`) || yrs.get(`${e.target}|${e.source}`) || []; return y.some((v) => v >= f.y0 && v <= f.y1); })
+      .filter((e) => { const y = yrs.get(`${e.source}|${e.target}`) || yrs.get(`${e.target}|${e.source}`) || []; return y.some((v) => v >= effectiveY0 && v <= effectiveY1); })
       .map((e) => ({ source: e.source, target: e.target, weight: e.weight }));
     return { nodes, edges };
-  }, [facIds, colorBy, f.y0, f.y1]);
+  }, [facIds, colorBy, effectiveY0, effectiveY1]);
 
   const groups = useMemo(() => {
     const c: Record<string, number> = {};
@@ -53,6 +73,13 @@ export default function CollabNet() {
             <input type="search" list="fac-names" className="w-full sm:w-auto" placeholder="Focus on a person…" onChange={(e) => {
               const n = g.nodes.find((x) => x.label.toLowerCase() === e.target.value.toLowerCase()); if (n) setFocus(n.id); }} aria-label="Focus on a person" />
             <datalist id="fac-names">{g.nodes.map((n) => <option key={n.id} value={n.label} />)}</datalist>
+          </div>
+          <div className="flex items-center gap-2 text-[13px] no-print">
+            <button className="btn" onClick={() => { if (playing) stopAnim(); else startAnim(); }}>{playing ? "Stop" : "Play timeline"}</button>
+            {animYear !== null && <input type="range" min={YEAR_MIN} max={YEAR_MAX} value={animYear} onChange={(e) => { stopAnim(); setAnimYear(Number(e.target.value)); }} aria-label="Animation year" />}
+            {animYear !== null && <span className="tabnum font-semibold">{animYear}</span>}
+            {animYear !== null && <button className="btn" onClick={() => { stopAnim(); setAnimYear(null); }}>Reset</button>}
+            {animYear !== null && <span className="muted">{g.edges.length} edges through {animYear}</span>}
           </div>
           <Network nodes={g.nodes} edges={g.edges} colorOf={colorOf} removable focus={focus} onSelect={setSel} legend={legend} height={620} />
           {person && (

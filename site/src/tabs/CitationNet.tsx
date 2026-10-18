@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { citationGraph, required } from "../data";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { citationGraph, required, YEAR_MIN, YEAR_MAX } from "../data";
 import { useFilters } from "../filters";
 import { ChartCard, cssVar, fmt, instColor, Section } from "../components/ui";
 import { Network, type NetEdge, type NetNode } from "../components/Network";
@@ -9,14 +9,31 @@ interface CNode { id: string; pr: number; indeg: number; inst: string; year: num
 export default function CitationNet() {
   const { f } = useFilters();
   const [k, setK] = useState(200);
+  const [animYear, setAnimYear] = useState<number | null>(null);
+  const [playing, setPlaying] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const stopAnim = useCallback(() => { setPlaying(false); if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; } }, []);
+  const startAnim = useCallback(() => { setAnimYear(YEAR_MIN); setPlaying(true); }, []);
+  useEffect(() => {
+    if (!playing) return;
+    timerRef.current = setInterval(() => {
+      setAnimYear((y) => { if (y === null || y >= YEAR_MAX) { stopAnim(); return null; } return y + 1; });
+    }, 1200);
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [playing, stopAnim]);
+
+  const effectiveY1 = animYear ?? f.y1;
+  const effectiveY0 = animYear !== null ? YEAR_MIN : f.y0;
+
   const g = useMemo(() => {
-    const all = (citationGraph.nodes as CNode[]).filter((n) => n.year >= f.y0 && n.year <= f.y1 && (f.inst === "both" || n.inst.split(";").includes(f.inst)));
+    const all = (citationGraph.nodes as CNode[]).filter((n) => n.year >= effectiveY0 && n.year <= effectiveY1 && (f.inst === "both" || n.inst.split(";").includes(f.inst)));
     const keep = all.sort((a, b) => b.pr - a.pr).slice(0, k);
     const ids = new Set(keep.map((n) => n.id));
     const nodes: NetNode[] = keep.map((n) => ({ id: n.id, label: `${n.title.slice(0, 60)}${n.title.length > 60 ? "…" : ""} (${n.venue || "—"} ${n.year})`, group: n.inst.includes(";") ? "both" : n.inst, size: n.indeg + 1 }));
     const edges: NetEdge[] = (citationGraph.edges as [string, string][]).filter(([a, b]) => ids.has(a) && ids.has(b)).map(([a, b]) => ({ source: a, target: b }));
     return { nodes, edges };
-  }, [f.y0, f.y1, f.inst, k]);
+  }, [effectiveY0, effectiveY1, f.inst, k]);
   const cn = required.citation_network;
   const dist = cn.in_degree_distribution as [number, number][];
   const color = (grp: string) => (grp === "both" ? cssVar("--ink-2") : instColor(grp));
@@ -24,9 +41,17 @@ export default function CitationNet() {
     <div className="flex flex-col gap-5">
       <Section title="Who cites whom inside the IIIT corpus" intro={`${fmt(cn.nodes)} papers, ${fmt(cn.edges)} citations between them, ${fmt(cn.external_edges)} citations to outside work. The graph shows the top papers by PageRank among those in the current year/institute filter.`}>
         <div className="card p-4 flex flex-col gap-3">
-          <label className="text-[13px] flex items-center gap-2 no-print">Papers shown (top k by PageRank):
-            <input type="range" min={50} max={600} step={50} value={k} onChange={(e) => setK(Number(e.target.value))} aria-label="number of papers" />
-            <span className="tabnum">{k}</span></label>
+          <div className="flex flex-wrap items-center gap-2 text-[13px] no-print">
+            <label className="flex items-center gap-2">Papers shown (top k by PageRank):
+              <input type="range" min={50} max={600} step={50} value={k} onChange={(e) => setK(Number(e.target.value))} aria-label="number of papers" />
+              <span className="tabnum">{k}</span></label>
+            <span className="flex-1" />
+            <button className="btn" onClick={() => { if (playing) stopAnim(); else startAnim(); }}>{playing ? "Stop" : "Play timeline"}</button>
+            {animYear !== null && <input type="range" min={YEAR_MIN} max={YEAR_MAX} value={animYear} onChange={(e) => { stopAnim(); setAnimYear(Number(e.target.value)); }} aria-label="Animation year" />}
+            {animYear !== null && <span className="tabnum font-semibold">{animYear}</span>}
+            {animYear !== null && <button className="btn" onClick={() => { stopAnim(); setAnimYear(null); }}>Reset</button>}
+            {animYear !== null && <span className="muted">{g.nodes.length} papers through {animYear}</span>}
+          </div>
           <Network nodes={g.nodes} edges={g.edges} directed colorOf={color} height={560}
             legend={[{ label: "IIIT-H", color: instColor("IIIT-H") }, { label: "IIIT-D", color: instColor("IIIT-D") }, { label: "joint", color: cssVar("--ink-2") }]} />
           <p className="text-[12px] muted">Node size = in-degree within the corpus. Arrows point from citing to cited paper. Hover a node for its title and neighbours.</p>
