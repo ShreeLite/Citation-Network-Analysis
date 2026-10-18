@@ -12,14 +12,12 @@ const IF_THRESHOLDS = [{ label: "All", value: 0 }, { label: "IF > 5", value: 5 }
 export default function Venues() {
   const { f, pap } = useFilters();
   const insts = f.inst === "both" ? INSTS : [f.inst];
-  const [q1Only, setQ1Only] = useState(false);
   const [ifMin, setIfMin] = useState(0);
 
-  const filteredPap = useMemo(() => pap.filter((p) => {
-    if (q1Only && p.quartile !== "Q1") return false;
-    if (ifMin > 0 && (!p.impact_factor || p.impact_factor <= ifMin)) return false;
-    return true;
-  }), [pap, q1Only, ifMin]);
+  const filteredPap = useMemo(() => {
+    if (ifMin <= 0) return pap;
+    return pap.filter((p) => p.impact_factor != null && p.impact_factor > ifMin);
+  }, [pap, ifMin]);
   const by = useMemo(() => Object.fromEntries(insts.map((i) => {
     const ps = filteredPap.filter((p) => p.our_institutions.split(";").includes(i));
     const j = ps.filter((p) => p.type === "journal"), c = ps.filter((p) => p.type === "conference");
@@ -49,13 +47,13 @@ export default function Venues() {
   return (
     <div className="flex flex-col gap-5">
       <div className="card p-3 flex flex-wrap items-center gap-3 text-[13px] no-print" role="region" aria-label="Quality filters">
-        <span className="font-semibold">Quality filters:</span>
-        <button className={`btn ${q1Only ? "btn-primary" : ""}`} onClick={() => setQ1Only(!q1Only)}>{q1Only ? "Q1 only ✓" : "Q1 only"}</button>
+        <span className="font-semibold">Filter by Impact Factor:</span>
         {IF_THRESHOLDS.map((t) => (
           <button key={t.value} className={`btn ${ifMin === t.value ? "btn-primary" : ""}`} onClick={() => setIfMin(t.value)}>{t.label}</button>
         ))}
-        {(q1Only || ifMin > 0) && <button className="btn" onClick={() => { setQ1Only(false); setIfMin(0); }}>Clear quality filters</button>}
-        {(q1Only || ifMin > 0) && <span className="muted">{fmt(filteredPap.length)} of {fmt(pap.length)} papers shown</span>}
+        {ifMin > 0 && <span className="muted">{fmt(filteredPap.length)} of {fmt(pap.length)} papers shown</span>}
+        <span className="flex-1" />
+        <span className="muted">IF = mean citations per paper in that venue within our dataset (not the official Clarivate JIF)</span>
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {insts.map((i) => [

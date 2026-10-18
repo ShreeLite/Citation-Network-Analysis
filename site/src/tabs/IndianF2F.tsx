@@ -99,6 +99,40 @@ export default function IndianF2F() {
 
   const summary = indianF2f.summary as any;
 
+  const findings = useMemo(() => {
+    const allEdges = indianF2f.external_edges as any[];
+    const allNodes = indianF2f.external_nodes as any[];
+    const ourNodes: Record<string, any> = {};
+    const partnerNodes: Record<string, any> = {};
+    for (const n of allNodes) { if (n.is_ours) ourNodes[n.id] = n; else partnerNodes[n.id] = n; }
+
+    const facPapers: Record<string, { name: string; inst: string; papers: number }> = {};
+    for (const e of allEdges) {
+      const ours = e.source in ourNodes ? e.source : e.target;
+      const n = ourNodes[ours];
+      if (!n) continue;
+      if (!facPapers[ours]) facPapers[ours] = { name: n.name, inst: n.inst, papers: 0 };
+      facPapers[ours].papers += e.papers;
+    }
+    const sorted = Object.values(facPapers).sort((a, b) => b.papers - a.papers);
+    const total = sorted.reduce((s, x) => s + x.papers, 0);
+    let running = 0, topN = 0;
+    for (const x of sorted) { running += x.papers; topN++; if (running >= total * 0.5) break; }
+
+    const instPapers: Record<string, number> = {};
+    for (const n of Object.values(partnerNodes)) instPapers[n.inst] = (instPapers[n.inst] || 0) + 1;
+    const topInsts = Object.entries(instPapers).sort((a, b) => b[1] - a[1]).slice(0, 5);
+
+    const hPapers = Object.values(facPapers).filter((x) => x.inst === "IIIT-H").reduce((s, x) => s + x.papers, 0);
+    const dPapers = Object.values(facPapers).filter((x) => x.inst === "IIIT-D").reduce((s, x) => s + x.papers, 0);
+    const hFac = Object.values(facPapers).filter((x) => x.inst === "IIIT-H").length;
+    const dFac = Object.values(facPapers).filter((x) => x.inst === "IIIT-D").length;
+
+    const crossInt = (indianF2f.internal_edges as any[]).filter((e: any) => e.cross_inst);
+
+    return { sorted, topN, totalFac: sorted.length, topInsts, hPapers, dPapers, hFac, dFac, crossInt, top5: sorted.slice(0, 5) };
+  }, []);
+
   return (
     <div className="flex flex-col gap-5">
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -107,6 +141,16 @@ export default function IndianF2F() {
         <Kpi label="Internal edges (Indian papers)" value={fmt(summary.total_internal_edges)} sub="faculty pairs co-authoring Indian-connected papers" />
         <Kpi label="Cross-institute (Indian papers)" value={fmt(summary.internal_cross_inst)} sub="IIIT-H ↔ IIIT-D edges on Indian-connected papers" />
       </div>
+
+      <section className="card p-5">
+        <h3 className="font-semibold text-[15px] mb-3">Key findings</h3>
+        <ul className="flex flex-col gap-2 text-[13px]">
+          <li><strong>Highly concentrated:</strong> The top {findings.topN} faculty (of {findings.totalFac} with Indian collaborators) account for 50% of all Indian collaboration papers. The most prolific are {findings.top5.map((x) => `${x.name} (${x.inst})`).join(", ")}.</li>
+          <li><strong>IIIT-D collaborates more within India:</strong> {findings.dFac} IIIT-D faculty produced {fmt(findings.dPapers)} Indian co-authored papers vs. {findings.hFac} IIIT-H faculty with {fmt(findings.hPapers)} — {((findings.dPapers / Math.max(findings.dFac, 1)) / (findings.hPapers / Math.max(findings.hFac, 1))).toFixed(1)}× higher rate per faculty at IIIT-D.</li>
+          <li><strong>Top Indian partners:</strong> {findings.topInsts.map(([inst, cnt]) => `${inst} (${cnt})`).join(", ")}. Geographic proximity matters — IIT Delhi and AIIMS dominate IIIT-D's partner list.</li>
+          <li><strong>Narrow cross-institute bridge:</strong> Only {findings.crossInt.length} faculty pairs bridge IIIT-H and IIIT-D on Indian-connected papers{findings.crossInt.length > 0 ? `, led by ${findings.crossInt.sort((a: any, b: any) => b.papers - a.papers)[0]?.name_a} ↔ ${findings.crossInt.sort((a: any, b: any) => b.papers - a.papers)[0]?.name_b} (${findings.crossInt.sort((a: any, b: any) => b.papers - a.papers)[0]?.papers} papers)` : ""}. Indian collaboration is largely institute-internal.</li>
+        </ul>
+      </section>
 
       <div className="flex flex-wrap items-center gap-2 text-[13px] no-print">
         <span>View:</span>
